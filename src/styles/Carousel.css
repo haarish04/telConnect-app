@@ -1,0 +1,38 @@
+/* Remove unnecessary flexbox rules from carousel-item */
+.carousel-item {
+    /* Bootstrap takes care of showing one item at a time */
+    padding: 40px;
+    background-color: #fdf4e5; /* Light background for contrast */
+}
+  
+/* Styling for carousel images */
+.carousel-image {
+    width: 350px; /* Slightly larger image */
+    height: auto;
+    margin-right: 30px; /* Increased space between image and text */
+    border-radius: 12px; /* More pronounced rounded corners */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+}
+  
+/* Styling for carousel captions */
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.85); /* Darker background */
+    color: #fff; /* White text color */
+    border-radius: 12px; /* Rounded corners */
+    padding: 25px;
+    max-width: 60%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Subtle shadow */
+}
+  
+/* Styling for headings in captions */
+.carousel-caption h5 {
+    font-size: 2.2rem; /* Larger font size for heading */
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+  
+/* Styling for paragraphs in captions */
+.carousel-caption p {
+    margin: 8px 0; /* Space between paragraphs */
+    font-size: 1.3rem;
+}

@@ -1,6 +1,6 @@
-import  { useState } from 'react';
-import '../styles/NavBar.css'
-import logo from '../assets/telstra-logo.png'
+import React, { useState, useEffect } from 'react';
+import '../styles/NavBar.css';
+import logo from '../assets/telstra-logo.png';
 import search from '../assets/search.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, Stack } from '@mui/material';
@@ -11,15 +11,15 @@ const CustomButton = ({ label, isActive, onClick }) => {
       onClick={onClick}
       variant="contained"
       sx={{
-        backgroundColor: isActive ? '#1E2A5A' : '#FFFFFF',  // Active is blue, others white
-        color: isActive ? '#FFFFFF' : '#000000',            // Active is white text, others black
-        borderRadius: '25px',                               // Rounded edges
-        textTransform: 'none',                              // No text transformation
-        fontWeight: 'bold',                                 // Bold text
-        padding: '6px 16px',                                // Custom padding
-        border: isActive ? 'none' : '1px solid #1E2A5A',    // Border for inactive buttons
+        backgroundColor: isActive ? '#1E2A5A' : '#FFFFFF',
+        color: isActive ? '#FFFFFF' : '#000000',
+        borderRadius: '25px',
+        textTransform: 'none',
+        fontWeight: 'bold',
+        padding: '6px 16px',
+        border: isActive ? 'none' : '1px solid #1E2A5A',
         '&:hover': {
-          backgroundColor: isActive ? '#1E2A5A' : '#F0F0F0', // Keep hover state
+          backgroundColor: isActive ? '#1E2A5A' : '#F0F0F0',
         },
       }}
       size='large'
@@ -30,7 +30,7 @@ const CustomButton = ({ label, isActive, onClick }) => {
 };
 
 const ButtonGroup = () => {
-  const [activeButton, setActiveButton] = useState('Home');  // Default active button
+  const [activeButton, setActiveButton] = useState('Home');
 
   return (
     <Stack direction="row" spacing={2}>
@@ -59,23 +59,41 @@ const ButtonGroup = () => {
 };
 
 const NavBar = () => {
-  return (
-    <div className='navbar'>
-        <div className='navbar-upper'>
-            <img src={logo} alt="" className='logo'/ >
-            <div className='search-login'>
-              <div className='search-box'>
-                <input type='text' placeholder='Search'/>
-                <img src={search} alt="" className='search'/>
-              </div>
-              <PersonIcon fontSize='large'/>
-            </div>            
-      </div>
-      <div className='navbar-lower'>
-      <ButtonGroup/>
-      </div>      
-    </div>
-  )
-}
+  const [isScrolled, setIsScrolled] = useState(false);
 
-export default NavBar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <div className='navbar-container'>
+      <div className={`navbar-upper ${isScrolled ? 'navbar-upper-hidden' : ''}`}>
+        <img src={logo} alt="Logo" className='logo' />
+        <div className='search-login'>
+          <div className='search-box'>
+            <input type='text' placeholder='Search' />
+            <img src={search} alt="Search" className='search' />
+          </div>
+          <PersonIcon fontSize='large' />
+        </div>
+      </div>
+      <div className={`navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}`}>
+        <ButtonGroup />
+      </div>
+    </div>
+  );
+};
+
+export default NavBar;
