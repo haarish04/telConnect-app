@@ -1,0 +1,87 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 0; /* Reduced overall padding */
+}
+
+.navbar-upper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.navbar-lower {
+    background-color: #ffffff;
+    padding: 10px 2%; /* Reduced padding */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo {
+    width: 60px; /* Slightly smaller logo */
+    cursor: pointer;
+}
+
+ul {
+    flex: 1;
+    list-style: none;
+    text-align: center;
+}
+
+ul li {
+    display: inline-block;
+    margin: 5px 15px; /* Reduced margin */
+    font-size: 16px; /* Slightly smaller font size */
+    cursor: pointer;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    padding: 5px; /* Padding inside the box */
+    border: 1px solid #ccc; /* Border around the box */
+    border-radius: 25px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    max-width: 220px; /* Increased width */
+    background: #fff; /* Background color */
+    position: relative; /* For positioning the icon inside the box */
+}
+
+.search-box input {
+    padding: 5px 10px; /* Padding inside the input */
+    border: none; /* Remove border */
+    outline: none; /* Remove default focus outline */
+    color: #000; /* Text color */
+    font-size: 14px; /* Font size */
+    width: calc(100% - 30px); /* Adjust width to fit the box and icon */
+}
+
+.search-box img {
+    width: 18px; /* Icon size */
+    position: absolute; /* Position inside the box */
+    right: 10px; /* Space from the right edge */
+    cursor: pointer; /* Pointer cursor */
+}
+
+.search-bar:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.search-login {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Reduced gap */
+}
