@@ -45,12 +45,12 @@ const ButtonGroup = () => {
         onClick={() => setActiveButton('Services')}
       />
       <CustomButton
-        label="About Us"
+        label="Recharge"
         isActive={activeButton === 'About Us'}
         onClick={() => setActiveButton('About Us')}
       />
       <CustomButton
-        label="FAQs"
+        label="Support"
         isActive={activeButton === 'FAQs'}
         onClick={() => setActiveButton('FAQs')}
       />
