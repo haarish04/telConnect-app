@@ -27,6 +27,7 @@
     align-items: center;
     position: relative; /* Not sticky until scrolled */
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .navbar-lower-sticky {
@@ -40,7 +41,7 @@
   }
   
   .logo {
-    width: 60px;
+    width: 80px;
     cursor: pointer;
   }
   

@@ -6,7 +6,5 @@
   font-weight: 600 ;
 }
 .container{
-  width:100vw;
-  min-height: 100vh;
-  background: rgb(252, 237, 208);
+  background: #7FC7D9;
 }

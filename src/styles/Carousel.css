@@ -2,7 +2,8 @@
 .carousel-item {
     /* Bootstrap takes care of showing one item at a time */
     padding: 40px;
-    background-color: #fdf4e5; /* Light background for contrast */
+    background-color: #DCF2F1; /* Light background for contrast */
+    border-radius: 12px;
 }
   
 /* Styling for carousel images */
@@ -16,23 +17,29 @@
   
 /* Styling for carousel captions */
 .carousel-caption {
-    background-color: rgba(0, 0, 0, 0.85); /* Darker background */
+    background-color: #131a38; /* Darker background */
     color: #fff; /* White text color */
     border-radius: 12px; /* Rounded corners */
-    padding: 25px;
-    max-width: 60%;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Subtle shadow */
-}
+    padding: 15px; /* Reduced padding */
+    max-width: 40%; /* Reduced width */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
+    text-align: center; /* Center-align the text */
+    margin: 0 auto; /* Center the caption box */
+    left: 0; /* Ensure it stays aligned to the center */
+    right: 0; /* Ensure it stays aligned to the center */
+  }
+  
   
 /* Styling for headings in captions */
 .carousel-caption h5 {
-    font-size: 2.2rem; /* Larger font size for heading */
+    font-size: 1.8rem; /* Smaller font size for heading */
     font-weight: bold;
-    margin-bottom: 12px;
-}
+    margin-bottom: 8px; /* Reduced margin */
+  }
   
-/* Styling for paragraphs in captions */
-.carousel-caption p {
-    margin: 8px 0; /* Space between paragraphs */
-    font-size: 1.3rem;
-}
+  /* Styling for paragraphs in captions */
+  .carousel-caption p {
+    margin: 6px 0; /* Reduced space between paragraphs */
+    font-size: 1.1rem; /* Smaller font size */
+  }
+  

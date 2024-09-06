@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage'
 
 const App = () => {
   return (
-    <div className='container'>
+    <div className=''>
       <NavBar></NavBar>
       <HomePage></HomePage>
     </div>

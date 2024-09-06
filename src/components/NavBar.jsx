@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/NavBar.css';
-import logo from '../assets/telstra-logo.png';
+import logo from '../assets/logo.png';
 import search from '../assets/search.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, Stack } from '@mui/material';

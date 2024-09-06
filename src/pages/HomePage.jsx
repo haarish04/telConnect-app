@@ -3,6 +3,8 @@ import "../styles/HomePage.css";
 import axios from 'axios';
 import CarouselComponent from '../components/Carousel';
 import AboutUs from '../assets/About_us.jfif';
+import WhyUs1 from '../assets/WhyUs1.png';
+import WhyUs2 from '../assets/WhyUs2.png';
 import CardGrid from '../components/CardGrid';
 
 const fetchAndStorePlans = async () => {
@@ -32,6 +34,10 @@ const HomePage = () => {
     const loadPlans = async () => {
       try {
         const fetchedPlans = await fetchAndStorePlans();
+        fetchedPlans.forEach((plan)=>{
+          console.log(plan.planDescription)
+        })
+        console.log(fetchedPlans)
         setPlans(fetchedPlans);
       } catch (error) {
         setError('Failed to load plans');
@@ -43,15 +49,37 @@ const HomePage = () => {
   }, []);
 
   const fetchPlanById = (id) => {
+    console.dir(plans.find(p => p.id === id) || null)
     return plans.find(p => p.id === id) || null;
   };
 
   const plan_carousel1 = fetchPlanById(15);
-  const plan_carousel2 = fetchPlanById(16);
-  const plan_card1 = fetchPlanById(23);
-  const plan_card2 = fetchPlanById(10);
-  const plan_card3 = fetchPlanById(9);
-
+  const plan_carousel2 = fetchPlanById(8);
+  const plan_card1 = fetchPlanById(24);
+  const plan_card2 = fetchPlanById(11);
+  const plan_card3 = fetchPlanById(10); 
+  console.log(plan_card1)
+  const plans_card = {
+    pc1: {
+      price: 1999,
+      validity: 365 ,
+      data: 24,
+      description: plan_card1?.planDescription
+    },
+    pc2: {
+      price: 1199,
+      validity:30 ,
+      data: 100,
+      description: plan_card2?.planDescription
+    },
+    pc3: {
+      price: 751,
+      validity:30,
+      data: 130,
+      description: plan_card3?.planDescription
+    }
+  };
+  
   return (
     <div className="homepage-container">
       <header className="header">
@@ -70,27 +98,46 @@ const HomePage = () => {
           <p>{error}</p>
         ) : (
           <CardGrid
-            plan_card1={plan_card1}
-            plan_card2={plan_card2}
-            plan_card3={plan_card3}
+            plan_card1={plans_card.pc1}
+            plan_card2={plans_card.pc2}
+            plan_card3={plans_card.pc3}
           />
         )}
       </section>
 
       <section className="why-us">
-        <div className="why-us-container">
-          <h2>Why Choose Us?</h2>
-          <p className="why-us-text">
-            At TelConnect, we go beyond being just a telecom provider—we are the heartbeat of global communication. With over 100 million happy customers in more than 200 countries, our network bridges borders, cultures, and time zones effortlessly.
-            <br /><br />
-            From the hustle and bustle of city life to the tranquility of remote areas, TelConnect ensures you stay connected with your loved ones, business associates, and the world. Our state-of-the-art infrastructure, powered by cutting-edge technology, guarantees 99.9% uptime, so you’re never out of touch, no matter where your journey takes you.
-            <br /><br />
-            Our dedication to innovation and customer satisfaction has positioned us as a leader in the telecom industry. Every day, we enable over a billion interactions—whether it’s a quick chat with a friend, a vital business call, or a heartfelt video message. We are the trusted choice for millions who seek reliability, clarity, and seamless connectivity.
-            <br /><br />
-            Join the TelConnect family today and experience a network that genuinely cares about your connection to the world. We don’t just connect calls—we connect lives.
-          </p>
-        </div>
-      </section>
+  <div className="why-us-container">
+    {/* First section: Text on the left, Image on the right */}
+    <div className="row align-items-center">
+      <div className="col-md-6">
+        <h2>Why Choose Us?</h2>
+        <p className="why-us-text">
+          At TelConnect, we go beyond being just a telecom provider—we are the heartbeat of global communication. With over 100 million happy customers in more than 200 countries, our network bridges borders, cultures, and time zones effortlessly.
+          <br /><br />
+          From the hustle and bustle of city life to the tranquility of remote areas, TelConnect ensures you stay connected with your loved ones, business associates, and the world. Our state-of-the-art infrastructure, powered by cutting-edge technology, guarantees 99.9% uptime, so you’re never out of touch, no matter where your journey takes you.
+        </p>
+      </div>
+      <div className="col-md-6">
+        <img src={WhyUs1} alt="Why Choose Us" className="img-fluid1" />
+      </div>
+    </div>
+
+    {/* Second section: Image on the left, Text on the right */}
+    <div className="row align-items-center mt-5">
+    <div className="col-md-6">
+    <img src={WhyUs2} alt="Our Commitment" className="img-fluid2" />
+      </div>
+      <div className="col-md-6">
+        <p className="why-us-text">
+          Our dedication to innovation and customer satisfaction has positioned us as a leader in the telecom industry. Every day, we enable over a billion interactions—whether it’s a quick chat with a friend, a vital business call, or a heartfelt video message. We are the trusted choice for millions who seek reliability, clarity, and seamless connectivity.
+          <br /><br />
+          Join the TelConnect family today and experience a network that genuinely cares about your connection to the world. We don’t just connect calls—we connect lives.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section className="about-us">
         <h2>About Us</h2>

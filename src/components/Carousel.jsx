@@ -2,17 +2,17 @@ import React from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
 import '../styles/Carousel.css'; // Your custom CSS
-import plan1_image1 from '../assets/Plan_image1.jfif';
-import plan1_image2 from '../assets/Plan_image2.jfif';
+import plan_image1 from '../assets/plan_image1.png';
+import plan_image2 from '../assets/plan_image2.png';
 
 const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
   return (
-    <Carousel interval={5000} controls={true} indicators={true}>
+    <Carousel interval={3000} controls={true} indicators={true}>
       {plan_carousel1 && (
         <Carousel.Item>
           <div className="d-flex align-items-center">
             <img
-              src={plan1_image1}
+              src={plan_image1}
               alt={plan_carousel1.planName}
               className="carousel-image"
             />
@@ -29,7 +29,7 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
         <Carousel.Item>
           <div className="d-flex align-items-center">
             <img
-              src={plan1_image2}
+              src={plan_image2}
               alt={plan_carousel2.planName}
               className="carousel-image"
             />
