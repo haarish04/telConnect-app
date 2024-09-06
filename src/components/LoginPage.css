@@ -1,0 +1,94 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+}
+
+.background {
+  display: flex;
+  height: 100vh;
+  width: 100%; /* Ensure full width */
+  background-color: #fff;
+}
+
+.image-section {
+  flex: 1; /* Take up half of the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.image-section img {
+  max-width: 100%; /* Allow the image to adjust its width */
+  max-height: 100%; /* Allow the image to adjust its height */
+  object-fit: contain; /* Ensure the entire image is visible */
+  display: block;
+}
+
+.login-section {
+  flex: 1; /* Adjust to take up the other half of the screen */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f0f0f0;
+  color: #0f1035;
+}
+
+.login-section h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  padding-right: 15%;
+}
+
+.login-section form {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20%;
+}
+
+.login-section form input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.25rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  background-color: white;
+}
+
+.login-section form input::placeholder {
+  font-size: 1rem;
+  color: #0f1035;
+}
+
+.login-section form input:focus {
+  color: #0f1035;
+}
+
+.login-section button {
+  padding: 0.75rem 1.5rem;
+  background-color: #0f1035;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.login-section p {
+  margin-top: 1.5rem;
+  text-align: center;
+  margin-right: 5rem;
+}
+
+.login-section a {
+  color: #365486;
+  text-decoration: none;
+}
