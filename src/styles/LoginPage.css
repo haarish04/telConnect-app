@@ -48,6 +48,7 @@ html {
   text-align: center;  /* Center-align the heading */
   width: 100%;         /* Make sure the heading takes full width */
   margin-bottom: 1.5rem; /* Add more space below the heading */
+  padding-right: 10%;
 }
 
 .login-section form {
