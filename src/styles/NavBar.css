@@ -78,3 +78,7 @@
   align-items: center;
   gap: 15px;
 }
+
+.loginicon {
+  cursor: pointer;
+}

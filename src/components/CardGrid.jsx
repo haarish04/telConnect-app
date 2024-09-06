@@ -28,7 +28,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
         <div className="plan-details">
           <div className="detail-section">
             <div>VALIDITY</div>
-            <div><strong>{plan.validity}</strong></div>
+            <div><strong>{plan.validity} days</strong></div>
           </div>
           <div className="detail-section">
             <div>DATA</div>

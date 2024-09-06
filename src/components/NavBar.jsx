@@ -86,7 +86,7 @@ const NavBar = () => {
             <input type='text' placeholder='Search' />
             <img src={search} alt="Search" className='search' />
           </div>
-          <PersonIcon fontSize='large' />
+          <PersonIcon fontSize='large' className='loginicon' />
         </div>
       </div>
       <div className={`navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}`}>
