@@ -4,6 +4,8 @@
     padding: 40px;
     background-color: #DCF2F1; /* Light background for contrast */
     border-radius: 12px;
+    padding-left: 200px;
+    padding-right: 200px;
 }
   
 /* Styling for carousel images */
