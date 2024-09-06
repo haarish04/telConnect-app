@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from "react";
-import "./LoginPage.css";
+import "../styles/LoginPage.css";
 import loginImg from "../assets/login-img.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

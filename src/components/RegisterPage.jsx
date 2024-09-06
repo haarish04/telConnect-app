@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import "./RegisterPage.css";
+import "../styles/RegisterPage.css";
 import telconnectimg1 from "../assets/login-img.png";
+import NavBar from "./NavBar";
 
 const RegisterPage = () => {
   const [step, setStep] = useState(1);
@@ -29,6 +30,8 @@ const RegisterPage = () => {
   };
 
   return (
+    <div> 
+      <NavBar />
     <div className="register-container">
       <div className="image-section">
         <img src={telconnectimg1} alt="Animation" />
@@ -38,7 +41,7 @@ const RegisterPage = () => {
         <form onSubmit={handleRegister}>
           {step === 1 && (
             <div className="step-box">
-              <h3>Step 1 of 2</h3>
+              <h4>Step 1 of 2</h4>
               <div>
                 <label className="bold-label">Enter Email:</label>
                 <input
@@ -106,10 +109,11 @@ const RegisterPage = () => {
           )}
         </form>
         <p>
-          Already have an account? <Link to="/">Login here</Link>
+          Already have an account? <Link to="/login">Login here</Link>
         </p>
       </div>
     </div>
+    </div> 
   );
 };
 

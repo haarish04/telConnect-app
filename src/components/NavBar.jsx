@@ -4,6 +4,8 @@ import logo from '../assets/logo.png';
 import search from '../assets/search.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, Stack } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const CustomButton = ({ label, isActive, onClick }) => {
   return (
@@ -86,7 +88,9 @@ const NavBar = () => {
             <input type='text' placeholder='Search' />
             <img src={search} alt="Search" className='search' />
           </div>
-          <PersonIcon fontSize='large' className='loginicon' />
+          <Link to="/login">
+            <PersonIcon fontSize="large" className="loginicon" style={{ color: "#1E2A5A" }} />
+          </Link>
         </div>
       </div>
       <div className={`navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}`}>

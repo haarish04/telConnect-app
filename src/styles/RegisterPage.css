@@ -70,7 +70,7 @@ html {
 .register-section .verify-button,
 .register-section button {
   padding: 0.5rem 1.5rem;
-  background-color: #007bff;
+  background-color: #1E2A5A;
   color: white;
   border: none;
   border-radius: 5px;
@@ -83,7 +83,7 @@ html {
 
 .register-section .send-otp-button {
   margin-bottom: 20px;
-  background-color: #007bff;
+  background-color: #1E2A5A;
   color: white;
   border: none;
   border-radius: 5px;
@@ -120,7 +120,7 @@ input::placeholder {
 }
 
 .register-section a {
-  color: #007bff;
+  color: #1E2A5A;
   text-decoration: none;
   font-size: 1rem;
 }
