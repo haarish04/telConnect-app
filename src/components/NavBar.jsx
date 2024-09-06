@@ -79,7 +79,7 @@ const NavBar = () => {
 
   return (
     <div className='navbar-container'>
-      <div className={navbar-upper ${isScrolled ? 'navbar-upper-hidden' : ''}}>
+      <div className={`navbar-upper ${isScrolled ? 'navbar-upper-hidden' : ''}`}>
         <img src={logo} alt="Logo" className='logo' />
         <div className='search-login'>
           <div className='search-box'>
@@ -89,7 +89,7 @@ const NavBar = () => {
           <PersonIcon fontSize='large' />
         </div>
       </div>
-      <div className={navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}}>
+      <div className={`navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}`}>
         <ButtonGroup />
       </div>
     </div>
