@@ -21,6 +21,7 @@ html {
   padding: 10px;
   background-color: #fff;
   overflow: hidden;
+  padding-bottom: 150px;
 }
 
 .image-section img {
