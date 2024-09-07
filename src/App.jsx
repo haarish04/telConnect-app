@@ -10,6 +10,8 @@ import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
 import DocumentVerificationPage from "./pages/DocumentVerificationPage";
 import PersonalInfoPage from "./pages/PersonalInfoPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import ConfirmationContainer from "./components/ConfirmationContainer";
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
             element={<DocumentVerificationPage />}
           />
           <Route path="/personalInfo" element={<PersonalInfoPage />} />
+          <Route path="/planConfirmation" element={<ConfirmationContainer />} />
+          {/* <Route path="/planConfirmation" element={<ConfirmationPage />} /> */}
         </Routes>
       </Router>
       <div className=""></div>

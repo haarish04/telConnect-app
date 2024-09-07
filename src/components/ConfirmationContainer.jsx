@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/ConfirmationPage.css";
 import axios from "axios";
 import ConfirmationPage from "../pages/ConfirmationPage";
+import { useLocation, Link } from "react-router-dom";
 
 export default function ConfirmationContainer() {
+  const location = useLocation();
+  console.log("Location object:", location);
+  const planId = location.state?.planId || localStorage.getItem("planId");
+
+  console.log("Plan ID (ConfirmationContainer):", planId); // Log planId here
+
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("hello");
+  console.log(planId);
 
   useEffect(() => {
     const fetchPlan = async () => {
-      console.log("Fetching plan details...");
       try {
+        // Use the dynamic planId in the API call
         const response = await axios.get(
-          "http://localhost:8082/plan/getPlan/PREP-TC-0549"
+          `http://localhost:8082/plan/getPlan/${planId}`
         );
-
-        // Additional logging for debugging
-
+        console.log(response.data);
         setPlan(response.data);
         setLoading(false);
       } catch (error) {
@@ -29,8 +34,13 @@ export default function ConfirmationContainer() {
       }
     };
 
-    fetchPlan(); // Call the async function to fetch data
-  }, []);
+    if (planId) {
+      fetchPlan(); // Only call the API if planId is available
+    } else {
+      setError("Plan ID not found");
+      setLoading(false);
+    }
+  }, [planId]);
 
   const handleCancel = () => {
     console.log("Cancellation initiated");
@@ -41,11 +51,11 @@ export default function ConfirmationContainer() {
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Show a loading message or spinner while fetching data
+    return <p>Loading...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>; // Show an error message if something goes wrong
+    return <p>{error}</p>;
   }
 
   return plan ? (

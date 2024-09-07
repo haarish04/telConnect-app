@@ -73,12 +73,17 @@ export const handleAuthRedirect = async (
 };
 
 // Reusable handler for plan clicks that can be called in any component
-export const onPlanClickHandler = async (navigate, customerData) => {
+export const onPlanClickHandler = async (navigate, customerData, planId) => {
+  console.log("Selected plan: ", planId);
+  localStorage.setItem("planId", planId);
   await handleAuthRedirect(
     navigate,
     customerData,
     "/login", // Redirect to login if not logged in
     "/documentVerification", // Redirect to document verification if not verified
-    "/planConfirmation" // Redirect to plan confirmation if verified
+    {
+      pathname: "/planConfirmation",
+      state: { planId }, // Pass planId in state
+    } // Redirect to plan confirmation if verified
   );
 };

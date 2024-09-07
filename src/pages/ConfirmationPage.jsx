@@ -1,5 +1,4 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/ConfirmationPage.css";
 import NavBar from "../components/NavBar";
 
@@ -66,12 +65,16 @@ export default function ConfirmationPage({
           <strong>End Date:</strong> {endDate}
         </p>
         <div className="button-container">
-          <button className="cancel-button" onClick={onCancel}>
-            Cancel
-          </button>
-          <button className="confirm-button" onClick={handleConfirm}>
-            Confirm
-          </button>
+          <Link to="/servicePlans">
+            <button className="cancel-button" onClick={onCancel}>
+              Cancel
+            </button>
+          </Link>
+          <Link to="/thank-you">
+            <button className="confirm-button" onClick={handleConfirm}>
+              Confirm
+            </button>
+          </Link>
         </div>
       </div>
     </div>

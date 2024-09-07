@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "../styles/ServicePlans.css";
-import { useNavigate } from 'react-router-dom';
-import { CustomerContext } from '../context/CustomerContext';
-import { onPlanClickHandler } from '../utils/authUtils'; 
+import { useNavigate } from "react-router-dom";
+import { CustomerContext } from "../context/CustomerContext";
+import { onPlanClickHandler } from "../utils/authUtils";
 
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
   const [serviceType, setServiceType] = useState("prepaid");
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const { customerData } = useContext(CustomerContext); 
-  const navigate = useNavigate(); 
+  const { customerData } = useContext(CustomerContext);
+  const navigate = useNavigate();
 
   // Call the plan click handler on button click
   const handleClick = () => {
-    onPlanClickHandler(navigate, customerData);
+    if (selectedPlan) onPlanClickHandler(navigate, customerData, selectedPlan);
+    else console.log("No plan selected");
   };
 
   useEffect(() => {
