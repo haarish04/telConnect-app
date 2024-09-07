@@ -70,6 +70,28 @@ body {
   .text-muted {
     color: #0F1035 !important; /* Dark blue text */
   }
+
+  .logout-button {
+    background-color: #365486; /* Navy Blue */
+    color: #DCF2F1; /* Almost white-ish */
+    border: #DCF2F1;
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #0F1035; /* Dark blue for hover */
+    border-color: #7FC7D9; /* Sea blue border on hover */
+  }
+  
+  .logout-button .MuiSvgIcon-root {
+    margin-right: 8px;
+    font-size: 1.5rem;
+  }
   
   @media (max-width: 768px) {
     .profile-card {
