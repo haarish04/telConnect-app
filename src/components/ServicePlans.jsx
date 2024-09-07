@@ -1,12 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "../styles/ServicePlans.css";
+import { useNavigate } from 'react-router-dom';
+import { CustomerContext } from '../context/CustomerContext';
+import { onPlanClickHandler } from '../utils/authUtils'; 
 
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
   const [serviceType, setServiceType] = useState("prepaid");
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const { customerData } = useContext(CustomerContext); 
+  const navigate = useNavigate(); 
+
+  // Call the plan click handler on button click
+  const handleClick = () => {
+    onPlanClickHandler(navigate, customerData);
+  };
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -40,15 +50,6 @@ const ServicePlans = () => {
 
   const handlePlanSelect = (planId) => {
     setSelectedPlan(planId);
-  };
-
-  const handleActivate = () => {
-    if (selectedPlan) {
-      console.log(`Activating plan: ${selectedPlan}`);
-      // Implement the activation logic here
-    } else {
-      alert("Please select a plan to activate.");
-    }
   };
 
   return (
@@ -104,7 +105,7 @@ const ServicePlans = () => {
         </div>
       </div>
 
-      <button className="activate-button" onClick={handleActivate}>
+      <button className="activate-button" onClick={handleClick}>
         Activate
       </button>
     </div>

@@ -1,12 +1,3 @@
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: auto;
-  background-color: #fff;
-}
-
 .box-container {
   display: flex;
   justify-content: center;
@@ -16,17 +7,16 @@ html {
 }
 
 .box {
-  background: #dcf2f1;
+  background: #DCF2F1;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
-  margin-bottom: 10%;
   width: 100%;
   max-width: 400px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.box h1 {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -42,8 +32,7 @@ h1 {
   font-weight: bold;
 }
 
-select,
-input[type="file"] {
+select, input[type="file"] {
   width: 100%;
   height: 40px; /* Ensures both elements have the same height */
   padding: 8px;
@@ -56,7 +45,7 @@ input[type="file"] {
 .acceptance-criteria {
   margin-top: 10px;
   font-size: 14px;
-  color: #0f1035;
+  color: #0F1035;
   text-align: left; /* Aligns the content to the left */
 }
 
@@ -64,7 +53,7 @@ input[type="file"] {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #365486;
+  background-color:#365486 ;
   color: #fff;
   border: none;
   border-radius: 4px;

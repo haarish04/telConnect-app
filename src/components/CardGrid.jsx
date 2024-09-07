@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, Row, Col, Button, Modal } from "react-bootstrap";
 import "../styles/CardGrid.css";
+import { useNavigate } from 'react-router-dom';
+import { CustomerContext } from '../context/CustomerContext';
+import { onPlanClickHandler } from '../utils/authUtils'; 
 
 const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const { customerData } = useContext(CustomerContext); // Access customer data from context
+  const navigate = useNavigate(); // Hook to handle navigation
+
+  // Call the plan click handler on button click
+  const handleClick = () => {
+    onPlanClickHandler(navigate, customerData); // Reuse the function
+  };
 
   const handleViewDetails = (plan) => {
     setSelectedPlan(plan);
@@ -44,7 +54,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </div>
 
-        <Button className="recharge-button">Select</Button>
+        <Button className="recharge-button" onClick={handleClick}>Select</Button>
       </Card.Body>
     </Card>
   );
@@ -76,7 +86,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="recharge-button" onClick={handleCloseModal}>
+          <Button className="recharge-button" onClick={handleClick}>
             Select
           </Button>
         </Modal.Footer>
