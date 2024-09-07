@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
+import axios from "axios"; // Import axios for making API calls
 import "../styles/RegisterPage.css";
 import telconnectimg1 from "../assets/login-img.png";
 
@@ -11,10 +12,21 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+  const [error, setError] = useState(null); // Add error state
 
-  const handleSendOtp = () => {
-    // Logic to send OTP
-    setOtpSent(true);
+  // Function to send OTP
+  const handleSendOtp = async () => {
+    try {
+      const response = await axios.post("http://localhost:8082/send-otp", {
+        email, // Send email in the request body
+      });
+      console.log(response.data); // Handle the response if needed
+      setOtpSent(true); // Update the state to show OTP sent message
+      setError(null); // Clear error if OTP is sent successfully
+    } catch (err) {
+      console.error(err);
+      setError("Failed to send OTP. Please try again."); // Show error message
+    }
   };
 
   const handleVerifyOtp = () => {
@@ -35,7 +47,7 @@ export default function Register() {
           <img src={telconnectimg1} alt="Animation" />
         </div>
         <div className="register-section">
-          <h2>Register</h2>
+          <h2>Sign Up</h2>
           <form onSubmit={handleRegister}>
             {step === 1 && (
               <div className="step-box">
@@ -60,6 +72,7 @@ export default function Register() {
                 {otpSent && (
                   <p className="success-msg">OTP has been sent successfully!</p>
                 )}
+                {error && <p className="error-msg">{error}</p>}
                 <div>
                   <label className="bold-label">Enter OTP:</label>
                   <input
@@ -93,7 +106,7 @@ export default function Register() {
                   />
                 </div>
                 <div>
-                  <label className="bold-label">Create Password:</label>
+                  <label className="bold-label">Confirm Password:</label>
                   <input
                     type="password"
                     value={confirmPassword}
