@@ -2,23 +2,24 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout'; // Import LogoutIcon
-import '../styles/ProfilePage.css'; // Link to CSS file
+import LogoutIcon from '@mui/icons-material/Logout';
+import '../styles/ProfilePage.css';
 import { CustomerContext } from '../context/CustomerContext';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const [customerData, setCustomerData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { logout } = useContext(CustomerContext); // Access the logout function from context
-  const navigate = useNavigate(); // Initialize navigate function from React Router
+  const { customerData: contextCustomerData, logout } = useContext(CustomerContext); // Access customerData and logout from context
+  const navigate = useNavigate();
+
+  const [customerData, setCustomerData] = useState(contextCustomerData);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
         const response = await axios.get('http://localhost:8082/customer/getCustomerDetails', {
-          params: { customerEmail: 'suk@gmail.com' },
+          params: { customerEmail: contextCustomerData.customerEmail }, // Use email from context
           withCredentials: true
         });
         setCustomerData(response.data);
@@ -29,12 +30,16 @@ const Profile = () => {
       }
     };
 
-    fetchCustomerData();
-  }, []);
+    if (contextCustomerData) {
+      fetchCustomerData();
+    } else {
+      setLoading(false);
+    }
+  }, [contextCustomerData]);
 
   const handleLogout = () => {
-    logout(); // Call the logout function from context
-    navigate('/home'); // Redirect to the home page
+    logout();
+    navigate('/home');
   };
 
   if (loading) {
@@ -63,11 +68,7 @@ const Profile = () => {
                     <p>{customerData.role}</p>
                   </div>
                 </div>
-                {/* Logout Button */}
-                <Button
-                  className="logout-button"
-                  onClick={handleLogout}
-                >
+                <Button className="logout-button" onClick={handleLogout}>
                   <LogoutIcon />
                   Logout
                 </Button>
