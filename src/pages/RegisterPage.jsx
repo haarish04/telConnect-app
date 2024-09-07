@@ -1,12 +1,12 @@
 // import React from "react";
 import NavBar from "../components/NavBar";
-import Login from "../components/Login";
+import Register from "../components/Register";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div>
       <NavBar />
-      <Login />
+      <Register />
     </div>
   );
 }

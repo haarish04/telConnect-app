@@ -4,7 +4,6 @@ import loginImg from "../assets/login-img.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
-import NavBar from "./NavBar";
 
 const Login = () => {
   const { setCustomerData } = useContext(CustomerContext); // Use context to set customer data
@@ -50,7 +49,6 @@ const Login = () => {
 
   return (
     <div>
-      <NavBar />
       <div className="background">
         <div className="image-section">
           <img src={loginImg} alt="Login Visual" />
