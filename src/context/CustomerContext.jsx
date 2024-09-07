@@ -1,4 +1,3 @@
-// CustomerContext.js
 import React, { createContext, useState, useEffect } from "react";
 
 // Create the context
@@ -22,8 +21,14 @@ export const CustomerProvider = ({ children }) => {
     }
   }, [customerData]);
 
+  // Logout function: Clears customer data from state and localStorage
+  const logout = () => {
+    setCustomerData(null);
+    localStorage.removeItem("customerData");
+  };
+
   return (
-    <CustomerContext.Provider value={{ customerData, setCustomerData }}>
+    <CustomerContext.Provider value={{ customerData, setCustomerData, logout }}>
       {children}
     </CustomerContext.Provider>
   );

@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout'; // Import LogoutIcon
 import '../styles/ProfilePage.css'; // Link to CSS file
+import { CustomerContext } from '../context/CustomerContext';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 const Profile = () => {
   const [customerData, setCustomerData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { logout } = useContext(CustomerContext); // Access the logout function from context
+  const navigate = useNavigate(); // Initialize navigate function from React Router
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -27,6 +32,11 @@ const Profile = () => {
     fetchCustomerData();
   }, []);
 
+  const handleLogout = () => {
+    logout(); // Call the logout function from context
+    navigate('/home'); // Redirect to the home page
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -45,12 +55,22 @@ const Profile = () => {
         <Row className="d-flex justify-content-center align-items-center h-100">
           <Col lg={8}>
             <Card className="profile-card">
-              <Card.Header className="profile-card-header">
-              <AccountCircleIcon style={{ fontSize: '6rem' }} className="profile-icon" />
-                <div className="profile-header-text">
-                  <h5>{customerData.customerName}</h5>
-                  <p>{customerData.role}</p>
+              <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center">
+                  <AccountCircleIcon style={{ fontSize: '6rem' }} className="profile-icon" />
+                  <div className="profile-header-text">
+                    <h5>{customerData.customerName}</h5>
+                    <p>{customerData.role}</p>
+                  </div>
                 </div>
+                {/* Logout Button */}
+                <Button
+                  className="logout-button"
+                  onClick={handleLogout}
+                >
+                  <LogoutIcon />
+                  Logout
+                </Button>
               </Card.Header>
               <Card.Body className="profile-card-body">
                 <h6>Information</h6>
