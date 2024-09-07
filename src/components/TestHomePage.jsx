@@ -1,9 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
-export const TestHomePage = () => {
-  const location = useLocation();
-  const { customerData } = location.state || {}; // Get customerData from the state
+import React, { useContext } from "react";
+import { CustomerContext } from "../context/CustomerContext";
+
+const TestHomePage = () => {
+  const { customerData } = useContext(CustomerContext);
 
   if (!customerData) {
     return <div>Loading...</div>;
@@ -12,15 +11,9 @@ export const TestHomePage = () => {
   return (
     <div>
       <h2>Customer Dashboard</h2>
-      <p>Email: {customerData.customerEmail}</p>
-      <p>Address: {customerData.customerAddress}</p>
-      <p>ID: {customerData.customerId}</p>
-      <p>Name: {customerData.customerName}</p>
+      <p>Customer details: {customerData.customerEmail}</p>
     </div>
   );
 };
 
-// Define the prop types
-TestHomePage.propTypes = {
-  customerData: PropTypes.object,
-};
+export default TestHomePage;

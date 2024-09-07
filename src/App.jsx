@@ -6,10 +6,11 @@ import ProfilePage from "./pages/ProfilePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./components/Login";
 import RegisterPage from "./components/RegisterPage";
-import { TestHomePage } from "./components/TestHomePage";
+import TestHomePage from "./components/TestHomePage";
+import { CustomerProvider } from "./context/CustomerContext";
 const App = () => {
   return (
-    <div>
+    <CustomerProvider>
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -22,7 +23,7 @@ const App = () => {
         {/* <HomePage></HomePage> */}
         {/* <ProfilePage></ProfilePage> */}
       </div>
-    </div>
+    </CustomerProvider>
   );
 };
 
