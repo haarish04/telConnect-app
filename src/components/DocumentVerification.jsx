@@ -45,7 +45,7 @@ export default function DocumentVerification() {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Important for file upload
+            "Content-Type": "multipart/form-data",
           },
         }
       );

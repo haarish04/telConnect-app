@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Check if the user is logged in (i.e., customerData is present)
 export const isLoggedIn = (customerData) => {
@@ -15,24 +15,24 @@ export const getCustomerId = (customerData) => {
 
 // API call to check if the document is verified
 export const isDocumentVerified = async (customerId) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8082/verification/getStatus/${customerId}`,
-        { withCredentials: true }
-      );
-      
-      // Check if the status is 'success'
-      if (response.data.status === 'success') {
-        return true; // Return true if the status is 'success'
-      } else {
-        return false; // Return false otherwise
-      }
-    } catch (error) {
-      console.error('Error checking document verification status:', error);
-      throw error; // Optionally handle the error, e.g., redirect to an error page
+  try {
+    const response = await axios.get(
+      `http://localhost:8082/verification/getStatus/${customerId}`,
+      { withCredentials: true }
+    );
+
+    // Check if the status is 'success'
+    if (response.data.includes("success")) {
+      // Changed from `contains` to `includes` for proper string check
+      return true; // Return true if the status is 'success'
+    } else {
+      return false; // Return false otherwise
     }
-  };
-  
+  } catch (error) {
+    console.error("Error checking document verification status:", error);
+    throw error; // Optionally handle the error, e.g., redirect to an error page
+  }
+};
 
 // Handle authentication and redirection
 export const handleAuthRedirect = async (
@@ -52,7 +52,7 @@ export const handleAuthRedirect = async (
   // Get customerId from customerData
   const customerId = getCustomerId(customerData);
   if (!customerId) {
-    console.error('Customer ID not found');
+    console.error("Customer ID not found");
     return;
   }
 
@@ -67,7 +67,7 @@ export const handleAuthRedirect = async (
       navigate(verificationRedirect);
     }
   } catch (error) {
-    console.error('Error during document verification process:', error);
+    console.error("Error during document verification process:", error);
     // Optionally handle error (e.g., redirect to error page or show error message)
   }
 };
@@ -77,8 +77,8 @@ export const onPlanClickHandler = async (navigate, customerData) => {
   await handleAuthRedirect(
     navigate,
     customerData,
-    '/login', // Redirect to login if not logged in
-    '/document-verification', // Redirect to document verification if not verified
-    '/plan-confirmation' // Redirect to plan confirmation if verified
+    "/login", // Redirect to login if not logged in
+    "/documentVerification", // Redirect to document verification if not verified
+    "/planConfirmation" // Redirect to plan confirmation if verified
   );
 };

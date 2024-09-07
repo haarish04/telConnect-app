@@ -9,6 +9,8 @@ import { CustomerProvider } from "./context/CustomerContext";
 import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
 import DocumentVerificationPage from "./pages/DocumentVerificationPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import ConfirmationContainer from "./components/ConfirmationContainer";
 
 const App = () => {
   return (
@@ -26,6 +28,11 @@ const App = () => {
           <Route
             path="/documentVerification"
             element={<DocumentVerificationPage />}
+          />
+          <Route path="/planConfirmation" element={<ConfirmationContainer />} />
+          <Route
+            path="/planConfirmationContainer"
+            element={<ConfirmationContainer />}
           />
         </Routes>
       </Router>

@@ -1,0 +1,58 @@
+/* Confirmation page heading */
+.confirmation-heading {
+  margin-top: 2em; /* Space from the top of the page */
+  text-align: center;
+  color: #365486; /* Ensure the heading is visible against the blue background */
+  font-size: 2em; /* Adjust size as needed */
+}
+
+/* Confirmation content styling */
+.parent-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+}
+
+.confirmation-content {
+  background-color: white;
+  color: #0f1035;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 85%;
+  max-width: 800px;
+  padding: 5% 10% 5% 10%; /* Padding: top 5%, right 10%, bottom 5%, left 10% */
+  margin-top: 2em;
+  text-align: left; /* Aligns text to the left */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add space between buttons */
+  margin-top: 20px;
+}
+
+.cancel-button,
+.confirm-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 5%; /* 5% margin on both sides, relative to the width of the parent container */
+}
+
+.cancel-button {
+  background-color: #0f1035; /* Red for cancel */
+  color: #ffffff;
+}
+
+.confirm-button {
+  background-color: #0f1035; /* Green for confirm */
+  color: #ffffff;
+}
+
+.cancel-button:hover,
+.confirm-button:hover {
+  opacity: 0.8; /* Add a hover effect */
+}
