@@ -21,6 +21,7 @@ html {
   padding: 10px;
   background-color: #fff;
   overflow: hidden;
+  padding-bottom: 150px;
 }
 
 .image-section img {
@@ -38,27 +39,32 @@ html {
   padding: 2rem;
   background-color: #f0f0f0;
   color: #0f1035;
+  padding-bottom: 150px;
+  padding-right: 7%;
 }
 
 .login-section h2 {
   margin-bottom: 2rem;
-  text-align: center;
-  padding-right: 15%;
+  text-align: center;  /* Center-align the heading */
+  width: 100%;         /* Make sure the heading takes full width */
+  margin-bottom: 1.5rem; /* Add more space below the heading */
+  padding-right: 10%;
 }
 
 .login-section form {
   display: flex;
   flex-direction: column;
-  padding-right: 20%;
+   /* Center-align form elements */
+  width: 100%; /
 }
 
 .login-section form input {
-  width: 100%;
+  width: calc(100% - 2rem); /* Adjust width with consistent padding */
   padding: 1rem;
   font-size: 1.25rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem; /* Increased margin-bottom for more space */
   background-color: white;
 }
 
@@ -72,20 +78,21 @@ html {
 }
 
 .login-section button {
-  padding: 0.75rem 1.5rem;
-  background-color: #0f1035;
+  padding: 1rem 1.5rem; /* Slightly increased padding for the button */
+  background-color: #1E2A5A;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin-top: 1rem;
-  margin-left: 1rem;
+  width: calc(100% - 2rem); /* Make the button width consistent with inputs */
+  margin-left: 0; /* Align button with input */
+  margin-bottom: 2rem; /* Add more space below the button */
 }
 
 .login-section p {
-  margin-top: 1.5rem;
+  margin-top: 2rem; /* Increase the space between button and text */
   text-align: center;
-  margin-right: 5rem;
+  width: 100%;
 }
 
 .login-section a {

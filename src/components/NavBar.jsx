@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../styles/NavBar.css';
 import logo from '../assets/logo.png';
 import search from '../assets/search.png';
 import PersonIcon from '@mui/icons-material/Person';
 import { Button, Stack } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { CustomerContext } from "../context/CustomerContext";  // Import the CustomerContext
 
 const CustomButton = ({ label, isActive, onClick }) => {
   return (
@@ -34,11 +36,13 @@ const ButtonGroup = () => {
 
   return (
     <Stack direction="row" spacing={2}>
+      <Link to='/home'>
       <CustomButton
         label="Home"
         isActive={activeButton === 'Home'}
         onClick={() => setActiveButton('Home')}
       />
+      </Link>
       <CustomButton
         label="Services"
         isActive={activeButton === 'Services'}
@@ -46,13 +50,13 @@ const ButtonGroup = () => {
       />
       <CustomButton
         label="Recharge"
-        isActive={activeButton === 'About Us'}
-        onClick={() => setActiveButton('About Us')}
+        isActive={activeButton === 'Recharge'}
+        onClick={() => setActiveButton('Recharge')}
       />
       <CustomButton
         label="Support"
-        isActive={activeButton === 'FAQs'}
-        onClick={() => setActiveButton('FAQs')}
+        isActive={activeButton === 'Support'}
+        onClick={() => setActiveButton('Support')}
       />
     </Stack>
   );
@@ -60,6 +64,7 @@ const ButtonGroup = () => {
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { customerData } = useContext(CustomerContext); // Access the customerData from the context
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,7 +91,10 @@ const NavBar = () => {
             <input type='text' placeholder='Search' />
             <img src={search} alt="Search" className='search' />
           </div>
-          <PersonIcon fontSize='large' className='loginicon' />
+          {/* Conditionally change the Link based on login state */}
+          <Link to={customerData ? "/profile" : "/login"}>
+            <PersonIcon fontSize="large" className="loginicon" style={{ color: "#1E2A5A" }} />
+          </Link>
         </div>
       </div>
       <div className={`navbar-lower ${isScrolled ? 'navbar-lower-sticky' : ''}`}>

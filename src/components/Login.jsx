@@ -1,17 +1,16 @@
-/* eslint-disable react/no-unescaped-entities */
-import React, { useState, useEffect } from "react";
-import "./LoginPage.css";
+import React, { useState, useContext } from "react";
+import "../styles/LoginPage.css";
 import loginImg from "../assets/login-img.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
+import { CustomerContext } from "../context/CustomerContext";
 
 const Login = () => {
+  const { setCustomerData } = useContext(CustomerContext); // Use context to set customer data
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [customerData, setCustomerData] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -29,22 +28,17 @@ const Login = () => {
         }
       );
 
-      console.log("Login successful:", loginResponse.data);
+      console.log(loginResponse);
 
       // Fetch customer details
       const customerDetailsResponse = await axios.get(
         "http://localhost:8082/customer/getCustomerDetails",
-        {
-          params: {
-            customerEmail: email,
-          },
-        }
+        { params: { customerEmail: email } }
       );
-      console.log("Customer Details Response:", customerDetailsResponse.data);
 
-      setCustomerData(customerDetailsResponse.data); // Asynchronous
+      setCustomerData(customerDetailsResponse.data); // Update customer data in context
+      navigate("/home");
     } catch (err) {
-      console.error("Error occurred:", err.response?.data || err.message);
       setError(
         err.response?.data?.message || "An error occurred during login."
       );
@@ -53,16 +47,8 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (customerData) {
-      // Pass customerData via navigate's state
-      navigate("/TestHomePage", { state: { customerData } });
-    }
-  }, [customerData, navigate]);
-
   return (
     <div>
-      <NavBar />
       <div className="background">
         <div className="image-section">
           <img src={loginImg} alt="Login Visual" />
@@ -78,7 +64,6 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-
             <label className="bold-label">Enter Password:</label>
             <input
               type="password"
@@ -87,15 +72,13 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-
             <button type="submit" disabled={isLoading}>
               {isLoading ? "Please wait...." : "Login"}
             </button>
-
             {error && <p style={{ color: "red" }}>{error}</p>}
           </form>
           <p>
-            Don't have an account? <a href="/register">Register here</a>
+            Don't have an account? <a href="/register">Sign Up</a>
           </p>
         </div>
       </div>
