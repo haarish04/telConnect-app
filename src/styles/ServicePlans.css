@@ -23,7 +23,7 @@
   padding: 10px 20px;
   margin: 0 10px;
   cursor: pointer;
-  border: 1px solid #007bff;
+  border: 1px solid #1E2A5A;
   background-color: #fff;
   color: #365486;
   border-radius: 4px;
@@ -32,12 +32,12 @@
 }
 
 .service-button.active {
-  background-color: #0F1035;
+  background-color: #1E2A5A;
   color: white;
 }
 
 .service-button:hover {
-  background-color: #0F1035;
+  background-color: #1E2A5A;
   color: white;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .plan-box.selected {
-  background-color: #0F1035; /* Change to Dark Blue when selected */
+  background-color: #1E2A5A; /* Change to Dark Blue when selected */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -84,7 +84,7 @@
 .activate-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #0F1035;
+  background-color: #1E2A5A;
   color: white;
   border: none;
   cursor: pointer;

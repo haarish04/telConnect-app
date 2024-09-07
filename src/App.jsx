@@ -9,8 +9,7 @@ import { CustomerProvider } from "./context/CustomerContext";
 import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
 import DocumentVerificationPage from "./pages/DocumentVerificationPage";
-import ConfirmationPage from "./pages/ConfirmationPage";
-import ConfirmationContainer from "./components/ConfirmationContainer";
+import PersonalInfoPage from "./pages/PersonalInfoPage";
 
 const App = () => {
   return (
@@ -29,11 +28,7 @@ const App = () => {
             path="/documentVerification"
             element={<DocumentVerificationPage />}
           />
-          <Route path="/planConfirmation" element={<ConfirmationContainer />} />
-          <Route
-            path="/planConfirmationContainer"
-            element={<ConfirmationContainer />}
-          />
+          <Route path="/personalInfo" element={<PersonalInfoPage />} />
         </Routes>
       </Router>
       <div className=""></div>
