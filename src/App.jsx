@@ -6,7 +6,6 @@ import ProfilePage from "./pages/ProfilePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import TestHomePage from "./components/TestHomePage";
 import { CustomerProvider } from "./context/CustomerContext";
 const App = () => {
   return (
