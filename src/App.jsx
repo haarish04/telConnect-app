@@ -6,6 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { CustomerProvider } from "./context/CustomerContext";
+import SupportPage from "./pages/SupportPage";
+import ServicePlansPage from "./pages/ServicePlansPage";
+import DocumentVerificationPage from "./pages/DocumentVerificationPage";
+import PersonalInfoPage from "./pages/PersonalInfoPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import ConfirmationContainer from "./components/ConfirmationContainer";
 
 const App = () => {
   return (
@@ -18,13 +24,18 @@ const App = () => {
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/servicePlans" element={<ServicePlansPage />} />
+          <Route
+            path="/documentVerification"
+            element={<DocumentVerificationPage />}
+          />
+          <Route path="/personalInfo" element={<PersonalInfoPage />} />
+          <Route path="/planConfirmation" element={<ConfirmationContainer />} />
+          {/* <Route path="/planConfirmation" element={<ConfirmationPage />} /> */}
         </Routes>
       </Router>
-      <div className="">
-        {/* <NavBar></NavBar> */}
-        {/* <HomePage></HomePage> */}
-        {/* <ProfilePage></ProfilePage> */}
-      </div>
+      <div className=""></div>
     </CustomerProvider>
   );
 };

@@ -1,29 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, Row, Col, Button, Modal } from "react-bootstrap";
 import "../styles/CardGrid.css";
+import { useNavigate } from "react-router-dom";
+import { CustomerContext } from "../context/CustomerContext";
+import { onPlanClickHandler } from "../utils/authUtils";
 
 const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(null); // Track selected plan
   const [showModal, setShowModal] = useState(false);
+  const { customerData } = useContext(CustomerContext); // Access customer data from context
+  const navigate = useNavigate(); // Hook to handle navigation
 
+  // Call the plan click handler on button click, passing planId
+  const handleClick = () => {
+    console.log(selectedPlan);
+    if (selectedPlan?.planId) {
+      // Ensure selectedPlan is set and pass planId
+      onPlanClickHandler(navigate, customerData, selectedPlan.planId);
+    } else {
+      console.log("No plan selected");
+    }
+  };
+
+  // Handle viewing plan details, setting the selected plan
   const handleViewDetails = (plan) => {
-    setSelectedPlan(plan);
-    setShowModal(true);
+    setSelectedPlan(plan); // Set selected plan
+    setShowModal(true); // Show modal
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
+  // Render individual plan cards
   const renderPlanCard = (plan) => (
-    <Card className="plan-card">
+    <Card className="plan-card" key={plan.planId}>
       <Card.Body>
         <Card.Title className="plan-price">₹ {plan.price}</Card.Title>
         <Card.Subtitle className="mb-2">
           <Button
             variant="link"
             className="custom-link-button"
-            onClick={() => handleViewDetails(plan)}
+            onClick={() => handleViewDetails(plan)} // View details when clicked
           >
             View details
           </Button>
@@ -44,7 +62,16 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </div>
 
-        <Button className="recharge-button">Select</Button>
+        {/* Select the plan directly from the card, then call handleClick */}
+        <Button
+          className="recharge-button"
+          onClick={() => {
+            setSelectedPlan(plan);
+            handleClick();
+          }}
+        >
+          Select
+        </Button>
       </Card.Body>
     </Card>
   );
@@ -76,7 +103,14 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="recharge-button" onClick={handleCloseModal}>
+          {/* Ensure plan is selected from modal, then call handleClick */}
+          <Button
+            className="recharge-button"
+            onClick={() => {
+              handleClick();
+              handleCloseModal();
+            }}
+          >
             Select
           </Button>
         </Modal.Footer>
