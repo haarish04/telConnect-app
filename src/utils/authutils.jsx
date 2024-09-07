@@ -78,7 +78,7 @@ export const onPlanClickHandler = async (navigate, customerData) => {
     navigate,
     customerData,
     '/login', // Redirect to login if not logged in
-    '/document-verification', // Redirect to document verification if not verified
+    '/documentVerification', // Redirect to document verification if not verified
     '/plan-confirmation' // Redirect to plan confirmation if verified
   );
 };

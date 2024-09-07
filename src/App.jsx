@@ -9,6 +9,7 @@ import { CustomerProvider } from "./context/CustomerContext";
 import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
 import DocumentVerificationPage from "./pages/DocumentVerificationPage";
+import PersonalInfoPage from "./pages/PersonalInfoPage";
 
 const App = () => {
   return (
@@ -23,10 +24,8 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/servicePlans" element={<ServicePlansPage />} />
-          <Route
-            path="/documentVerification"
-            element={<DocumentVerificationPage />}
-          />
+          <Route path="/documentVerification" element={<DocumentVerificationPage />} />
+          <Route path="/personalInfo" element={<PersonalInfoPage />} />
         </Routes>
       </Router>
       <div className=""></div>
