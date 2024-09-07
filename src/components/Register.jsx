@@ -16,10 +16,11 @@ export default function Register() {
 
   // Function to send OTP
   const handleSendOtp = async () => {
+    const name = "YourName"; // Change this to the actual name or make it dynamic if needed
     try {
-      const response = await axios.post("http://localhost:8082/send-otp", {
-        email, // Send email in the request body
-      });
+      const response = await axios.post(
+        `http://localhost:8082/sendMail/OTP?recipient=${email}&name=${name}`
+      );
       console.log(response.data); // Handle the response if needed
       setOtpSent(true); // Update the state to show OTP sent message
       setError(null); // Clear error if OTP is sent successfully
@@ -29,10 +30,26 @@ export default function Register() {
     }
   };
 
-  const handleVerifyOtp = () => {
-    // Logic to verify OTP
-    setOtpVerified(false);
-    setStep(2);
+  // Function to verify OTP
+  const handleVerifyOtp = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8082/sendMail/verifyOTP?recipient=${email}&otp=${otp}`, // Your OTP verification API
+        {} // Sending email and otp in the request body
+      );
+
+      if (response.status === 200) {
+        // OTP verified successfully, proceed to next step
+        setOtpVerified(true);
+        setStep(2);
+      }
+    } catch (err) {
+      console.error(err);
+      // If OTP verification fails, refresh the page
+      setOtpVerified(false);
+      setError("OTP verification failed. Please try again.");
+      window.location.reload(); // Refresh the page to stay on the same step
+    }
   };
 
   const handleRegister = (event) => {
@@ -70,9 +87,9 @@ export default function Register() {
                   Send OTP
                 </button>
                 {otpSent && (
-                  <p className="success-msg">OTP has been sent successfully!</p>
+                  <p className="msg">OTP has been sent successfully!</p>
                 )}
-                {error && <p className="error-msg">{error}</p>}
+                {error && <p className="msg">{error}</p>}
                 <div>
                   <label className="bold-label">Enter OTP:</label>
                   <input

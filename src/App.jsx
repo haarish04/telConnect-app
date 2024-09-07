@@ -1,5 +1,4 @@
 //import React from 'react'
-import NavBar from "./components/NavBar";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -18,6 +17,7 @@ const App = () => {
           {/* <Route path="/TestHomePage" element={<TestHomePage />} /> */}
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </Router>
       <div className="">

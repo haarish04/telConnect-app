@@ -167,16 +167,16 @@ export default function HomePage() {
           <div className="about-us-container">
             <img src={AboutUs} alt="About Us" className="aboutus-image" />
             <p className="about-text">
-              Welcome to TelConnect! We’re not just another telecom company;
-              We’re your digital lifestyle partner. At TelConnect, we believe in
-              keeping you connected with what matters most. Whether it’s
-              unlimited calls to your besties, streaming your favorite shows, or
-              staying on top of your social game with high-speed data, we’ve got
-              you covered. Our plans are designed to fit your dynamic lifestyle,
-              offering flexibility, affordability, and reliability. Join the
-              TelConnect family and experience a seamless, fun, and friendly
-              connection that keeps you in the loop, always. Let’s stay
-              connected, together!
+              We’re not just another telecom company, we’re your digital
+              lifestyle partner. At TelConnect, we believe in keeping you
+              connected with what matters most. Whether it’s unlimited calls to
+              your besties, streaming your favorite shows, or staying on top of
+              your social game with high-speed data, we’ve got you covered. Our
+              plans are designed to fit your dynamic lifestyle, offering
+              flexibility, affordability, and reliability. Join the TelConnect
+              family and experience a seamless, fun, and friendly connection
+              that keeps you in the loop, always. Let’s stay connected,
+              together!
             </p>
           </div>
         </section>
