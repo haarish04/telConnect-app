@@ -1,9 +1,9 @@
-import React from 'react';
-import { Carousel } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
-import '../styles/Carousel.css'; // Your custom CSS
-import plan_image1 from '../assets/plan_image1.png';
-import plan_image2 from '../assets/plan_image2.png';
+import React from "react";
+import { Carousel } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
+import "../styles/Carousel.css"; // Your custom CSS
+import plan_image1 from "../assets/plan_image1.png";
+import plan_image2 from "../assets/plan_image2.png";
 
 const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
   return (
@@ -19,7 +19,7 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
             <Carousel.Caption className="carousel-caption">
               <h5>{plan_carousel1.planName}</h5>
               <p>{plan_carousel1.planDescription}</p>
-              <p>Price: {plan_carousel1.planPrice}</p>
+              <p>Price: ₹{plan_carousel1.planPrice.replace(/[\?]/g, "")}</p>
               <p>Duration: {plan_carousel1.planDuration}</p>
             </Carousel.Caption>
           </div>
@@ -36,7 +36,7 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
             <Carousel.Caption className="carousel-caption">
               <h5>{plan_carousel2.planName}</h5>
               <p>{plan_carousel2.planDescription}</p>
-              <p>Price: {plan_carousel2.planPrice}</p>
+              <p>Price: ₹{plan_carousel2.planPrice.replace(/[\?]/g, "")}</p>
               <p>Duration: {plan_carousel2.planDuration}</p>
             </Carousel.Caption>
           </div>

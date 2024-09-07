@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Card, Row, Col, Button, Modal } from 'react-bootstrap';
-import '../styles/CardGrid.css';
+import React, { useState } from "react";
+import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import "../styles/CardGrid.css";
 
 const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -20,7 +20,11 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
       <Card.Body>
         <Card.Title className="plan-price">₹ {plan.price}</Card.Title>
         <Card.Subtitle className="mb-2">
-          <Button variant="link" className="custom-link-button" onClick={() => handleViewDetails(plan)}>
+          <Button
+            variant="link"
+            className="custom-link-button"
+            onClick={() => handleViewDetails(plan)}
+          >
             View details
           </Button>
         </Card.Subtitle>
@@ -28,11 +32,15 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
         <div className="plan-details">
           <div className="detail-section">
             <div>VALIDITY</div>
-            <div><strong>{plan.validity} days</strong></div>
+            <div>
+              <strong>{plan.validity} days</strong>
+            </div>
           </div>
           <div className="detail-section">
             <div>DATA</div>
-            <div><strong>{plan.data} GB</strong></div>
+            <div>
+              <strong>{plan.data} GB</strong>
+            </div>
           </div>
         </div>
 
@@ -68,7 +76,9 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="recharge-button" onClick={handleCloseModal}>Select</Button>
+          <Button className="recharge-button" onClick={handleCloseModal}>
+            Select
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
