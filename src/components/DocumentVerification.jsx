@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../styles/DocumentVerification.css";
 
-const DocumentVerification = () => {
+export default function DocumentVerification() {
   const [documentType, setDocumentType] = useState("");
   const [file, setFile] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [message, setMessage] = useState(""); // Success or failure message
+  const [isLoading, setIsLoading] = useState(false); // To show loading state
 
   const handleDocumentTypeChange = (e) => {
     setDocumentType(e.target.value);
@@ -26,21 +28,45 @@ const DocumentVerification = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!documentType || !file) {
-      alert("Please select document type and upload a file.");
+      alert("Please select a document type and upload a file.");
       return;
     }
-    // Simulate file upload process
-    setTimeout(() => {
-      setSuccessMessage("Document submitted successfully.");
-    }, 1000);
+
+    const formData = new FormData();
+    formData.append("documentType", documentType);
+    formData.append("file", file);
+
+    try {
+      setIsLoading(true); // Set loading to true before the request
+      const response = await axios.post(
+        "http://localhost:8082/OCR/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file upload
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setMessage("Document submitted successfully.");
+      } else {
+        setMessage("Document could not be verified, please try again ");
+      }
+    } catch (error) {
+      console.error("Error uploading document:", error);
+      setMessage("Document submission failed. Please try again.");
+    } finally {
+      setIsLoading(false); // Turn off loading
+    }
   };
 
   return (
     <div className="box-container">
       <div className="box">
-        <h1>Document Verifications</h1>
+        <h1>Document Verification</h1>
         <div className="form-group">
           <label className="label-left">
             Document Type:
@@ -64,13 +90,15 @@ const DocumentVerification = () => {
           <br />
           <strong>File Size:</strong> Maximum 500KB
         </p>
-        <button onClick={handleUpload} className="upload-button">
-          Upload
+        <button
+          onClick={handleUpload}
+          className="upload-button"
+          disabled={isLoading}
+        >
+          {isLoading ? "Uploading..." : "Upload"}
         </button>
-        {successMessage && <p className="success-message">{successMessage}</p>}
+        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );
-};
-
-export default DocumentVerification;
+}

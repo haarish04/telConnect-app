@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { CustomerProvider } from "./context/CustomerContext";
 import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
+import DocumentVerificationPage from "./pages/DocumentVerificationPage";
 
 const App = () => {
   return (
@@ -22,13 +23,13 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/servicePlans" element={<ServicePlansPage />} />
+          <Route
+            path="/documentVerification"
+            element={<DocumentVerificationPage />}
+          />
         </Routes>
       </Router>
-      <div className="">
-        {/* <NavBar></NavBar> */}
-        {/* <HomePage></HomePage> */}
-        {/* <ProfilePage></ProfilePage> */}
-      </div>
+      <div className=""></div>
     </CustomerProvider>
   );
 };
