@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { CustomerProvider } from "./context/CustomerContext";
+import SupportPage from './pages/SupportPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/support" element={<SupportPage />} />
         </Routes>
       </Router>
       <div className="">

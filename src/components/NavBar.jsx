@@ -53,11 +53,14 @@ const ButtonGroup = () => {
         isActive={activeButton === 'Recharge'}
         onClick={() => setActiveButton('Recharge')}
       />
+
+      <Link to='/support'>
       <CustomButton
         label="Support"
         isActive={activeButton === 'Support'}
         onClick={() => setActiveButton('Support')}
       />
+      </Link>
     </Stack>
   );
 };
