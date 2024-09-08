@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #7fc7d9;
+  background-color: #DCF2F1;
 }
 
 .profile-card {
@@ -21,7 +21,7 @@
 }
 
 .profile-card-header {
-  background: linear-gradient(135deg, #365486, #0f1035);
+  background: linear-gradient(135deg, #365486, #1E2A5A);
   color: white;
   display: flex;
   align-items: center;
@@ -67,8 +67,8 @@ hr {
 }
 
 .logout-button {
-  background-color: #365486; /* Navy Blue */
-  color: #dcf2f1; /* Almost white-ish */
+  background-color: #1E2A5A; /* Navy Blue */
+  color: #ffffff; 
   border: #dcf2f1;
   border-radius: 50px;
   padding: 8px 16px;
@@ -79,7 +79,7 @@ hr {
 }
 
 .logout-button:hover {
-  background-color: #0f1035; /* Dark blue for hover */
+  background-color: #365486; /* Dark blue for hover */
   border-color: #7fc7d9; /* Sea blue border on hover */
 }
 

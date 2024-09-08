@@ -63,43 +63,46 @@ export default function ConfirmationPage({
   };
 
   return (
-    <div>
+    <>
       <NavBar />
-      <h1 className="confirmation-heading">
-        <p>Please review your selected plan details below:</p>
-      </h1>
-      <div className="confirmation-content">
-        <p>
-          <strong>Plan ID:</strong> {planId}
-        </p>
-        <p>
-          <strong>Plan Name:</strong> {planName}
-        </p>
-        <p>
-          <strong>Plan Price:</strong> {formattedPrice}
-        </p>
-        <p>
-          <strong>Plan Duration:</strong> {planDuration}{" "}
-        </p>
-        <p>
-          <strong>Start Date:</strong> {today.toLocaleDateString()}
-        </p>
-        <p>
-          <strong>End Date:</strong> {endDate}
-        </p>
-        <div className="button-container">
-          <Link to="/servicePlans">
-            <button className="cancel-button" onClick={onCancel}>
-              Cancel
-            </button>
-          </Link>
-          <Link to="/thank-you">
-            <button className="confirm-button" onClick={handleConfirm}>
-              Confirm
-            </button>
-          </Link>
+      <div className="confirmation-container">
+        <h1 className="confirmation-heading">
+          <p>Please review your selected plan details below:</p>
+        </h1>
+        <div className="confirmation-content">
+          <p>
+            <strong>Plan ID:</strong> {planId}
+          </p>
+          <p>
+            <strong>Plan Name:</strong> {planName}
+          </p>
+          <p>
+            <strong>Plan Price:</strong> {formattedPrice}
+          </p>
+          <p>
+            <strong>Plan Duration:</strong> {planDuration}
+          </p>
+          <p>
+            <strong>Start Date:</strong> {today.toLocaleDateString()}
+          </p>
+          <p>
+            <strong>End Date:</strong> {endDate}
+          </p>
+          <div className="button-container">
+            <Link to="/servicePlans">
+              <button className="cancel-button" onClick={onCancel}>
+                Cancel
+              </button>
+            </Link>
+            <Link to="/thank-you">
+              <button className="confirm-button" onClick={handleConfirm}>
+                Confirm
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
+  
 }
