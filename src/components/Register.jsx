@@ -16,7 +16,7 @@ export default function Register() {
 
   // Function to send OTP
   const handleSendOtp = async () => {
-    const name = "YourName"; // Change this to the actual name or make it dynamic if needed
+    const name = ""; // Change this to the actual name or make it dynamic if needed
     try {
       const response = await axios.post(
         `http://localhost:8082/sendMail/OTP?recipient=${email}&name=${name}`

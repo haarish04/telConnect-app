@@ -1,6 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/ConfirmationPage.css";
 import NavBar from "../components/NavBar";
+import axios from "axios";
+import { useContext } from "react";
+import { CustomerContext } from "../context/CustomerContext";
 
 export default function ConfirmationPage({
   planId,
@@ -11,6 +14,7 @@ export default function ConfirmationPage({
   onConfirm,
 }) {
   const navigate = useNavigate();
+  const { customerData } = useContext(CustomerContext);
 
   // Get today's date
   const today = new Date();
@@ -34,9 +38,28 @@ export default function ConfirmationPage({
 
   const formattedPrice = formatPrice(planPrice);
 
-  const handleConfirm = () => {
-    // Redirect to ThankYou page
-    navigate("/thank-you");
+  const handleConfirm = async () => {
+    // Access customerData from context
+    const email = customerData.email;
+    // const email = "haarish.anandan@gmail.com";
+    const name = " ";
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8082/sendMail/thankYou?recipient=${email}&name=${name}`
+      );
+      console.log(response);
+
+      // Second axios put request to another email endpoint
+      await axios.post(
+        `http://localhost:8082/sendMail/serviceActivation?recipient=${email}&name=${name}`
+      );
+
+      // After successful requests, navigate to the thank-you page
+      navigate("/thank-you");
+    } catch (error) {
+      console.error("Error sending emails:", error);
+    }
   };
 
   return (
