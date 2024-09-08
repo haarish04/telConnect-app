@@ -61,21 +61,21 @@ const Home = () => {
   // console.log(plan_card1);
   const plans_card = {
     pc1: {
-      planId: plan_card1.planId,
+      planId: "PREP-TC-1999",
       price: 1999,
       validity: 365,
       data: 24,
       description: plan_card1?.planDescription,
     },
     pc2: {
-      planId: plan_card2.planId,
+      planId: "POST-TC-1199",
       price: 1199,
       validity: 30,
       data: 100,
       description: plan_card2?.planDescription,
     },
     pc3: {
-      planId: plan_card3.planId,
+      planId: "POST-TC-0751",
       price: 751,
       validity: 30,
       data: 130,
