@@ -40,7 +40,7 @@ const Support = () => {
           </Col>
           <Col lg={4} className="text-center">
             <h5>Email Us</h5>
-            <p>support@telconnect.com</p>
+            <p>telconnecta@gmail.com</p>
           </Col>
           <Col lg={4} className="text-center">
             <h5>Visit Us</h5>
