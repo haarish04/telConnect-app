@@ -10,8 +10,6 @@ TelConnect Frontend is a React application designed for interacting with the Tel
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [API Integration](#api-integration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 
