@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
-import '../styles/ProfilePage.css';
-import { CustomerContext } from '../context/CustomerContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import "../styles/ProfilePage.css";
+import { CustomerContext } from "../context/CustomerContext";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { customerData: contextCustomerData, logout } = useContext(CustomerContext); // Access customerData and logout from context
+  const { customerData: contextCustomerData, logout } =
+    useContext(CustomerContext); // Access customerData and logout from context
   const navigate = useNavigate();
 
   const [customerData, setCustomerData] = useState(contextCustomerData);
@@ -18,10 +19,13 @@ const Profile = () => {
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/customer/getCustomerDetails', {
-          params: { customerEmail: contextCustomerData.customerEmail }, // Use email from context
-          withCredentials: true
-        });
+        const response = await axios.get(
+          "http://localhost:8082/customer/getCustomerDetails",
+          {
+            params: { customerEmail: contextCustomerData.customerEmail }, // Use email from context
+            withCredentials: true,
+          }
+        );
         setCustomerData(response.data);
       } catch (err) {
         setError(err);
@@ -39,7 +43,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/home');
+    navigate("/home");
   };
 
   if (loading) {
@@ -53,6 +57,7 @@ const Profile = () => {
   if (!customerData) {
     return <div>No customer data found.</div>;
   }
+  console.log(customerData);
 
   return (
     <section className="profile-section vh-100">
@@ -62,7 +67,10 @@ const Profile = () => {
             <Card className="profile-card">
               <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
                 <div className="d-flex align-items-center">
-                  <AccountCircleIcon style={{ fontSize: '6rem' }} className="profile-icon" />
+                  <AccountCircleIcon
+                    style={{ fontSize: "6rem" }}
+                    className="profile-icon"
+                  />
                   <div className="profile-header-text">
                     <h5>{customerData.customerName}</h5>
                     <p>{customerData.role}</p>

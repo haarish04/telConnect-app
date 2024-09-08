@@ -89,7 +89,7 @@ const ServicePlans = () => {
                 }`}
                 onClick={() => handlePlanSelect(plan.planId)}
               >
-                <h3>{plan.planName}</h3>
+                <h3>{plan.planName.replace("?", "")}</h3>
                 <p>{plan.planDescription}</p>
                 <p>
                   <strong>Price:</strong> ₹{plan.planPrice.replace("?", "")}
