@@ -4,7 +4,13 @@ import logo from "../assets/logo.png";
 import search from "../assets/search.png";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Stack } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom"; // Import useLocation
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom"; // Import useLocation
 import { CustomerContext } from "../context/CustomerContext"; // Import the CustomerContext
 
 const CustomButton = ({ label, isActive, onClick }) => {
@@ -46,26 +52,14 @@ const ButtonGroup = () => {
   return (
     <Stack direction="row" spacing={2}>
       <Link to="/home">
-        <CustomButton
-          label="Home"
-          isActive={activeButton === "Home"}
-        />
+        <CustomButton label="Home" isActive={activeButton === "Home"} />
       </Link>
       <Link to="/servicePlans">
-        <CustomButton
-          label="Services"
-          isActive={activeButton === "Services"}
-        />
+        <CustomButton label="Services" isActive={activeButton === "Services"} />
       </Link>
-      <CustomButton
-        label="Recharge"
-        isActive={activeButton === "Recharge"}
-      />
+      <CustomButton label="Recharge" isActive={activeButton === "Recharge"} />
       <Link to="/support">
-        <CustomButton
-          label="Support"
-          isActive={activeButton === "Support"}
-        />
+        <CustomButton label="Support" isActive={activeButton === "Support"} />
       </Link>
     </Stack>
   );

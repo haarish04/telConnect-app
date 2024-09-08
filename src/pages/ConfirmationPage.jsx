@@ -40,8 +40,8 @@ export default function ConfirmationPage({
 
   const handleConfirm = async () => {
     // Access customerData from context
-    const email = customerData.email;
-    // const email = "haarish.anandan@gmail.com";
+    const email = customerData.customerEmail;
+    console.log(email);
     const name = " ";
 
     try {
