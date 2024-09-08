@@ -67,7 +67,9 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           className="recharge-button"
           onClick={() => {
             setSelectedPlan(plan);
-            handleClick();
+            console.log(plan.planId);
+                    
+            //handleClick();
           }}
         >
           Select

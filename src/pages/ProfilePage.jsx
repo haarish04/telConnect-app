@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar";
 import Profile from "../components/Profile";
 
-export default function LoginPage() {
+export default function ProfilePage() {
   return (
     <div>
       <NavBar />
