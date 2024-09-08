@@ -23,6 +23,8 @@ function PersonalInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Combine all the form data into a single object
     const fullAddress = [
       formData.address1,
       formData.address2,
@@ -30,9 +32,23 @@ function PersonalInfo() {
     ]
       .filter(Boolean)
       .join(", ");
-    alert(
-      `Submitted! Name: ${formData.name}, DOB: ${formData.dob}, Address: ${fullAddress}, Phone: ${formData.phone}`
-    );
+
+    // Get email and password from session storage (set during registration)
+    const email = sessionStorage.getItem("email");
+    const password = sessionStorage.getItem("password");
+
+    // Store all form details along with email and password in session storage
+    const allDetails = {
+      ...formData,
+      fullAddress,
+      email,
+      password,
+    };
+
+    sessionStorage.setItem("personalInfo", JSON.stringify(allDetails));
+
+    // Log to test if details are stored
+    console.log("Stored personal info: ", allDetails);
   };
 
   const openDatePicker = () => {
@@ -116,9 +132,7 @@ function PersonalInfo() {
           />
         </div>
         <div className="form-group phone-group">
-          <label htmlFor="phone">
-            Phone Number: <span className="required-asterisk">*</span>
-          </label>
+          <label htmlFor="phone">Phone Number:</label>
           <div className="phone-container">
             <span className="phone-prefix">+91 </span>
             <input
@@ -127,7 +141,6 @@ function PersonalInfo() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              required
               pattern="\d{10}"
               maxLength="10"
               className="form-input phone-input"

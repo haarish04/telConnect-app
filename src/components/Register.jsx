@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for making API calls
 import "../styles/RegisterPage.css";
 import telconnectimg1 from "../assets/login-img.png";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -42,6 +43,9 @@ export default function Register() {
         // OTP verified successfully, proceed to next step
         setOtpVerified(true);
         setStep(2);
+
+        // Store email in sessionStorage after OTP verification
+        sessionStorage.setItem("email", email);
       }
     } catch (err) {
       console.error(err);
@@ -52,9 +56,26 @@ export default function Register() {
     }
   };
 
+  // Function to register the user
   const handleRegister = (event) => {
     event.preventDefault();
-    // Logic to register the user
+
+    // Check if the passwords match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // Store password in sessionStorage
+    sessionStorage.setItem("password", password);
+
+    // Log sessionStorage data for verification
+    console.log("SessionStorage Data:", {
+      email: sessionStorage.getItem("email"),
+      password: sessionStorage.getItem("password"),
+    });
+
+    navigate("/personalInfo");
   };
 
   return (
@@ -132,6 +153,7 @@ export default function Register() {
                     required
                   />
                 </div>
+                {error && <p className="msg">{error}</p>}
                 <button type="submit">Register</button>
               </div>
             )}
