@@ -72,7 +72,7 @@ function PersonalInfo() {
       const newVerificationRequest = await axios.post(
         `http://localhost:8082/verification/save?documentId=${documentDetails.data[0].documentId}&customerId=${customerDetails.data.customerId}`
       );
-      // navigate("/login");
+      navigate("/login");
 
       // Create a new record in document_verification
       // const documentVerificationResponse = await axios.post(
