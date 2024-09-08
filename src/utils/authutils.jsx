@@ -8,6 +8,7 @@ export const isLoggedIn = (customerData) => {
 // Get the customerId from customerData
 export const getCustomerId = (customerData) => {
   if (customerData) {
+    console.log(customerData);
     return customerData.customerId; // Make sure this is the correct key for customerId
   }
   return null;
@@ -29,8 +30,13 @@ export const isDocumentVerified = async (customerId) => {
       return false; // Return false otherwise
     }
   } catch (error) {
-    console.error("Error checking document verification status:", error);
-    throw error; // Optionally handle the error, e.g., redirect to an error page
+    if (error.response && error.response.status === 404) {
+      // If the status code is 404, return false
+      return false;
+    } else {
+      console.error("Error checking document verification status:", error);
+      throw error;
+    } // Optionally handle the error, e.g., redirect to an error page
   }
 };
 
@@ -51,6 +57,7 @@ export const handleAuthRedirect = async (
 
   // Get customerId from customerData
   const customerId = getCustomerId(customerData);
+
   if (!customerId) {
     console.error("Customer ID not found");
     return;

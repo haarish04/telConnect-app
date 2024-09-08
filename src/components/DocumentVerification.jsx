@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import "../styles/DocumentVerification.css";
+import { useNavigate } from "react-router-dom";
+import { CustomerContext } from "../context/CustomerContext";
 
 export default function DocumentVerification() {
   const [documentType, setDocumentType] = useState("");
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState(""); // Success or failure message
   const [isLoading, setIsLoading] = useState(false); // To show loading state
+  const { customerData } = useContext(CustomerContext); // Access customerData from context
+  const navigate = useNavigate(); // For navigation
 
   const handleDocumentTypeChange = (e) => {
     setDocumentType(e.target.value);
@@ -51,9 +55,21 @@ export default function DocumentVerification() {
       );
 
       if (response.status === 200) {
-        setMessage("Document submitted successfully.");
+        // If document verification is successful, attempt to update verification status
+        const updateStatus = await updateVerificationStatus(
+          customerData.customerId,
+          documentType
+        );
+        if (updateStatus) {
+          // Redirect to the services page after status update
+          navigate("/servicePlans");
+        } else {
+          setMessage(
+            "Document verified, but status update failed. Please try again."
+          );
+        }
       } else {
-        setMessage("Document could not be verified, please try again ");
+        setMessage("Document could not be verified, please try again.");
       }
     } catch (error) {
       console.error("Error uploading document:", error);
@@ -63,8 +79,25 @@ export default function DocumentVerification() {
     }
   };
 
+  // Function to update the verification status
+  const updateVerificationStatus = async (documentType) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8082/verification/updateStatus/${customerData.customerId}/Aadhar/status=success`,
+        {}
+      );
+      console.log(response.data);
+      // If the status update is successful, return true
+      return response.status === 200;
+    } catch (error) {
+      console.error("Error updating verification status:", error);
+      return false; // Return false if there's an error
+    }
+  };
+
   return (
     <div className="box-container">
+      <h1>Please verify documents to complete KYC</h1>
       <div className="box">
         <h1>Document Verification</h1>
         <div className="form-group">

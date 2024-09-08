@@ -12,8 +12,8 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
   const navigate = useNavigate(); // Hook to handle navigation
 
   // Call the plan click handler on button click, passing planId
-  const handleClick = () => {
-    console.log(selectedPlan);
+  const handleClick = (plan) => {
+    setSelectedPlan(plan);
     if (selectedPlan?.planId) {
       // Ensure selectedPlan is set and pass planId
       onPlanClickHandler(navigate, customerData, selectedPlan.planId);
@@ -31,6 +31,11 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  // const handleSelection = (plan) => {
+  //   setSelectedPlan(plan);                   
+  //   handleClick();
+  // }
 
   // Render individual plan cards
   const renderPlanCard = (plan) => (
@@ -65,10 +70,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
         {/* Select the plan directly from the card, then call handleClick */}
         <Button
           className="recharge-button"
-          onClick={() => {
-            setSelectedPlan(plan);
-            handleClick();
-          }}
+          onClick={() => { handleClick(plan) }}
         >
           Select
         </Button>
@@ -107,8 +109,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           <Button
             className="recharge-button"
             onClick={() => {
-              handleClick();
-              handleCloseModal();
+              handleClick(selectedPlan)
             }}
           >
             Select

@@ -61,25 +61,25 @@ const Home = () => {
   // console.log(plan_card1);
   const plans_card = {
     pc1: {
-      planId: plan_card1.planId,
+      planId: "PREP-TC-1999",
       price: 1999,
       validity: 365,
       data: 24,
-      description: plan_card1?.planDescription,
+      description: plan_card1?.planDescription
     },
     pc2: {
-      planId: plan_card2.planId,
+      planId: "POST-TC-1199",
       price: 1199,
       validity: 30,
       data: 100,
-      description: plan_card2?.planDescription,
+      description: plan_card2?.planDescription
     },
     pc3: {
-      planId: plan_card3.planId,
+      planId: "POST-TC-0751",
       price: 751,
       validity: 30,
       data: 130,
-      description: plan_card3?.planDescription,
+      description: plan_card3?.planDescription
     },
   };
 
@@ -160,7 +160,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="about-us">
+      <section id="about" className="about-us">
         <h2>About Us</h2>
         <div className="about-us-container">
           <img src={AboutUs} alt="About Us" className="aboutus-image" />
@@ -177,18 +177,6 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-      <footer className="footer">
-        <div className="footer-links">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Contact</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-        </div>
-        <p>&copy; 2024 TelConnect. All rights reserved.</p>
-      </footer>
     </div>
   );
 };

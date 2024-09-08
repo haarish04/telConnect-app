@@ -4,7 +4,13 @@ import logo from "../assets/logo.png";
 import search from "../assets/search.png";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Stack } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom"; // Import useLocation
 import { CustomerContext } from "../context/CustomerContext"; // Import the CustomerContext
 
 const CustomButton = ({ label, isActive, onClick }) => {
@@ -32,36 +38,28 @@ const CustomButton = ({ label, isActive, onClick }) => {
 };
 
 const ButtonGroup = () => {
-  const [activeButton, setActiveButton] = useState("Home");
+  const location = useLocation(); // Get the current location
+  const pathToButton = {
+    "/home": "Home",
+    "/servicePlans": "Services",
+    "/recharge": "Recharge",
+    "/support": "Support",
+  };
+
+  const currentPath = location.pathname;
+  const activeButton = pathToButton[currentPath] || "Home"; // Set active button based on path
 
   return (
     <Stack direction="row" spacing={2}>
       <Link to="/home">
-        <CustomButton
-          label="Home"
-          isActive={activeButton === "Home"}
-          onClick={() => setActiveButton("Home")}
-        />
+        <CustomButton label="Home" isActive={activeButton === "Home"} />
       </Link>
       <Link to="/servicePlans">
-        <CustomButton
-          label="Services"
-          isActive={activeButton === "Services"}
-          onClick={() => setActiveButton("Services")}
-        />
+        <CustomButton label="Services" isActive={activeButton === "Services"} />
       </Link>
-      <CustomButton
-        label="Recharge"
-        isActive={activeButton === "Recharge"}
-        onClick={() => setActiveButton("Recharge")}
-      />
-
+      <CustomButton label="Recharge" isActive={activeButton === "Recharge"} />
       <Link to="/support">
-        <CustomButton
-          label="Support"
-          isActive={activeButton === "Support"}
-          onClick={() => setActiveButton("Support")}
-        />
+        <CustomButton label="Support" isActive={activeButton === "Support"} />
       </Link>
     </Stack>
   );

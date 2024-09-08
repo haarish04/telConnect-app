@@ -12,6 +12,7 @@ import DocumentVerificationPage from "./pages/DocumentVerificationPage";
 import PersonalInfoPage from "./pages/PersonalInfoPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import ConfirmationContainer from "./components/ConfirmationContainer";
+import ThankYouPage from "./pages/ThankYouPage";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/personalInfo" element={<PersonalInfoPage />} />
           <Route path="/planConfirmation" element={<ConfirmationContainer />} />
           {/* <Route path="/planConfirmation" element={<ConfirmationPage />} /> */}
+          <Route path="/thank-you" element={<ThankYouPage />} />
         </Routes>
       </Router>
       <div className=""></div>
