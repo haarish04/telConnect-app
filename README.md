@@ -1,6 +1,3 @@
-Certainly! Here’s the full Markdown content for your README file, including the `npm run dev` command in the `bash` code block:
-
-```markdown
 # TelConnect Frontend
 
 TelConnect Frontend is a React application designed for interacting with the TelConnect backend. It provides a user interface for customer registration, service plan selection, and more.
