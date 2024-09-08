@@ -23,8 +23,6 @@ function PersonalInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Combine all the form data into a single object
     const fullAddress = [
       formData.address1,
       formData.address2,
@@ -32,23 +30,9 @@ function PersonalInfo() {
     ]
       .filter(Boolean)
       .join(", ");
-
-    // Get email and password from session storage (set during registration)
-    const email = sessionStorage.getItem("email");
-    const password = sessionStorage.getItem("password");
-
-    // Store all form details along with email and password in session storage
-    const allDetails = {
-      ...formData,
-      fullAddress,
-      email,
-      password,
-    };
-
-    sessionStorage.setItem("personalInfo", JSON.stringify(allDetails));
-
-    // Log to test if details are stored
-    console.log("Stored personal info: ", allDetails);
+    alert(
+      `Submitted! Name: ${formData.name}, DOB: ${formData.dob}, Address: ${fullAddress}, Phone: ${formData.phone}`
+    );
   };
 
   const openDatePicker = () => {
@@ -58,6 +42,7 @@ function PersonalInfo() {
   };
 
   return (
+    <div className="page-format">
     <div className="form-container">
       <h1 className="heading">Personal Information</h1>
       <form onSubmit={handleSubmit} className="personal-info-form">
@@ -132,7 +117,9 @@ function PersonalInfo() {
           />
         </div>
         <div className="form-group phone-group">
-          <label htmlFor="phone">Phone Number:</label>
+          <label htmlFor="phone">
+            Phone Number: <span className="required-asterisk">*</span>
+          </label>
           <div className="phone-container">
             <span className="phone-prefix">+91 </span>
             <input
@@ -141,6 +128,7 @@ function PersonalInfo() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              required
               pattern="\d{10}"
               maxLength="10"
               className="form-input phone-input"
@@ -152,6 +140,7 @@ function PersonalInfo() {
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 }
