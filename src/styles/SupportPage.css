@@ -1,8 +1,11 @@
-/* Support Page Styles */
+.py-5
+{
+  background-color: #DCF2F1;
+}
 .support-section {
-    background-color: #7FC7D9 ;
+    background-color: #DCF2F1 ;
     min-height: 100vh;
-    padding: 80px 0;
+    padding: 30px 0;
   }
   
   .support-title {
@@ -14,11 +17,11 @@
   .support-description {
     color: #365486;
     font-size: 1.2rem;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   
   .support-form .form-control {
-    background-color: #DCF2F1 ;
+    background-color: #ffffff ;
     color: #0F1035;
     border: none;
     border-radius: 5px;
@@ -32,9 +35,9 @@
   }
   
   .support-button {
-    background-color: #365486;
+    background-color: #1E2A5A;
     border: none;
-    color: #DCF2F1;
+    color: #ffffff;
     padding: 12px 20px;
     border-radius: 5px;
     width: 100%;

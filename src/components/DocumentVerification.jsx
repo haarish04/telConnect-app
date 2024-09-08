@@ -97,6 +97,7 @@ export default function DocumentVerification() {
 
   return (
     <div className="box-container">
+      <h1>Please verify documents to complete KYC</h1>
       <div className="box">
         <h1>Document Verification</h1>
         <div className="form-group">

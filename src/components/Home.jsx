@@ -160,7 +160,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="about-us">
+      <section id="about" className="about-us">
         <h2>About Us</h2>
         <div className="about-us-container">
           <img src={AboutUs} alt="About Us" className="aboutus-image" />
@@ -177,18 +177,6 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-      <footer className="footer">
-        <div className="footer-links">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Services</a>
-          <a href="#">Contact</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-        </div>
-        <p>&copy; 2024 TelConnect. All rights reserved.</p>
-      </footer>
     </div>
   );
 };

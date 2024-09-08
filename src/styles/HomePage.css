@@ -178,29 +178,3 @@
   margin-right: 20px; /* Space between image and text */
   border-radius: 8px; /* Optional rounded corners */
 }
-
-.footer {
-  background-color: #f1f1f1; /* Very light grey background */
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
-}
-
-.footer-links {
-  margin-bottom: 10px;
-}
-
-.footer-links a {
-  color: #333; /* Dark text color for links */
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-.footer p {
-  color: #666; /* Slightly lighter text color */
-  margin: 0;
-}
