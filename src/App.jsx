@@ -13,6 +13,8 @@ import PersonalInfoPage from "./pages/PersonalInfoPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import ConfirmationContainer from "./components/ConfirmationContainer";
 import ThankYouPage from "./pages/ThankYouPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
 
 const App = () => {
   return (
@@ -35,6 +37,8 @@ const App = () => {
           <Route path="/planConfirmation" element={<ConfirmationContainer />} />
           {/* <Route path="/planConfirmation" element={<ConfirmationPage />} /> */}
           <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
+          <Route path="/termsOfService" element={<TermsOfServicePage />} />
         </Routes>
       </Router>
       <div className=""></div>
