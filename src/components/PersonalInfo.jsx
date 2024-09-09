@@ -101,6 +101,7 @@ function PersonalInfo() {
   };
 
   return (
+    <div className="page-format">
     <div className="form-container">
       <h1 className="heading">Personal Information</h1>
       <form onSubmit={handleSubmit} className="personal-info-form">
@@ -196,6 +197,7 @@ function PersonalInfo() {
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 }
