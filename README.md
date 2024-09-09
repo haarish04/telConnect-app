@@ -36,7 +36,6 @@ To get started with the project, clone the repository and install the required d
 
 ```bash
 git clone https://github.com/your-username/telconnect-frontend.git
-cd telconnect-frontend
 npm install
 ```
 
