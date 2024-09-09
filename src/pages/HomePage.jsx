@@ -8,6 +8,7 @@ export default function HomePage() {
     <div>
       <NavBar />
       <Home />
+      <Footer />
     </div>
   );
 }

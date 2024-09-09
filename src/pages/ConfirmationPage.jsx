@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import { useContext } from "react";
 import { CustomerContext } from "../context/CustomerContext";
+import Footer from "../components/Footer";
 
 export default function ConfirmationPage({
   planId,
@@ -102,6 +103,7 @@ export default function ConfirmationPage({
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
   

@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import "../styles/PersonalInfo.css";
-import { useNavigate } from "react-router-dom";
 
 function PersonalInfo() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -24,7 +21,7 @@ function PersonalInfo() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const fullAddress = [
       formData.address1,
@@ -33,65 +30,9 @@ function PersonalInfo() {
     ]
       .filter(Boolean)
       .join(", ");
-
-    const email = sessionStorage.getItem("email");
-    const password = sessionStorage.getItem("password");
-
-    const newcustomerData = {
-      customerName: formData.name,
-      password: password,
-      customerEmail: email,
-      customerPhno: formData.phone,
-      customerAddress: fullAddress,
-      customerDOB: formData.dob,
-    };
-
-    console.log(newcustomerData);
-
-    try {
-      // Register new customer
-      const registerResponse = await axios.post(
-        "http://localhost:8082/customer/register",
-        newcustomerData
-      );
-
-      const customerDetails = await axios.get(
-        `http://localhost:8082/customer/getCustomerDetails?customerEmail=${email}`
-      );
-      console.log("customerId:", customerDetails.data.customerId);
-
-      const blankDocument = await axios.post(
-        `http://localhost:8082/document/save?customerId=${customerDetails.data.customerId}&DocumentType=Aadhar`
-      );
-
-      const documentDetails = await axios.get(
-        `http://localhost:8082/document/get/${customerDetails.data.customerId}`
-      );
-      console.log("DocumentId:", documentDetails.data[0].documentId);
-
-      const newVerificationRequest = await axios.post(
-        `http://localhost:8082/verification/save?documentId=${documentDetails.data[0].documentId}&customerId=${customerDetails.data.customerId}`
-      );
-      navigate("/login");
-
-      // Create a new record in document_verification
-      // const documentVerificationResponse = await axios.post(
-      //   "http://localhost:8082/createDocumentVerification",
-      //   {
-      //     email,
-      //     status: "failed",
-      //   }
-      // );
-      // console.log(
-      //   "Document verification response:",
-      //   documentVerificationResponse.data
-      // );
-
-      // Optional: Redirect or show a success message
-    } catch (err) {
-      console.error("Error during registration:", err);
-      // Handle error
-    }
+    alert(
+      `Submitted! Name: ${formData.name}, DOB: ${formData.dob}, Address: ${fullAddress}, Phone: ${formData.phone}`
+    );
   };
 
   const openDatePicker = () => {
@@ -101,10 +42,10 @@ function PersonalInfo() {
   };
 
   return (
+    <div className="page-format">
     <div className="form-container">
       <h1 className="heading">Personal Information</h1>
       <form onSubmit={handleSubmit} className="personal-info-form">
-        {/* Form fields */}
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="name">
@@ -176,7 +117,9 @@ function PersonalInfo() {
           />
         </div>
         <div className="form-group phone-group">
-          <label htmlFor="phone">Phone Number:</label>
+          <label htmlFor="phone">
+            Phone Number: <span className="required-asterisk">*</span>
+          </label>
           <div className="phone-container">
             <span className="phone-prefix">+91 </span>
             <input
@@ -185,6 +128,7 @@ function PersonalInfo() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              required
               pattern="\d{10}"
               maxLength="10"
               className="form-input phone-input"
@@ -196,6 +140,7 @@ function PersonalInfo() {
           Submit
         </button>
       </form>
+    </div>
     </div>
   );
 }
