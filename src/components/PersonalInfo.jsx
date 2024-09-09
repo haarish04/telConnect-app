@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import "../styles/PersonalInfo.css";
 import { useNavigate } from "react-router-dom";
@@ -73,21 +73,6 @@ function PersonalInfo() {
         `http://localhost:8082/verification/save?documentId=${documentDetails.data[0].documentId}&customerId=${customerDetails.data.customerId}`
       );
       navigate("/login");
-
-      // Create a new record in document_verification
-      // const documentVerificationResponse = await axios.post(
-      //   "http://localhost:8082/createDocumentVerification",
-      //   {
-      //     email,
-      //     status: "failed",
-      //   }
-      // );
-      // console.log(
-      //   "Document verification response:",
-      //   documentVerificationResponse.data
-      // );
-
-      // Optional: Redirect or show a success message
     } catch (err) {
       console.error("Error during registration:", err);
       // Handle error
