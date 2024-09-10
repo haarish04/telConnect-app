@@ -55,7 +55,7 @@ const Profile = () => {
   };
 
   const redirectToDocumentVerification = () => {
-    navigate("/documentVerification");
+    navigate("/documentVerification", { state: { fromProfile: true } });
   };
 
   if (loading) {
@@ -93,7 +93,6 @@ const Profile = () => {
                 </Button>
               </Card.Header>
               <Card.Body className="profile-card-body">
-                <h6>Information</h6>
                 <hr />
                 <Row className="pt-1">
                   <Col xs={6} className="mb-3">
