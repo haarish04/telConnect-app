@@ -3,13 +3,17 @@ import axios from "axios";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Green tick for verified
+import ErrorIcon from "@mui/icons-material/Error"; // Red cross or warning for unverified
 import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
+import { isDocumentVerified, handleAuthRedirect } from "../utils/authUtils"; // Import from authUtils
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [documentVerified, setDocumentVerified] = useState(false); // For document verification status
   const { customerData: contextCustomerData, logout } =
     useContext(CustomerContext); // Access customerData and logout from context
   const navigate = useNavigate();
@@ -27,6 +31,10 @@ const Profile = () => {
           }
         );
         setCustomerData(response.data);
+
+        // Check document verification status
+        const verified = await isDocumentVerified(response.data.customerId); // Use customerId for verification check
+        setDocumentVerified(verified);
       } catch (err) {
         setError(err);
       } finally {
@@ -46,6 +54,10 @@ const Profile = () => {
     navigate("/home");
   };
 
+  const redirectToDocumentVerification = () => {
+    navigate("/documentVerification");
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -57,7 +69,6 @@ const Profile = () => {
   if (!customerData) {
     return <div>No customer data found.</div>;
   }
-  console.log(customerData);
 
   return (
     <section className="profile-section vh-100">
@@ -94,6 +105,31 @@ const Profile = () => {
                     <p className="text-muted">{customerData.customerPhno}</p>
                   </Col>
                 </Row>
+
+                <h6>Document Verification Status</h6>
+                <hr />
+                <Row className="pt-1">
+                  <Col xs={12} className="mb-3">
+                    {documentVerified ? (
+                      <div className="text-success">
+                        <CheckCircleIcon style={{ fontSize: "2rem" }} />
+                        Document Verified
+                      </div>
+                    ) : (
+                      <div className="text-danger">
+                        <ErrorIcon style={{ fontSize: "2rem" }} />
+                        <p>Your documents are not verified.</p>
+                        <Button
+                          onClick={redirectToDocumentVerification}
+                          className="mt-2"
+                        >
+                          Verify Documents
+                        </Button>
+                      </div>
+                    )}
+                  </Col>
+                </Row>
+
                 <h6>Address</h6>
                 <hr />
                 <Row className="pt-1">
