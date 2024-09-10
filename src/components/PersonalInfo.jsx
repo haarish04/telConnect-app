@@ -72,7 +72,7 @@ function PersonalInfo() {
       const newVerificationRequest = await axios.post(
         `http://localhost:8082/verification/save?documentId=${documentDetails.data[0].documentId}&customerId=${customerDetails.data.customerId}`
       );
-      navigate("/login");
+      navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {
       console.error("Error during registration:", err);
       // Handle error

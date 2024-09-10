@@ -1,12 +1,12 @@
 .background {
   display: flex;
   height: 100vh;
-  width: 100%; /* Ensure full width */
+  width: 100%;
   background-color: #fff;
 }
 
 .image-section {
-  flex: 1; /* Take up half of the screen */
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,14 +17,14 @@
 }
 
 .image-section img {
-  max-width: 100%; /* Allow the image to adjust its width */
-  max-height: 100%; /* Allow the image to adjust its height */
-  object-fit: contain; /* Ensure the entire image is visible */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   display: block;
 }
 
 .login-section {
-  flex: 1; /* Adjust to take up the other half of the screen */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,26 +37,25 @@
 
 .login-section h2 {
   margin-bottom: 2rem;
-  text-align: center;  /* Center-align the heading */
-  width: 100%;         /* Make sure the heading takes full width */
-  margin-bottom: 1.5rem; /* Add more space below the heading */
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
   padding-right: 10%;
 }
 
 .login-section form {
   display: flex;
   flex-direction: column;
-   /* Center-align form elements */
-  width: 100%; /
+  width: 100%;
 }
 
 .login-section form input {
-  width: calc(100% - 2rem); /* Adjust width with consistent padding */
+  width: calc(100% - 2rem);
   padding: 1rem;
   font-size: 1.25rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 2rem; /* Increased margin-bottom for more space */
+  margin-bottom: 2rem;
   background-color: white;
 }
 
@@ -70,19 +69,19 @@
 }
 
 .login-section button {
-  padding: 1rem 1.5rem; /* Slightly increased padding for the button */
+  padding: 1rem 1.5rem;
   background-color: #1E2A5A;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  width: calc(100% - 2rem); /* Make the button width consistent with inputs */
-  margin-left: 0; /* Align button with input */
-  margin-bottom: 2rem; /* Add more space below the button */
+  width: calc(100% - 2rem);
+  margin-left: 0;
+  margin-bottom: 2rem;
 }
 
 .login-section p {
-  margin-top: 2rem; /* Increase the space between button and text */
+  margin-top: 2rem;
   text-align: center;
   width: 100%;
 }
@@ -90,4 +89,8 @@
 .login-section a {
   color: #365486;
   text-decoration: none;
+}
+
+.success-message {
+  font-size: 1rem;
 }
