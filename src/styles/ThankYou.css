@@ -1,46 +1,44 @@
 .thank-you-container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full viewport height */
-  background-color: #DCF2F1;
-
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #afe7e4;
 }
 
 .thank-you-content {
   text-align: center;
-  background-color: #fff; /* White background for the container */
+  background-color: #fff;
   padding: 2em;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 90%; /* Ensure it scales well on different screens */
-  max-width: 900px; /* Set a maximum width for better appearance */
-  /* Removed margin: 0 auto as it's not necessary with flex centering */
+  width: 90%;
+  max-width: 900px;
 }
 
 .tick {
   font-size: 4em;
-  color: #365486; /* Color for the tick mark */
+  color: #365486;
 }
 
 .message {
   margin: 1em 0;
   font-size: 1.2em;
-  color: #333; /* Dark gray color for the message text */
+  color: #333;
 }
 
 .button {
-  background-color: #1E2A5A; /* Background color for the button */
+  background-color: #1E2A5A;
   color: white;
   padding: 0.75em 1.5em;
-  margin-top: 2em; /* Adjusted margin to space the button from the message */
+  margin-top: 2em;
   text-decoration: none;
   border-radius: 5px;
   font-size: 1em;
   display: inline-block;
-  transition: background-color 0.3s ease; /* Smooth transition effect */
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
-  background-color: #0f1035; /* Darker background for button hover effect */
+  background-color: #0f1035;
 }

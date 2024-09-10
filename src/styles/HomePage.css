@@ -1,10 +1,11 @@
 .homepage-container {
   font-family: Arial, sans-serif;
-  width: 100vw; /* Full viewport width */
+  width: 100vw;
   max-width: 100vw;
-  margin: 0; /* Remove any default margin */
-  padding: 0; /* Remove any default padding */
-  box-sizing: border-box; /* Include padding and border in the width */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #afe7e4;
 }
 
 .header {
@@ -34,16 +35,16 @@
 }
 
 .top-offers {
-  background-color: #365486; /* Orange color */
-  padding: 30px; /* Adjust as needed */
-  border-radius: 8px; /* Optional: adds rounded corners */
-  color: white; /* Optional: sets text color to white for better contrast */
+  background-color: #365486;
+  padding: 30px;
+  border-radius: 8px;
+  color: white;
   padding-left: 150px;
   padding-right: 150px;
 }
 
 .top-offers h2 {
-  color: white; /* Optional: sets heading color to white for better contrast */
+  color: white;
 }
 
 .offers-container {
@@ -64,14 +65,14 @@
 }
 
 .why-us {
-  background-color: #dcf2f1;
+  background-color: #afe7e4;
   padding: 40px;
   border-radius: 8px;
   margin: 20px 0;
 }
 
 .why-us-container {
-  background-color: #dcf2f1;
+  background-color: #afe7e4;
   padding: 10px;
   border-radius: 8px;
   max-width: 1200px;
@@ -103,19 +104,19 @@
   padding-top: 60px;
   width: 100%;
   height: auto;
-  border-radius: 8px; /* Optional: To match the design consistency */
+  border-radius: 8px;
 }
 
 .img-fluid2 {
   width: 100%;
   height: auto;
-  border-radius: 8px; /* Optional: To match the design consistency */
+  border-radius: 8px;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 20px 0; /* Add space between rows */
+  margin: 20px 0;
 }
 
 .col-md-6 {
@@ -138,43 +139,39 @@
   }
 }
 
-/* Styling for the about-text paragraph */
 .about-text {
-  color: #ffffff; /* White text */
-  padding: 20px; /* Padding inside the container */
-  font-size: 1.2rem; /* Readable font size */
-  line-height: 1.8; /* Increase line-height for readability */
-  text-align: justify; /* Justifies the text */
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Clean, modern font */
+  color: #ffffff;
+  padding: 20px;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  text-align: justify;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Styling for the entire about-us section */
 .about-us {
-  background-color: #1e2a5a; /* Dark blue background */
-  padding: 50px 20px; /* Spacing for the footer */
-  text-align: center; /* Center the heading */
+  background-color: #1e2a5a;
+  padding: 50px 20px;
+  text-align: center;
   border-radius: 8px;
 }
 
 .about-us h2 {
-  font-size: 2.5rem; /* Larger heading */
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  color: #ffffff; /* White color for heading */
+  color: #ffffff;
 }
 
-/* Container to hold image and text */
 .about-us-container {
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Align items in the center vertically */
-  justify-content: center; /* Center the content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 1200px;
-  margin: 0 auto; /* Centers the container */
+  margin: 0 auto;
 }
 
-/* Styling for the image */
 .aboutus-image {
-  width: 30%; /* Large image taking up 40% of the container */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 20px; /* Space between image and text */
-  border-radius: 8px; /* Optional rounded corners */
+  width: 30%;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 8px;
 }
