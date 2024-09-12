@@ -17,14 +17,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install npm dependencies using the locally installed npm
-                bat "${env.NPM_PATH} install"
+                bat "npm install"
             }
         }
 
         stage('Build Application') {
             steps {
                 // Build the Vite React app using the locally installed npm
-                bat "${env.NPM_PATH} run build"
+                bat "npm run build"
             }
         }
 
