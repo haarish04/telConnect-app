@@ -15,15 +15,13 @@ pipeline {
                 bat '''
                 node -v
                 npm -v
-                dir
-                dir
                 npm install
                 '''
             }
         }
         stage('Build React App') {
             steps {
-                bat 'npm run build'
+                bat 'npx vite build'
             }
         }
     }
