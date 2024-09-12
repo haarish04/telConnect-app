@@ -10,7 +10,6 @@ import SupportPage from "./pages/SupportPage";
 import ServicePlansPage from "./pages/ServicePlansPage";
 import DocumentVerificationPage from "./pages/DocumentVerificationPage";
 import PersonalInfoPage from "./pages/PersonalInfoPage";
-import ConfirmationPage from "./pages/ConfirmationPage";
 import ConfirmationContainer from "./components/ConfirmationContainer";
 import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
