@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build React App') {
             steps {
-                bat 'npx vite build'
+                bat 'npm run build'
             }
         }
     }
