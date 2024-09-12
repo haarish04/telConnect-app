@@ -73,15 +73,16 @@ export default function DocumentVerification() {
           customerData.customerId,
           documentType
         );
+
         if (updateStatus) {
           if (isFromProfile) {
             // If the user came from profile, redirect back to profile
             navigate("/profile");
           } else {
             // If the user is in registration flow, check if the plan is selected
-            if (customerData.selectedPlan) {
+            if (localStorage.getItem("planId")) {
               // If a plan is selected, redirect to confirmation page
-              navigate("/confirmation");
+              navigate("/planConfirmation");
             } else {
               // If no plan is selected, redirect to service plans
               navigate("/servicePlans");
