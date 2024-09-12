@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import "../styles/DocumentVerification.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
 
 export default function DocumentVerification() {
@@ -11,11 +11,23 @@ export default function DocumentVerification() {
   const [isLoading, setIsLoading] = useState(false); // To show loading state
   const { customerData } = useContext(CustomerContext); // Access customerData from context
   const navigate = useNavigate(); // For navigation
+  const location = useLocation(); // To get the source of navigation
+  const [isFromProfile, setIsFromProfile] = useState(false); // To track if user came from profile
 
+  // Check if the user came from the profile page
+  useEffect(() => {
+    const state = location.state || {};
+    if (state.fromProfile) {
+      setIsFromProfile(true);
+    }
+  }, [location]);
+
+  // Function to handle document type change
   const handleDocumentTypeChange = (e) => {
     setDocumentType(e.target.value);
   };
 
+  // Function to handle file change
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -32,6 +44,7 @@ export default function DocumentVerification() {
     }
   };
 
+  // Function to handle file upload
   const handleUpload = async () => {
     if (!documentType || !file) {
       alert("Please select a document type and upload a file.");
@@ -60,9 +73,21 @@ export default function DocumentVerification() {
           customerData.customerId,
           documentType
         );
+
         if (updateStatus) {
-          // Redirect to the services page after status update
-          navigate("/servicePlans");
+          if (isFromProfile) {
+            // If the user came from profile, redirect back to profile
+            navigate("/profile");
+          } else {
+            // If the user is in registration flow, check if the plan is selected
+            if (localStorage.getItem("planId")) {
+              // If a plan is selected, redirect to confirmation page
+              navigate("/planConfirmation");
+            } else {
+              // If no plan is selected, redirect to service plans
+              navigate("/servicePlans");
+            }
+          }
         } else {
           setMessage(
             "Document verified, but status update failed. Please try again."
@@ -80,10 +105,10 @@ export default function DocumentVerification() {
   };
 
   // Function to update the verification status
-  const updateVerificationStatus = async (documentType) => {
+  const updateVerificationStatus = async (customerId, documentType) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8082/verification/updateStatus/${customerData.customerId}/Aadhar/status=success`,
+        `http://localhost:8082/verification/updateStatus/${customerId}/Aadhar/status=success`,
         {}
       );
       console.log(response.data);

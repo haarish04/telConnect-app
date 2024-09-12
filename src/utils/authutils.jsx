@@ -8,8 +8,7 @@ export const isLoggedIn = (customerData) => {
 // Get the customerId from customerData
 export const getCustomerId = (customerData) => {
   if (customerData) {
-    console.log(customerData);
-    return customerData.customerId; // Make sure this is the correct key for customerId
+    return customerData.customerId; // Ensure this matches your customerData structure
   }
   return null;
 };
@@ -24,19 +23,17 @@ export const isDocumentVerified = async (customerId) => {
 
     // Check if the status is 'success'
     if (response.data.includes("success")) {
-      // Changed from `contains` to `includes` for proper string check
-      return true; // Return true if the status is 'success'
+      return true;
     } else {
-      return false; // Return false otherwise
+      return false;
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      // If the status code is 404, return false
       return false;
     } else {
       console.error("Error checking document verification status:", error);
       throw error;
-    } // Optionally handle the error, e.g., redirect to an error page
+    }
   }
 };
 
@@ -48,14 +45,11 @@ export const handleAuthRedirect = async (
   verificationRedirect,
   planConfirmationRedirect
 ) => {
-  // Check if the user is logged in
   if (!isLoggedIn(customerData)) {
-    // If not logged in, redirect to the login page
-    navigate(loginRedirect);
+    navigate(loginRedirect); // Redirect to login page
     return;
   }
 
-  // Get customerId from customerData
   const customerId = getCustomerId(customerData);
 
   if (!customerId) {
@@ -75,22 +69,22 @@ export const handleAuthRedirect = async (
     }
   } catch (error) {
     console.error("Error during document verification process:", error);
-    // Optionally handle error (e.g., redirect to error page or show error message)
   }
 };
 
-// Reusable handler for plan clicks that can be called in any component
+// Reusable handler for plan clicks
 export const onPlanClickHandler = async (navigate, customerData, planId) => {
   console.log("Selected plan: ", planId);
-  localStorage.setItem("planId", planId);
+  localStorage.setItem("planId", planId); // Save the selected plan
+
   await handleAuthRedirect(
     navigate,
     customerData,
     "/login", // Redirect to login if not logged in
     "/documentVerification", // Redirect to document verification if not verified
     {
-      pathname: "/planConfirmation",
-      state: { planId }, // Pass planId in state
-    } // Redirect to plan confirmation if verified
+      pathname: "/planConfirmation", // Redirect to confirmation page with the selected plan
+      state: { planId }, // Pass the planId as part of state
+    }
   );
 };

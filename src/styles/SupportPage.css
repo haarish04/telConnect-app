@@ -1,9 +1,9 @@
 .py-5
 {
-  background-color: #DCF2F1;
+  background-color: #afe7e4;
 }
 .support-section {
-    background-color: #DCF2F1 ;
+    background-color: #afe7e4 ;
     min-height: 100vh;
     padding: 30px 0;
   }
@@ -47,7 +47,7 @@
   
   .support-button:hover {
     background-color: #365486;
-    color: #DCF2F1;
+    color: #afe7e4;
   }
   
   .contact-info {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #DCF2F1;
+  background-color: #afe7e4;
 }
 
 .profile-card {
@@ -13,11 +13,11 @@
   width: 100%;
   max-width: 800px;
   transition: transform 0.3s ease-in-out;
-  margin-bottom: 15%; /* Add smooth transition */
+  margin-bottom: 15%;
 }
 
 .profile-card:hover {
-  transform: scale(1.05); /* Slightly enlarge the card on hover */
+  transform: scale(1.05);
 }
 
 .profile-card-header {
@@ -43,7 +43,7 @@
 .profile-card-body {
   color: #0f1035;
   padding: 20px;
-  background-color: #f9f9f9; /* Light background for contrast */
+  background-color: #f9f9f9;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
@@ -63,13 +63,13 @@ hr {
 }
 
 .text-muted {
-  color: #0f1035 !important; /* Dark blue text */
+  color: #0f1035 !important;
 }
 
 .logout-button {
-  background-color: #1E2A5A; /* Navy Blue */
-  color: #ffffff; 
-  border: #dcf2f1;
+  background-color: #1E2A5A;
+  color: #ffffff;
+  border: #afe7e4;
   border-radius: 50px;
   padding: 8px 16px;
   display: flex;
@@ -79,8 +79,8 @@ hr {
 }
 
 .logout-button:hover {
-  background-color: #365486; /* Dark blue for hover */
-  border-color: #7fc7d9; /* Sea blue border on hover */
+  background-color: #365486;
+  border-color: #7fc7d9;
 }
 
 .logout-button .MuiSvgIcon-root {
@@ -92,4 +92,7 @@ hr {
   .profile-card {
     max-width: 95%;
   }
+}
+.mt-2 {
+  background-color: #1E2A5A;
 }

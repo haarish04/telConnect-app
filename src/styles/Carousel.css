@@ -1,6 +1,6 @@
 .carousel-item {
   padding: 40px;
-  background-color: #DCF2F1;
+  background-color: #afe7e4;
   border-radius: 12px;
   padding-left: 200px;
   padding-right: 200px;
@@ -25,7 +25,6 @@
   margin: 0 auto;
   left: 0;
   right: 0;
-  /* transition: background-color 0.3s ease; */
 }
 
 .carousel-link {
