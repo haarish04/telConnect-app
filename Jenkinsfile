@@ -6,8 +6,7 @@ pipeline {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/sukruthi-landing']],
-                    userRemoteConfigs: [[url: '
-https://github.com/haarish04/telConnect-app']]
+                    userRemoteConfigs: [[url: 'https://github.com/haarish04/telConnect-app']]
                 ])
             }
         }
