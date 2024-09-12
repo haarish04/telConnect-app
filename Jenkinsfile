@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your code from version control (e.g., Git)
-                git branch: 'main', url: 'https://github.com/haarish04/telConnect-app'
+                git branch: 'sukruthi-landing', url: 'https://github.com/haarish04/telConnect-app'
             }
         }
 
