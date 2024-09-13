@@ -4,82 +4,85 @@ import "../styles/CardGrid.css";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
 import { onPlanClickHandler } from "../utils/authUtils";
+import Alert from '@mui/material/Alert'; // Import Alert component from Material-UI
 
 const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
-  const [selectedPlan, setSelectedPlan] = useState(null); // Track selected plan
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { customerData } = useContext(CustomerContext); // Access customer data from context
-  const navigate = useNavigate(); // Hook to handle navigation
+  const [alertMessage, setAlertMessage] = useState(''); // State to handle alert messages
+  const { customerData } = useContext(CustomerContext);
+  const navigate = useNavigate();
 
-  // Call the plan click handler on button click, passing planId
-  const handleClick = (plan) => {
+  // Call the plan click handler on button click, passing planId and setAlertMessage
+  const handleClick = async (plan) => {
     setSelectedPlan(plan);
-    if (selectedPlan?.planId) {
-      // Ensure selectedPlan is set and pass planId
-      onPlanClickHandler(navigate, customerData, selectedPlan.planId);
+    if (plan?.planId) {
+      await onPlanClickHandler(navigate, customerData, plan.planId, setAlertMessage);
     } else {
       console.log("No plan selected");
     }
   };
 
-  // Handle viewing plan details, setting the selected plan
   const handleViewDetails = (plan) => {
-    setSelectedPlan(plan); // Set selected plan
-    setShowModal(true); // Show modal
+    setSelectedPlan(plan);
+    setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  // const handleSelection = (plan) => {
-  //   setSelectedPlan(plan);                   
-  //   handleClick();
-  // }
-
-  // Render individual plan cards
   const renderPlanCard = (plan) => (
     <Card className="plan-card" key={plan.planId}>
       <Card.Body>
         <Card.Title className="plan-price">₹ {plan.price}</Card.Title>
         <Card.Subtitle className="mb-2">
-          <Button
-            variant="link"
-            className="custom-link-button"
-            onClick={() => handleViewDetails(plan)} // View details when clicked
-          >
+          <Button variant="link" className="custom-link-button" onClick={() => handleViewDetails(plan)}>
             View details
           </Button>
         </Card.Subtitle>
-
         <div className="plan-details">
           <div className="detail-section">
             <div>VALIDITY</div>
-            <div>
-              <strong>{plan.validity} days</strong>
-            </div>
+            <div><strong>{plan.validity} days</strong></div>
           </div>
           <div className="detail-section">
             <div>DATA</div>
-            <div>
-              <strong>{plan.data} GB</strong>
-            </div>
+            <div><strong>{plan.data} GB</strong></div>
           </div>
         </div>
-
-        {/* Select the plan directly from the card, then call handleClick */}
-        <Button
-          className="recharge-button"
-          onClick={() => { handleClick(plan) }}
-        >
-          Select
-        </Button>
+        <Button className="recharge-button" onClick={() => handleClick(plan)}>Select</Button>
       </Card.Body>
     </Card>
   );
 
   return (
     <>
+      {alertMessage && (
+        <div style={{ 
+          position: 'fixed', 
+          top: '10%', 
+          left: '50%', 
+          transform: 'translate(-50%, 0)', 
+          width: '80%', 
+          maxWidth: '500px', 
+          zIndex: 9999,
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // Optional: Keep boxShadow for subtle elevation
+          textAlign: 'center',
+          boxSizing: 'border-box', // Ensure padding is included in the width calculation
+        }}>
+          <Alert 
+            severity="info" 
+            style={{ 
+              fontSize: '1rem', 
+              margin: 0, // Remove default margin
+              boxShadow: 'none', // Remove internal shadow
+            }}>
+            {alertMessage}
+          </Alert>
+        </div>
+        
+      )}
       <Row xs={1} md={2} lg={3} className="g-4">
         <Col>{renderPlanCard(plan_card1)}</Col>
         <Col>{renderPlanCard(plan_card2)}</Col>
@@ -105,15 +108,7 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          {/* Ensure plan is selected from modal, then call handleClick */}
-          <Button
-            className="recharge-button"
-            onClick={() => {
-              handleClick(selectedPlan)
-            }}
-          >
-            Select
-          </Button>
+          <Button className="recharge-button" onClick={() => handleClick(selectedPlan)}>Select</Button>
         </Modal.Footer>
       </Modal>
     </>
