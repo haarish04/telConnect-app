@@ -36,7 +36,7 @@ pipeline {
                     } catch (Exception e) {
                         echo "Exception occurred: " + e.toString()
                     }
-                    bat "docker build -t ${imageName} ."
+                    bat "docker build --progress=plain -t ${imageName} ."
                 }
             }
         }
