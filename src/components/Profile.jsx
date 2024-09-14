@@ -9,6 +9,8 @@ import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import { isDocumentVerified, handleAuthRedirect } from "../utils/authUtils"; // Import from authUtils
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import EditProfileModal from './EditProfileModal'; // Import the modal component
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [customerData, setCustomerData] = useState(contextCustomerData);
+  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -58,6 +61,17 @@ const Profile = () => {
     navigate("/documentVerification", { state: { fromProfile: true } });
   };
 
+  const handleUpdateCustomerData = async (updatedData) => {
+    try {
+      await axios.put("http://localhost:8082/customer/updateCustomerDetails", updatedData, {
+        withCredentials: true,
+      });
+      setCustomerData(updatedData); // Update state with the new data
+    } catch (err) {
+      console.error("Error updating customer data:", err);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -71,84 +85,103 @@ const Profile = () => {
   }
 
   return (
-    <section className="profile-section vh-100">
-      <Container className="py-5 h-100">
-        <Row className="d-flex justify-content-center align-items-center h-100">
-          <Col lg={8}>
-            <Card className="profile-card">
-              <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
-                <div className="d-flex align-items-center">
-                  <AccountCircleIcon
-                    style={{ fontSize: "6rem" }}
-                    className="profile-icon"
-                  />
-                  <div className="profile-header-text">
-                    <h5>{customerData.customerName}</h5>
-                    <p>{customerData.role}</p>
-                  </div>
-                </div>
-                <Button className="logout-button" onClick={handleLogout}>
-                  <LogoutIcon />
-                  Logout
-                </Button>
-              </Card.Header>
-              <Card.Body className="profile-card-body">
-                <hr />
-                <Row className="pt-1">
-                  <Col xs={6} className="mb-3">
-                    <h6>Email</h6>
-                    <p className="text-muted">{customerData.customerEmail}</p>
-                  </Col>
-                  <Col xs={6} className="mb-3">
-                    <h6>Phone</h6>
-                    <p className="text-muted">{customerData.customerPhno}</p>
-                  </Col>
-                </Row>
-
-                <h6>Document Verification Status</h6>
-                <hr />
-                <Row className="pt-1">
-                  <Col xs={12} className="mb-3">
-                    {documentVerified ? (
-                      <div className="text-success">
-                        <CheckCircleIcon style={{ fontSize: "2rem" }} />
-                        Document Verified
-                      </div>
-                    ) : (
-                      <div className="text-danger">
-                        <ErrorIcon style={{ fontSize: "2rem" }} />
-                        <p>Your documents are not verified.</p>
+    <>
+      <section className="profile-section vh-100">
+        <Container className="py-5 h-100">
+          <Row className="d-flex justify-content-center align-items-center h-100">
+            <Col lg={8}>
+              <Card className="profile-card">
+                <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
+                  <div className="d-flex align-items-center">
+                    <AccountCircleIcon
+                      style={{ fontSize: "6rem" }}
+                      className="profile-icon"
+                    />
+                    <div className="d-flex flex-column">
+                      <div className="d-flex align-items-center">
+                        <h5 className="mb-0">{customerData.customerName}</h5>
                         <Button
-                          onClick={redirectToDocumentVerification}
-                          className="mt-2"
+                          variant="link"
+                          className="edit-button ms-2"
+                          onClick={() => setShowModal(true)} // Show the modal
                         >
-                          Verify Documents
+                          <EditRoundedIcon />
                         </Button>
                       </div>
-                    )}
-                  </Col>
-                </Row>
+                      <p>{customerData.role}</p>
+                    </div>
+                  </div>
+                  <Button className="logout-button" onClick={handleLogout}>
+                    <LogoutIcon />
+                    Logout
+                  </Button>
+                </Card.Header>
+                <Card.Body className="profile-card-body">
+                  <hr />
+                  <Row className="pt-1">
+                    <Col xs={6} className="mb-3">
+                      <h6>Email</h6>
+                      <p className="text-muted">{customerData.customerEmail}</p>
+                    </Col>
+                    <Col xs={6} className="mb-3">
+                      <h6>Phone</h6>
+                      <p className="text-muted">{customerData.customerPhno}</p>
+                    </Col>
+                  </Row>
 
-                <h6>Address</h6>
-                <hr />
-                <Row className="pt-1">
-                  <Col xs={12} className="mb-3">
-                    <p className="text-muted">{customerData.customerAddress}</p>
-                  </Col>
-                </Row>
-                <h6>Date of Birth</h6>
-                <hr />
-                <Row className="pt-1">
-                  <Col xs={12} className="mb-3">
-                    <p className="text-muted">{customerData.customerDOB}</p>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+                  <h6>Document Verification Status</h6>
+                  <hr />
+                  <Row className="pt-1">
+                    <Col xs={12} className="mb-3">
+                      {documentVerified ? (
+                        <div className="text-success">
+                          <CheckCircleIcon style={{ fontSize: "2rem" }} />
+                          Document Verified
+                        </div>
+                      ) : (
+                        <div className="text-danger">
+                          <ErrorIcon style={{ fontSize: "2rem" }} />
+                          <p>Your documents are not verified.</p>
+                          <Button
+                            onClick={redirectToDocumentVerification}
+                            className="mt-2"
+                          >
+                            Verify Documents
+                          </Button>
+                        </div>
+                      )}
+                    </Col>
+                  </Row>
+
+                  <h6>Address</h6>
+                  <hr />
+                  <Row className="pt-1">
+                    <Col xs={12} className="mb-3">
+                      <p className="text-muted">{customerData.customerAddress}</p>
+                    </Col>
+                  </Row>
+                  <h6>Date of Birth</h6>
+                  <hr />
+                  <Row className="pt-1">
+                    <Col xs={12} className="mb-3">
+                      <p className="text-muted">{customerData.customerDOB}</p>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Include the EditProfileModal component */}
+      <EditProfileModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        customerData={customerData}
+        updateCustomerData={handleUpdateCustomerData}
+      />
+    </>
   );
 };
 

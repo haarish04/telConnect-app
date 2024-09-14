@@ -23,16 +23,15 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center; /* Center items horizontally */
   padding: 2rem;
   background-color: #f0f0f0;
-  margin-left: 1rem;
-  margin-right: 5rem;
-  margin-bottom: 10rem;
 }
 
 .register-section h2 {
-  margin-bottom: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem; /* Increased spacing below the heading */
   text-align: center;
   font-size: 2rem;
 }
@@ -41,19 +40,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; Ensure form takes full width
 }
 
 .register-section form div {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem; /* Reduced margin for better spacing between fields */
+  width: 100%;
+  max-width: 400px; /* Ensure consistent width */
 }
 
 .register-section input[type="email"],
 .register-section input[type="text"],
 .register-section input[type="password"] {
   width: 100%;
-  max-width: 400px;
   padding: 1rem;
-  font-size: 1.25rem;
+  font-size: 1rem; /* Adjusted font size for consistency */
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -62,7 +63,7 @@
 
 .register-section .verify-button,
 .register-section button {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem; /* Increased padding for better button appearance */
   background-color: #1e2a5a;
   color: white;
   border: none;
@@ -83,23 +84,23 @@
   font-size: 1.1rem;
   width: 100%;
   max-width: 400px;
-  margin-bottom: 10%;
+  margin-bottom: 1.5rem; /*Adjusted spacing below the button*/
 }
 
 .register-section .send-otp-button:hover,
 .register-section .verify-button:hover,
 .register-section button:hover {
-  background-color: #1e2a5a;
+  background-color: #0f1a3a; /* Slightly darker for hover effect */
 }
 
 .msg {
   color: red;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   font-size: 1rem;
 }
 
 .register-section p {
-  margin-top: 2rem;
+  /* margin-top: 1rem; */
   text-align: center;
 }
 
