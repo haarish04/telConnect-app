@@ -21,18 +21,14 @@ export const isDocumentVerified = async (customerId) => {
       { withCredentials: true }
     );
 
-    // Check if the status is 'success'
-    if (response.data.includes("success")) {
-      return true;
-    } else {
-      return false;
-    }
+    // Check if the status contains 'success'
+    return response.data.includes("success");
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return false;
+      return false; // If 404, assume document not verified
     } else {
       console.error("Error checking document verification status:", error);
-      throw error;
+      throw error; // Throw error for higher-level handling
     }
   }
 };
@@ -43,48 +39,63 @@ export const handleAuthRedirect = async (
   customerData,
   loginRedirect,
   verificationRedirect,
-  planConfirmationRedirect
+  planConfirmationRedirect,
+  setAlertMessage // Function to set alert messages
 ) => {
   if (!isLoggedIn(customerData)) {
-    navigate(loginRedirect); // Redirect to login page
+    setAlertMessage('Please log in to proceed.');
+    setTimeout(() => {
+      setAlertMessage(''); // Clear alert after delay
+      navigate(loginRedirect); // Redirect to login
+    }, 3000);
     return;
   }
 
   const customerId = getCustomerId(customerData);
 
   if (!customerId) {
-    console.error("Customer ID not found");
+    console.error("Customer ID not found.");
+    setAlertMessage("Customer ID not found. Please log in again.");
+    setTimeout(() => setAlertMessage(''), 3000);
     return;
   }
 
-  // Check if the customer's documents are verified
   try {
     const verified = await isDocumentVerified(customerId);
     if (verified) {
-      // If verified, redirect to plan confirmation page
-      navigate(planConfirmationRedirect);
+      setAlertMessage('Redirecting to the Plan Confirmation Page...');
+      setTimeout(() => {
+        setAlertMessage('');
+        navigate(planConfirmationRedirect); // Redirect to plan confirmation
+      }, 3000);
     } else {
-      // If not verified, redirect to document verification page
-      navigate(verificationRedirect);
+      setAlertMessage('Redirecting to the Document Verification Page...');
+      setTimeout(() => {
+        setAlertMessage('');
+        navigate(verificationRedirect); // Redirect to document verification
+      }, 3000);
     }
   } catch (error) {
-    console.error("Error during document verification process:", error);
+    console.error("Error during document verification:", error);
+    setAlertMessage('Error occurred during the process. Please try again.');
+    setTimeout(() => setAlertMessage(''), 3000); // Clear alert after error
   }
 };
 
 // Reusable handler for plan clicks
-export const onPlanClickHandler = async (navigate, customerData, planId) => {
+export const onPlanClickHandler = async (navigate, customerData, planId, setAlertMessage) => {
   console.log("Selected plan: ", planId);
-  localStorage.setItem("planId", planId); // Save the selected plan
+  localStorage.setItem("planId", planId); // Save the selected plan to localStorage
 
   await handleAuthRedirect(
     navigate,
     customerData,
     "/login", // Redirect to login if not logged in
-    "/documentVerification", // Redirect to document verification if not verified
+    "/documentVerification", // Redirect to document verification if documents not verified
     {
-      pathname: "/planConfirmation", // Redirect to confirmation page with the selected plan
-      state: { planId }, // Pass the planId as part of state
-    }
+      pathname: "/planConfirmation", // Redirect to plan confirmation with the selected plan
+      state: { planId }, // Pass the planId as part of the state
+    },
+    setAlertMessage // Set alert messages using the passed state handler
   );
 };

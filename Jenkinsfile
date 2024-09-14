@@ -18,11 +18,11 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                node -v
-                npm -v
+                C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\node -v
+                C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\npm -v
                 dir
                 dir node_modules/.bin
-                npm install
+                C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\npm install
                 '''
             }
         }
@@ -30,21 +30,20 @@ pipeline {
             steps {
                 script {
                     def imageName = 'my-react-app'
-                    try{
+                    try {
                         bat "docker rm -f ${imageName}"
                         bat "docker rmi -f ${imageName}"
-                    }   
-                     catch(Exception e) {
+                    } catch (Exception e) {
                         echo "Exception occurred: " + e.toString()
                     }
-                    bat "docker build  -t ${imageName} ."
+                    bat "docker build --progress=plain -t ${imageName} ."
                 }
             }
         }
         stage("Run React Container") {
             steps {
                 bat '''
-                docker run -d --name my-react-app  -p 3002:3000 my-react-app
+                docker run -d --name my-react-app -p 3002:3000 my-react-app
                 '''
             }
         }
