@@ -14,6 +14,8 @@ import ConfirmationContainer from "./components/ConfirmationContainer";
 import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
+import AdminPage from "./pages/AdminPage";
+
 
 const App = () => {
   return (
@@ -38,6 +40,7 @@ const App = () => {
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
           <Route path="/termsOfService" element={<TermsOfServicePage />} />
+          <Route path="/adminPage" element={<AdminPage />} />
         </Routes>
       </Router>
       <div className=""></div>

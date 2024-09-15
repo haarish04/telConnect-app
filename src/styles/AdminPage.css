@@ -1,0 +1,87 @@
+/* AdminPage.css */
+.admin-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #DCF2F1; /* Almost white-ish */
+    margin: 0; /* Ensure no margin on the outer container */
+  }
+  
+  /* Header section */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #365486; /* Navy blue */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Remove any potential margin */
+    height: 60px; /* Fixed height for header */
+  }
+  
+  /* Main content and sidebar container */
+  .main-container {
+    display: flex;
+    flex: 1; /* Takes up the remaining height after the header */
+    margin: 0;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #7FC7D9; /* Sea blue */
+    width: 250px;
+    padding: 0;
+  }
+  
+  .tab {
+    position: relative;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .active {
+    background-color: #0F1035; /* Dark blue for active tab */
+    position: relative;
+  }
+  
+  /* Enlarged arrow for the active tab */
+  .active::after {
+    content: '';
+    position: absolute;
+    right: -30px; /* Move the arrow further right to accommodate larger size */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 30px solid #0F1035; /* Make the arrow larger */
+    border-top: 20px solid transparent; /* Bigger arrow dimensions */
+    border-bottom: 20px solid transparent;
+  }
+  
+  .tab:not(.active):hover {
+    background-color: rgba(0, 0, 0, 0.2); /* Light hover effect */
+  }
+  
+  /* Content area */
+  .content {
+    flex: 1;
+    padding: 40px;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Remove any extra margin */
+  }
+  
+  .tab-content {
+    font-size: 1.2rem;
+    color: #365486; /* Navy blue for content text */
+    text-align: left;
+  }
+  
