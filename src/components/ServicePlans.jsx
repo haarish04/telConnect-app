@@ -135,7 +135,7 @@ const ServicePlans = () => {
                 {/* Divider between description and price/duration */}
                 <div className="price-section">
                   <CurrencyRupeeIcon />
-                  <span>{plan.planPrice.replace("Rs.", "")}</span>
+                  <span>{plan.planPrice.replace("?", "")}</span>
                 </div>
                 <div className="duration-section">
                   <AccessTimeIcon />
