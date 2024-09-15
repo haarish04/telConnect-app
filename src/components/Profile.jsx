@@ -63,7 +63,7 @@ const Profile = () => {
 
   const handleUpdateCustomerData = async (updatedData) => {
     try {
-      await axios.put("http://localhost:8082/customer/updateCustomerDetails", updatedData, {
+      await axios.put("http://localhost:8082/customer/update", updatedData, {
         withCredentials: true,
       });
       setCustomerData(updatedData); // Update state with the new data
