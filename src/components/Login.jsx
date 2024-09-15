@@ -27,19 +27,25 @@ const Login = () => {
     setIsLoading(true);
     setError(null);
 
+    const loginCredentials = {
+      customerEmail: email,
+      password: password,
+    };
+
+    console.log(loginCredentials);
     try {
       const loginResponse = await axios.post(
-        "http://localhost:8082/customer/login",
+        "http://localhost:8082/api/customers/login",
+        loginCredentials, // Sending the login credentials in the request body
         {
-          customerEmail: email,
-          password: password,
+          headers: {
+            "Content-Type": "application/json", // Ensure JSON is sent
+          },
         }
       );
-
-      console.log(loginResponse);
+      //Get customer Details after login, to be used in context to persist data throughout session
       const customerDetailsResponse = await axios.get(
-        "http://localhost:8082/customer/getCustomerDetails",
-        { params: { customerEmail: email } }
+        `http://localhost:8082/api/customers/${email}`
       );
 
       setCustomerData(customerDetailsResponse.data);
@@ -54,38 +60,40 @@ const Login = () => {
   };
 
   return (
-    <div>      
+    <div>
       <div className="background">
         <div className="image-section">
           <img src={loginImg} alt="Login Visual" />
         </div>
         <div className="login-section">
-        <h2>Login</h2>
-        {/* Display the success message if the user came from registration */}
-        {successMessage && <p className="success-message">{successMessage}</p>}
-        
-        <form onSubmit={handleSubmit}>
-        <label className="bold-label">Enter Email:</label>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label className="bold-label">Enter Password:</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit" disabled={isLoading}>
-          {isLoading ? "Please wait...." : "Login"}
-          </button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        </form>
+          <h2>Login</h2>
+          {/* Display the success message if the user came from registration */}
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <label className="bold-label">Enter Email:</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label className="bold-label">Enter Password:</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Please wait...." : "Login"}
+            </button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </form>
           <p>
             Don't have an account? <a href="/register">Sign Up</a>
           </p>

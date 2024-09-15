@@ -4,7 +4,7 @@ import "../styles/ServicePlans.css";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
 import { onPlanClickHandler } from "../utils/authUtils";
-import Alert from '@mui/material/Alert'; // Import Alert component from Material-UI
+import Alert from "@mui/material/Alert"; // Import Alert component from Material-UI
 
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
@@ -18,7 +18,7 @@ const ServicePlans = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/plan/getAllPlans");
+        const response = await axios.get("http://localhost:8082/api/plans");
         setPlans(response.data);
       } catch (error) {
         console.error("Error fetching plans:", error);
@@ -29,8 +29,10 @@ const ServicePlans = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = plans.filter(plan =>
-      serviceType === "prepaid" ? plan.planId.startsWith("PREP") : plan.planId.startsWith("POST")
+    const filtered = plans.filter((plan) =>
+      serviceType === "prepaid"
+        ? plan.planId.startsWith("PREP")
+        : plan.planId.startsWith("POST")
     );
     setFilteredPlans(filtered);
   }, [serviceType, plans]);
@@ -47,7 +49,12 @@ const ServicePlans = () => {
   const handleClick = async () => {
     if (selectedPlan) {
       try {
-        await onPlanClickHandler(navigate, customerData, selectedPlan, setAlertMessage);
+        await onPlanClickHandler(
+          navigate,
+          customerData,
+          selectedPlan,
+          setAlertMessage
+        );
       } catch (error) {
         setAlertMessage("Error activating plan. Please try again.");
       }
@@ -59,42 +66,50 @@ const ServicePlans = () => {
   return (
     <div className="service-plans-container">
       {alertMessage && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '10%', 
-          left: '50%', 
-          transform: 'translate(-50%, 0)', 
-          width: '80%', 
-          maxWidth: '500px', 
-          zIndex: 9999,
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // Optional: Keep boxShadow for subtle elevation
-          textAlign: 'center',
-          boxSizing: 'border-box', // Ensure padding is included in the width calculation
-        }}>
-          <Alert 
-            severity="info" 
-            style={{ 
-              fontSize: '1rem', 
+        <div
+          style={{
+            position: "fixed",
+            top: "10%",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+            width: "80%",
+            maxWidth: "500px",
+            zIndex: 9999,
+            boxShadow: "0 4px 6px rgba(0,0,0,0.1)", // Optional: Keep boxShadow for subtle elevation
+            textAlign: "center",
+            boxSizing: "border-box", // Ensure padding is included in the width calculation
+          }}
+        >
+          <Alert
+            severity="info"
+            style={{
+              fontSize: "1rem",
               margin: 0, // Remove default margin
-              boxShadow: 'none', // Remove internal shadow
-            }}>
+              boxShadow: "none", // Remove internal shadow
+            }}
+          >
             {alertMessage}
           </Alert>
         </div>
-        
       )}
 
-      <h2 className="headline">Experience the Power of Unlimited Connections with Our Services!</h2>
+      <h2 className="headline">
+        Experience the Power of Unlimited Connections with Our Services!
+      </h2>
 
       <div className="service-select">
-        <button 
-          className={`service-button ${serviceType === "prepaid" ? "active" : ""}`} 
+        <button
+          className={`service-button ${
+            serviceType === "prepaid" ? "active" : ""
+          }`}
           onClick={() => handleServiceChange("prepaid")}
         >
           Prepaid
         </button>
-        <button 
-          className={`service-button ${serviceType === "postpaid" ? "active" : ""}`} 
+        <button
+          className={`service-button ${
+            serviceType === "postpaid" ? "active" : ""
+          }`}
           onClick={() => handleServiceChange("postpaid")}
         >
           Postpaid
@@ -105,15 +120,21 @@ const ServicePlans = () => {
         <div className="plans-grid">
           {filteredPlans.length > 0 ? (
             filteredPlans.map((plan) => (
-              <div 
-                key={plan.planId} 
-                className={`plan-box ${selectedPlan === plan.planId ? "selected" : ""}`} 
+              <div
+                key={plan.planId}
+                className={`plan-box ${
+                  selectedPlan === plan.planId ? "selected" : ""
+                }`}
                 onClick={() => handlePlanSelect(plan.planId)}
               >
                 <h3>{plan.planName.replace("?", "")}</h3>
                 <p>{plan.planDescription}</p>
-                <p><strong>Price:</strong> ₹{plan.planPrice.replace("?", "")}</p>
-                <p><strong>Duration:</strong> {plan.planDuration}</p>
+                <p>
+                  <strong>Price:</strong> ₹{plan.planPrice.replace("?", "")}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {plan.planDuration}
+                </p>
               </div>
             ))
           ) : (
@@ -122,7 +143,9 @@ const ServicePlans = () => {
         </div>
       </div>
 
-      <button className="activate-button" onClick={handleClick}>Activate</button>
+      <button className="activate-button" onClick={handleClick}>
+        Activate
+      </button>
     </div>
   );
 };

@@ -46,15 +46,16 @@ export default function ConfirmationPage({
     const name = " ";
 
     try {
+      //Thank you mail after confirmation
       const response = await axios.post(
-        `http://localhost:8082/sendMail/thankYou?recipient=${email}&name=${name}`
+        `http://localhost:8082/api/emails/thank-you?recipient=${email}&name=${name}`
       );
       console.log(response);
 
-      // Second axios put request to another email endpoint
-      await axios.post(
-        `http://localhost:8082/sendMail/serviceActivation?recipient=${email}&name=${name}`
-      );
+      // Second axios put request to another email endpoint, this should come after admin approves
+      // await axios.post(
+      //   `http://localhost:8082/sendMail/serviceActivation?recipient=${email}&name=${name}`
+      // );
 
       // After successful requests, navigate to the thank-you page
       navigate("/thank-you");
@@ -106,5 +107,4 @@ export default function ConfirmationPage({
       <Footer />
     </>
   );
-  
 }

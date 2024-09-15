@@ -91,7 +91,7 @@ const NavBar = () => {
         className={`navbar-upper ${isScrolled ? "navbar-upper-hidden" : ""}`}
       >
         <Link to="/home">
-        <img src={logo} alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" />
         </Link>
         <div className="search-login">
           <div className="search-box">

@@ -9,7 +9,7 @@ import CardGrid from "../components/CardGrid";
 
 const fetchAndStorePlans = async () => {
   try {
-    const response = await axios.get("http://localhost:8082/plan/getAllPlans", {
+    const response = await axios.get("http://localhost:8082/api/plans", {
       withCredentials: true,
     });
     const plans = response.data;
@@ -65,21 +65,21 @@ const Home = () => {
       price: 1999,
       validity: 365,
       data: 24,
-      description: plan_card1?.planDescription
+      description: plan_card1?.planDescription,
     },
     pc2: {
       planId: "POST-TC-1199",
       price: 1199,
       validity: 30,
       data: 100,
-      description: plan_card2?.planDescription
+      description: plan_card2?.planDescription,
     },
     pc3: {
       planId: "POST-TC-0751",
       price: 751,
       validity: 30,
       data: 130,
-      description: plan_card3?.planDescription
+      description: plan_card3?.planDescription,
     },
   };
 

@@ -9,8 +9,8 @@ import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import { isDocumentVerified, handleAuthRedirect } from "../utils/authUtils"; // Import from authUtils
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import EditProfileModal from './EditProfileModal'; // Import the modal component
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import EditProfileModal from "./EditProfileModal"; // Import the modal component
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -26,10 +26,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
+        //Get details of customer to display in profile
         const response = await axios.get(
-          "http://localhost:8082/customer/getCustomerDetails",
+          `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
           {
-            params: { customerEmail: contextCustomerData.customerEmail }, // Use email from context
             withCredentials: true,
           }
         );
@@ -63,9 +63,13 @@ const Profile = () => {
 
   const handleUpdateCustomerData = async (updatedData) => {
     try {
-      await axios.put("http://localhost:8082/customer/updateCustomerDetails", updatedData, {
-        withCredentials: true,
-      });
+      await axios.patch(
+        `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
+        updatedData,
+        {
+          withCredentials: true,
+        }
+      );
       setCustomerData(updatedData); // Update state with the new data
     } catch (err) {
       console.error("Error updating customer data:", err);
@@ -157,7 +161,9 @@ const Profile = () => {
                   <hr />
                   <Row className="pt-1">
                     <Col xs={12} className="mb-3">
-                      <p className="text-muted">{customerData.customerAddress}</p>
+                      <p className="text-muted">
+                        {customerData.customerAddress}
+                      </p>
                     </Col>
                   </Row>
                   <h6>Date of Birth</h6>

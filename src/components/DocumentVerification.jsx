@@ -3,15 +3,15 @@ import axios from "axios";
 import "../styles/DocumentVerification.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
-import Alert from '@mui/material/Alert'; // Import Alert component from Material-UI
-import AlertTitle from '@mui/material/AlertTitle'; // Import AlertTitle component from Material-UI
+import Alert from "@mui/material/Alert"; // Import Alert component from Material-UI
+import AlertTitle from "@mui/material/AlertTitle"; // Import AlertTitle component from Material-UI
 
 export default function DocumentVerification() {
-  const [documentType, setDocumentType] = useState("");
+  const [userDocumentType, setuserDocumentType] = useState("");
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState(""); // Success or failure message
   const [isLoading, setIsLoading] = useState(false); // To show loading state
-  const [alertMessage, setAlertMessage] = useState(''); // Alert message state
+  const [alertMessage, setAlertMessage] = useState(""); // Alert message state
   const { customerData } = useContext(CustomerContext); // Access customerData from context
   const navigate = useNavigate(); // For navigation
   const location = useLocation(); // To get the source of navigation
@@ -26,8 +26,9 @@ export default function DocumentVerification() {
   }, [location]);
 
   // Function to handle document type change
-  const handleDocumentTypeChange = (e) => {
-    setDocumentType(e.target.value);
+  const handleuserDocumentTypeChange = (e) => {
+    setuserDocumentType(e.target.value);
+    console.log(e.target.value);
   };
 
   // Function to handle file change
@@ -50,19 +51,19 @@ export default function DocumentVerification() {
 
   // Function to handle file upload
   const handleUpload = async () => {
-    if (!documentType || !file) {
+    if (!userDocumentType || !file) {
       setMessage("Please select a document type and upload a file.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("documentType", documentType);
+    formData.append("userDocumentType", userDocumentType);
     formData.append("file", file);
 
     try {
       setIsLoading(true); // Set loading to true before the request
       const response = await axios.post(
-        "http://localhost:8082/OCR/",
+        "http://localhost:8082/api/ocr/recognize",
         formData,
         {
           headers: {
@@ -74,8 +75,7 @@ export default function DocumentVerification() {
       if (response.status === 200) {
         // If document verification is successful, attempt to update verification status
         const updateStatus = await updateVerificationStatus(
-          customerData.customerId,
-          documentType
+          customerData.customerId
         );
 
         if (updateStatus) {
@@ -96,7 +96,9 @@ export default function DocumentVerification() {
             }
           }, 2000); // Delay navigation to allow alert message display
         } else {
-          setMessage("Document verified, but status update failed. Please try again.");
+          setMessage(
+            "Document verified, but status update failed. Please try again."
+          );
         }
       } else {
         setMessage("Document could not be verified, please try again.");
@@ -110,11 +112,10 @@ export default function DocumentVerification() {
   };
 
   // Function to update the verification status
-  const updateVerificationStatus = async (customerId, documentType) => {
+  const updateVerificationStatus = async (customerId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8082/verification/updateStatus/${customerId}/Aadhar/status=success`,
-        {}
+        `http://localhost:8082/api/verification/${customerId}/status?status=success`
       );
       console.log(response.data);
       // If the status update is successful, return true
@@ -133,9 +134,12 @@ export default function DocumentVerification() {
         <div className="form-group">
           <label className="label-left">
             Document Type:
-            <select value={documentType} onChange={handleDocumentTypeChange}>
+            <select
+              value={userDocumentType}
+              onChange={handleuserDocumentTypeChange}
+            >
               <option value="">Select</option>
-              <option value="aadhar">Aadhar</option>
+              <option value="Aadhar">Aadhar</option>
               <option value="passport">Passport</option>
             </select>
           </label>
@@ -162,29 +166,31 @@ export default function DocumentVerification() {
         </button>
         {message && <p className="message">{message}</p>}
         {alertMessage && (
-          <div style={{ 
-            position: 'fixed', 
-            top: '10%', 
-            left: '50%', 
-            transform: 'translate(-50%, 0)', 
-            width: '80%', 
-            maxWidth: '500px', 
-            zIndex: 9999,
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)', // Optional: Keep boxShadow for subtle elevation
-            textAlign: 'center',
-            boxSizing: 'border-box', // Ensure padding is included in the width calculation
-          }}>
-          <Alert 
-            severity="success" 
-            style={{ 
-              fontSize: '1rem', 
-              margin: 0, // Remove default margin
-              boxShadow: 'none', // Remove internal shadow
+          <div
+            style={{
+              position: "fixed",
+              top: "10%",
+              left: "50%",
+              transform: "translate(-50%, 0)",
+              width: "80%",
+              maxWidth: "500px",
+              zIndex: 9999,
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)", // Optional: Keep boxShadow for subtle elevation
+              textAlign: "center",
+              boxSizing: "border-box", // Ensure padding is included in the width calculation
             }}
           >
-            <AlertTitle>Success</AlertTitle>
-            {alertMessage}
-          </Alert>
+            <Alert
+              severity="success"
+              style={{
+                fontSize: "1rem",
+                margin: 0, // Remove default margin
+                boxShadow: "none", // Remove internal shadow
+              }}
+            >
+              <AlertTitle>Success</AlertTitle>
+              {alertMessage}
+            </Alert>
           </div>
         )}
       </div>
