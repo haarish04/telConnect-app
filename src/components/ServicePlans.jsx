@@ -4,7 +4,9 @@ import "../styles/ServicePlans.css";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
 import { onPlanClickHandler } from "../utils/authUtils";
-import Alert from "@mui/material/Alert"; // Import Alert component from Material-UI
+import Alert from "@mui/material/Alert";
+import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import duration icon
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
@@ -75,17 +77,17 @@ const ServicePlans = () => {
             width: "80%",
             maxWidth: "500px",
             zIndex: 9999,
-            boxShadow: "0 4px 6px rgba(0,0,0,0.1)", // Optional: Keep boxShadow for subtle elevation
+            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
             textAlign: "center",
-            boxSizing: "border-box", // Ensure padding is included in the width calculation
+            boxSizing: "border-box",
           }}
         >
           <Alert
             severity="info"
             style={{
               fontSize: "1rem",
-              margin: 0, // Remove default margin
-              boxShadow: "none", // Remove internal shadow
+              margin: 0,
+              boxShadow: "none",
             }}
           >
             {alertMessage}
@@ -129,12 +131,16 @@ const ServicePlans = () => {
               >
                 <h3>{plan.planName.replace("?", "")}</h3>
                 <p>{plan.planDescription}</p>
-                <p>
-                  <strong>Price:</strong> ₹{plan.planPrice.replace("?", "")}
-                </p>
-                <p>
-                  <strong>Duration:</strong> {plan.planDuration}
-                </p>
+                <div className="divider"></div>{" "}
+                {/* Divider between description and price/duration */}
+                <div className="price-section">
+                  <CurrencyRupeeIcon />
+                  <span>{plan.planPrice.replace("Rs.", "")}</span>
+                </div>
+                <div className="duration-section">
+                  <AccessTimeIcon />
+                  <span>{plan.planDuration}</span>
+                </div>
               </div>
             ))
           ) : (
