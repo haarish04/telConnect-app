@@ -15,63 +15,64 @@ const AdminPage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'Overview':
-        return <div className="tab-content">Overview Content</div>;
+        return <div className="admin-tab-content">Overview Content</div>;
       case 'ActivateServicePlan':
-        return <div className="tab-content">Activate Service Plan Content</div>;
+        return <div className="admin-tab-content">Activate Service Plan Content</div>;
       case 'CustomerAccounts':
-        return <div className="tab-content">Customer Accounts Content</div>;
+        return <div className="admin-tab-content">Customer Accounts Content</div>;
       case 'AddServicePlan':
-        return <div className="tab-content">Add Service Plan Content</div>;
+        return <div className="admin-tab-content">Add Service Plan Content</div>;
       case 'EditServicePlans':
-        return <div className="tab-content">Edit Service Plans Content</div>;
+        return <div className="admin-tab-content">Edit Service Plans Content</div>;
       default:
-        return <div className="tab-content">Select a tab to view content.</div>;
+        return <div className="admin-tab-content">Select a tab to view content.</div>;
     }
   };
 
   return (
-    <div className="admin-page">
-        {/* <NavBar /> */}
+    <div className="admin-page-container">
+      {/* <NavBar /> */}
       {/* Horizontal Navbar */}
-      <div className="header">
+      <div className="admin-header">
         <AdminPanelSettingsIcon
-        fontSize="large"
-        className="loginicon"
-        style={{ color: "#ffff" }} />
-        <div className="header-left">Welcome Admin!</div>
-        <div className="header-right">Login/Logout</div>
+          fontSize="large"
+          className="admin-login-icon"
+          style={{ color: "#fff" }}
+        />
+        <div className="admin-header-left">Welcome Admin!</div>
+        <div className="admin-header-right">Login/Logout</div>
       </div>
 
       {/* Main container */}
-      <div className="main-container">
+      <div className="admin-main-container">
         {/* Vertical Sidebar */}
-        <div className="sidebar">
+        <div className="admin-sidebar">
           <div
-            className={`tab ${activeTab === 'Overview' ? 'active' : ''}`}
+            className={`admin-tab ${activeTab === 'Overview' ? 'admin-active-tab' : ''}`}
             onClick={() => handleTabClick('Overview')}
           >
             Overview
           </div>
           <div
-            className={`tab ${activeTab === 'ActivateServicePlan' ? 'active' : ''}`}
+            className={`admin-tab ${activeTab === 'ActivateServicePlan' ? 'admin-active-tab' : ''}`}
             onClick={() => handleTabClick('ActivateServicePlan')}
           >
             Activate Service Plan
           </div>
           <div
-            className={`tab ${activeTab === 'CustomerAccounts' ? 'active' : ''}`}
+            className={`admin-tab ${activeTab === 'CustomerAccounts' ? 'admin-active-tab' : ''}`}
             onClick={() => handleTabClick('CustomerAccounts')}
           >
             Customer Accounts
           </div>
           <div
-            className={`tab ${activeTab === 'AddServicePlan' ? 'active' : ''}`}
+            className={`admin-tab ${activeTab === 'AddServicePlan' ? 'admin-active-tab' : ''}`}
             onClick={() => handleTabClick('AddServicePlan')}
           >
             Add Service Plan
           </div>
           <div
-            className={`tab ${activeTab === 'EditServicePlans' ? 'active' : ''}`}
+            className={`admin-tab ${activeTab === 'EditServicePlans' ? 'admin-active-tab' : ''}`}
             onClick={() => handleTabClick('EditServicePlans')}
           >
             Edit Service Plans
@@ -79,7 +80,7 @@ const AdminPage = () => {
         </div>
 
         {/* Content Area */}
-        <div className="content">{renderContent()}</div>
+        <div className="admin-content">{renderContent()}</div>
       </div>
     </div>
   );
