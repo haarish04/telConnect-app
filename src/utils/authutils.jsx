@@ -47,7 +47,7 @@ export const handleAuthRedirect = async (
     setTimeout(() => {
       setAlertMessage(""); // Clear alert after delay
       navigate(loginRedirect); // Redirect to login
-    }, 3000);
+    }, 2000);
     return;
   }
 
@@ -56,7 +56,7 @@ export const handleAuthRedirect = async (
   if (!customerId) {
     console.error("Customer ID not found.");
     setAlertMessage("Customer ID not found. Please log in again.");
-    setTimeout(() => setAlertMessage(""), 3000);
+    setTimeout(() => setAlertMessage(""), 2000);
     return;
   }
 
@@ -67,18 +67,18 @@ export const handleAuthRedirect = async (
       setTimeout(() => {
         setAlertMessage("");
         navigate(planConfirmationRedirect); // Redirect to plan confirmation
-      }, 3000);
+      }, 2000);
     } else {
       setAlertMessage("Redirecting to the Document Verification Page...");
       setTimeout(() => {
         setAlertMessage("");
         navigate(verificationRedirect); // Redirect to document verification
-      }, 3000);
+      }, 2000);
     }
   } catch (error) {
     console.error("Error during document verification:", error);
     setAlertMessage("Error occurred during the process. Please try again.");
-    setTimeout(() => setAlertMessage(""), 3000); // Clear alert after error
+    setTimeout(() => setAlertMessage(""), 2000); // Clear alert after error
   }
 };
 
