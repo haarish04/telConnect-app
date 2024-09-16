@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../styles/AdminPage.css'; // Updated CSS file for styling
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import NavBar from '../components/NavBar';
+import Overview from '../components/Overview';
+import CreateServicePlan from '../components/CreateServicePlan';
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Overview');
@@ -15,13 +17,13 @@ const AdminPage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'Overview':
-        return <div className="admin-tab-content">Overview Content</div>;
+        return <Overview />
       case 'ActivateServicePlan':
         return <div className="admin-tab-content">Activate Service Plan Content</div>;
       case 'CustomerAccounts':
         return <div className="admin-tab-content">Customer Accounts Content</div>;
-      case 'AddServicePlan':
-        return <div className="admin-tab-content">Add Service Plan Content</div>;
+      case 'CreateServicePlan':
+        return <CreateServicePlan />
       case 'EditServicePlans':
         return <div className="admin-tab-content">Edit Service Plans Content</div>;
       default:
@@ -66,10 +68,10 @@ const AdminPage = () => {
             Customer Accounts
           </div>
           <div
-            className={`admin-tab ${activeTab === 'AddServicePlan' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('AddServicePlan')}
+            className={`admin-tab ${activeTab === 'CreateServicePlan' ? 'admin-active-tab' : ''}`}
+            onClick={() => handleTabClick('CreateServicePlan')}
           >
-            Add Service Plan
+            Create Service Plan
           </div>
           <div
             className={`admin-tab ${activeTab === 'EditServicePlans' ? 'admin-active-tab' : ''}`}

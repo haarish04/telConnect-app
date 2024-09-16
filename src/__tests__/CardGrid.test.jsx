@@ -66,15 +66,15 @@ describe("CardGrid Component", () => {
     fireEvent.click(screen.getAllByText(/View details/i)[0]);
 
     await waitFor(() => {
-      expect(screen.getAllByText(/Basic Plan/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/Price:/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/₹ 299/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/Description:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Basic Plan/i)).toBeInTheDocument();
+      expect(screen.getByText(/Price:/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/₹ 299/i)[0]).toBeInTheDocument();
+      expect(screen.getByText(/Description:/i)).toBeInTheDocument();
       expect(
-        screen.getAllByText(/Sample Plan Description/i)
+        screen.getByText(/Sample Plan Description/i)
       ).toBeInTheDocument();
-      expect(screen.getAllByText(/Validity:/i)).toBeInTheDocument();
-      expect(screen.getAllByText(/30 days/i)).toBeInTheDocument();
+      expect(screen.getByText(/Validity:/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/30 days/i)[0]).toBeInTheDocument();
     });
   });
 
@@ -95,7 +95,8 @@ describe("CardGrid Component", () => {
       expect(onPlanClickHandler).toHaveBeenCalledWith(
         expect.any(Function), // navigate function
         mockCustomerData, // customer data
-        "PREP-TC-0001"
+        "PREP-TC-0001",
+        expect.any(Function)
       );
     });
   });
