@@ -57,7 +57,7 @@ const ButtonGroup = () => {
       <Link to="/servicePlans">
         <CustomButton label="Services" isActive={activeButton === "Services"} />
       </Link>
-      <CustomButton label="Recharge" isActive={activeButton === "Recharge"} />
+      {/* <CustomButton label="Recharge" isActive={activeButton === "Recharge"} /> */}
       <Link to="/support">
         <CustomButton label="Support" isActive={activeButton === "Support"} />
       </Link>

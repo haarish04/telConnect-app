@@ -1,20 +1,36 @@
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { CustomerContext } from "../context/CustomerContext"; // Import the context
 import "../styles/EditProfileModal.css"; // Make sure to import the CSS file
 
-const EditProfileModal = ({ show, handleClose, customerData, updateCustomerData }) => {
-  const [formData, setFormData] = useState({
-    customerName: customerData.customerName,
-    customerEmail: customerData.customerEmail,
-    customerDOB: customerData.customerDOB,
-    customerAddress: customerData.customerAddress,
-  });
+const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
+  // Access customerData and logout from CustomerContext
+  const { customerData } = useContext(CustomerContext);
+
+  // Alert state variables
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState(''); // 'success' or 'danger'
 
   const [showPasswordModal, setShowPasswordModal] = useState(false); // Toggle between modals
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+  });
+
+  const [formData, setFormData] = useState({
+    customerName: customerData.customerName,
+    customerEmail: customerData.customerEmail,
+    customerDOB: customerData.customerDOB,
+    customerAddress: customerData.customerAddress,
+    password: "", // Start with an empty password
+  });
+
+  const [passwordVisible, setPasswordVisible] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
   });
 
   // Toggle between modals
@@ -35,7 +51,21 @@ const EditProfileModal = ({ show, handleClose, customerData, updateCustomerData 
   };
 
   const handleSaveChanges = () => {
-    updateCustomerData(formData);
+    if (formData.password) {
+      // Validate and handle password
+      if (formData.password !== passwordData.newPassword) {
+        setAlertVisible(true);
+        setAlertMessage("Passwords do not match!");
+        setAlertType("danger");
+        return;
+      }
+    }
+
+    // Update customer data successfully
+    updateCustomerData(formData); // Assuming this handles password update too
+    setAlertVisible(true);
+    setAlertMessage("Profile updated successfully!");
+    setAlertType("success");
     handleClose();
   };
 
@@ -48,16 +78,45 @@ const EditProfileModal = ({ show, handleClose, customerData, updateCustomerData 
   };
 
   const handlePasswordSave = () => {
-    // Add validation logic here for password change
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert("Passwords do not match!");
+    // Check if current password matches the stored password
+    if (passwordData.currentPassword !== customerData.password) {
+      setAlertVisible(true);
+      setAlertMessage("Current password is incorrect!");
+      setAlertType("danger");
       return;
     }
 
-    // Handle password change logic here (e.g., API call)
+    // Check if new password and confirm password match
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setAlertVisible(true);
+      setAlertMessage("Passwords do not match!");
+      setAlertType("danger");
+      return;
+    }
+
+    // Handle password change logic here (e.g., API call to update password)
     console.log("Password changed successfully", passwordData);
 
+    // Optionally, update formData with the new password
+    setFormData({
+      ...formData,
+      password: passwordData.newPassword,
+    });
+
     handlePasswordModalClose();
+
+    // Show success alert
+    setAlertVisible(true);
+    setAlertMessage("Password changed successfully!");
+    setAlertType("success");
+  };
+
+  // Toggle password visibility
+  const togglePasswordVisibility = (field) => {
+    setPasswordVisible({
+      ...passwordVisible,
+      [field]: !passwordVisible[field],
+    });
   };
 
   return (
@@ -68,8 +127,15 @@ const EditProfileModal = ({ show, handleClose, customerData, updateCustomerData 
           <Modal.Title className="modal-title-white">Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* Alert Section */}
+          {alertVisible && (
+            <Alert variant={alertType} onClose={() => setAlertVisible(false)} dismissible>
+              {alertMessage}
+            </Alert>
+          )}
+
           <Form className="form">
-            <Form.Group >
+            <Form.Group>
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -133,33 +199,64 @@ const EditProfileModal = ({ show, handleClose, customerData, updateCustomerData 
           <Modal.Title className="modal-title-white">Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* Alert Section */}
+          {alertVisible && (
+            <Alert variant={alertType} onClose={() => setAlertVisible(false)} dismissible>
+              {alertMessage}
+            </Alert>
+          )}
+
           <Form className="form">
             <Form.Group>
               <Form.Label>Current Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="currentPassword"
-                value={passwordData.currentPassword}
-                onChange={handlePasswordChange}
-              />
+              <div className="password-input-group">
+                <Form.Control
+                  type={passwordVisible.currentPassword ? "text" : "password"}
+                  name="currentPassword"
+                  value={passwordData.currentPassword}
+                  onChange={handlePasswordChange}
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => togglePasswordVisibility('currentPassword')}
+                >
+                  {passwordVisible.currentPassword ? "Hide" : "Show"}
+                </Button>
+              </div>
             </Form.Group>
             <Form.Group>
               <Form.Label>New Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="newPassword"
-                value={passwordData.newPassword}
-                onChange={handlePasswordChange}
-              />
+              <div className="password-input-group">
+                <Form.Control
+                  type={passwordVisible.newPassword ? "text" : "password"}
+                  name="newPassword"
+                  value={passwordData.newPassword}
+                  onChange={handlePasswordChange}
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => togglePasswordVisibility('newPassword')}
+                >
+                  {passwordVisible.newPassword ? "Hide" : "Show"}
+                </Button>
+              </div>
             </Form.Group>
             <Form.Group>
               <Form.Label>Confirm New Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="confirmPassword"
-                value={passwordData.confirmPassword}
-                onChange={handlePasswordChange}
-              />
+              <div className="password-input-group">
+                <Form.Control
+                  type={passwordVisible.confirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  value={passwordData.confirmPassword}
+                  onChange={handlePasswordChange}
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => togglePasswordVisibility('confirmPassword')}
+                >
+                  {passwordVisible.confirmPassword ? "Hide" : "Show"}
+                </Button>
+              </div>
             </Form.Group>
           </Form>
         </Modal.Body>

@@ -1,0 +1,36 @@
+/* Constrain the width of the table and reduce font sizes to fit the layout */
+.document-verification-container {
+    width: 100%; 
+    padding: 10px; /* Reduce padding to make it more compact */
+    box-sizing: border-box;
+}
+
+.document-verification-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.search-input {
+    margin-bottom: 10px; /* Reduce space for better fit */
+    max-width: 250px;
+}
+
+.table-container {
+    max-width: 100%;
+    overflow-x: auto; /* Horizontal scroll for overflow */
+}
+
+.table-header-cell {
+    font-size: 0.8rem; /* Smaller font for table headers */
+    padding: 8px; /* Reduce padding for headers */
+}
+
+.table-body-cell {
+    font-size: 0.75rem; /* Smaller font for table body */
+    padding: 6px; /* Reduce padding for table body */
+}
+
+.MuiTableCell-root {
+    white-space: nowrap;
+}

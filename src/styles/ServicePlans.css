@@ -11,7 +11,7 @@
   margin-bottom: 40px;
 }
 
-.service-select {
+.service-select-page {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
@@ -27,16 +27,6 @@
   border-radius: 5px;
   font-size: 1.1em;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.service-button.active {
-  background-color: #1E2A5A;
-  color: white;
-}
-
-.service-button:hover {
-  background-color: #1E2A5A;
-  color: white;
 }
 
 .plans-box {
@@ -70,11 +60,6 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.plan-box.selected {
-  background-color: #1E2A5A;
-  color: #fff;
-  border-left: 6px solid #365486;
-}
 
 .plan-box h3 {
   font-size: 1.7rem;
@@ -122,3 +107,26 @@
 .activate-button:hover {
   background-color: #0F1035;
 }
+
+.service-button.active {
+  background-color: #0F1035; /* Dark blue from your theme */
+  color: white; 
+  border: 2px solid #365486; /* Navy blue for a darker highlight */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+  transform: scale(1.05); /* Slightly increase size to stand out */
+}
+
+.service-button:hover {
+  background-color: #0F1035;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.plan-box.selected {
+  background-color: #0F1035; /* Dark blue background for selected plan */
+  color: #fff;
+  border-left: 8px solid #365486; /* Thicker, darker navy-blue border */
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3); /* Add more shadow to selected plan */
+  transform: scale(1.03); /* Slightly scale the selected box */
+}
+

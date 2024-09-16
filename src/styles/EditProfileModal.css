@@ -92,3 +92,15 @@
 .modal-title-white {
   color: #ffffff; /* Ensure title color is white */
 }
+.password-input-group {
+  display: flex;
+  align-items: center;
+}
+
+.password-input-group .form-control {
+  flex: 1;
+}
+
+.password-input-group .btn {
+  margin-left: 8px;
+}

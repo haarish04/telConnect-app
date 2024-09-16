@@ -1,0 +1,58 @@
+/* Container and overall layout */
+.MuiPaper-root {
+    background-color: #f9f9f9; /* Light background color for the paper */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden;
+  }
+  
+  /* Search Box styling */
+  .MuiBox-root {
+    background-color: #ffffff; /* White background for the search area */
+    border-bottom: 1px solid #e0e0e0; /* Light border for separation */
+  }
+  
+  .MuiTextField-root {
+    width: 100%;
+  }
+  
+  .MuiInputLabel-root {
+    color: #333333; /* Darker text color for the label */
+  }
+  
+  .MuiOutlinedInput-root {
+    border-radius: 4px; /* Rounded corners for input */
+  }
+  
+  /* Table styling */
+  .MuiTableContainer-root {
+    background-color: #ffffff; /* White background for the table container */
+    border: 1px solid #e0e0e0; /* Light border around the table */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .MuiTableHead-root {
+    background-color: #365486; /* Corporate color for header */
+    color: #ffffff; /* White text color for header */
+  }
+  
+  .MuiTableCell-root {
+    border-bottom: 1px solid #e0e0e0; /* Light border for cells */
+  }
+  
+  .MuiTableRow-hover:hover {
+    background-color: #f1f1f1; /* Hover effect for rows */
+  }
+  
+  .MuiTablePagination-root {
+    background-color: #f1f1f1; /* Background color for pagination */
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .MuiTableCell-root {
+      font-size: 0.875rem; /* Smaller font size for mobile */
+    }
+  }
+  

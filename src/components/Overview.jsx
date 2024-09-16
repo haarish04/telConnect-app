@@ -68,7 +68,9 @@ const Overview = () => {
     { name: 'Postpaid Users', value: postpaidUsersCount },
   ];
 
-  const COLORS = ['#007bff', '#28a745']; // Corporate colors
+  // Updated COLORS array with theme colors
+  const COLORS_ACTIVE_INACTIVE = ['#365486', '#7FC7D9']; // Navy Blue and Sea Blue for active/inactive users
+  const COLORS_PREPAID_POSTPAID = ['#365486', '#7FC7D9']; 
 
   return (
     <Container fluid className="overview-container">
@@ -89,7 +91,7 @@ const Overview = () => {
               fill="#007bff"
             >
               {activeUsersData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={COLORS_ACTIVE_INACTIVE[index % COLORS_ACTIVE_INACTIVE.length]} />
               ))}
             </Pie>
             <Tooltip />
@@ -110,10 +112,10 @@ const Overview = () => {
               cx="50%"
               cy="50%"
               outerRadius={120}
-              fill="#28a745"
+              fill="#007bff"
             >
               {prepaidPostpaidData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={COLORS_PREPAID_POSTPAID[index % COLORS_PREPAID_POSTPAID.length]} />
               ))}
             </Pie>
             <Tooltip />
@@ -135,7 +137,7 @@ const Overview = () => {
                 label="Admin Tasks"
                 multiline
                 rows={6}
-                defaultValue="Tasks can be jotted down by the admin..."
+                defaultValue="Daily Tasks"
                 fullWidth
                 variant="outlined"
                 className="notepad-textfield"

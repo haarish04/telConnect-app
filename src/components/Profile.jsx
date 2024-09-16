@@ -16,8 +16,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [documentVerified, setDocumentVerified] = useState(false); // For document verification status
-  const { customerData: contextCustomerData, logout } =
-    useContext(CustomerContext); // Access customerData and logout from context
+  const { customerData: contextCustomerData, logout } =  useContext(CustomerContext); // Access customerData and logout from context
   const navigate = useNavigate();
 
   const [customerData, setCustomerData] = useState(contextCustomerData);
@@ -106,7 +105,7 @@ const Profile = () => {
                         <h5 className="mb-0">{customerData.customerName}</h5>
                         <Button
                           variant="link"
-                          className="edit-button ms-2"
+                          className="edit-button-profile"
                           onClick={() => setShowModal(true)} // Show the modal
                         >
                           <EditRoundedIcon />

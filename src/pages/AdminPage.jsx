@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../styles/AdminPage.css'; // Updated CSS file for styling
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import NavBar from '../components/NavBar';
 import Overview from '../components/Overview';
 import CreateServicePlan from '../components/CreateServicePlan';
+import EditServicePlans from '../components/EditServicePlans';
+import DocumentVerificationStatusLogs from '../components/DocumentVerificationStatusLogs';
+import CustomerAccounts from '../components/CustomerAccounts';
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Button } from "react-bootstrap";
+import { CustomerContext } from "../context/CustomerContext";
+import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Overview');
+  const { logout } =  useContext(CustomerContext); 
+  const navigate = useNavigate();
 
   // Function to handle tab change
   const handleTabClick = (tab) => {
@@ -21,14 +30,21 @@ const AdminPage = () => {
       case 'ActivateServicePlan':
         return <div className="admin-tab-content">Activate Service Plan Content</div>;
       case 'CustomerAccounts':
-        return <div className="admin-tab-content">Customer Accounts Content</div>;
+        return <CustomerAccounts />
       case 'CreateServicePlan':
         return <CreateServicePlan />
       case 'EditServicePlans':
-        return <div className="admin-tab-content">Edit Service Plans Content</div>;
+        return <EditServicePlans />
+      case 'DocumentVerificationStatusLogs':
+        return <DocumentVerificationStatusLogs />
       default:
         return <div className="admin-tab-content">Select a tab to view content.</div>;
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/home");
   };
 
   return (
@@ -42,7 +58,10 @@ const AdminPage = () => {
           style={{ color: "#fff" }}
         />
         <div className="admin-header-left">Welcome Admin!</div>
-        <div className="admin-header-right">Login/Logout</div>
+        <Button className="logout-button-admin" onClick={handleLogout}>
+            <LogoutIcon />
+              Logout
+        </Button>
       </div>
 
       {/* Main container */}
@@ -78,6 +97,12 @@ const AdminPage = () => {
             onClick={() => handleTabClick('EditServicePlans')}
           >
             Edit Service Plans
+          </div>
+          <div
+            className={`admin-tab ${activeTab === 'DocumentVerificationStatusLogs' ? 'admin-active-tab' : ''}`}
+            onClick={() => handleTabClick('DocumentVerificationStatusLogs')}
+          >
+            Document Verification Status Logs
           </div>
         </div>
 

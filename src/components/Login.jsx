@@ -13,7 +13,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-  const location = useLocation(); // To check where the user is coming from
+  const location = useLocation();
 
   // Check if the user is redirected from the PersonalInfo page after registration
   useEffect(() => {
@@ -32,24 +32,34 @@ const Login = () => {
       password: password,
     };
 
-    console.log(loginCredentials);
     try {
-      const loginResponse = await axios.post(
+      // Step 1: Authenticate the user
+      await axios.post(
         "http://localhost:8082/api/customers/login",
-        loginCredentials, // Sending the login credentials in the request body
+        loginCredentials,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure JSON is sent
+            "Content-Type": "application/json",
           },
         }
       );
-      //Get customer Details after login, to be used in context to persist data throughout session
+
+      // Step 2: Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
         `http://localhost:8082/api/customers/${email}`
       );
 
-      setCustomerData(customerDetailsResponse.data);
-      navigate("/home");
+      const customerData = customerDetailsResponse.data;
+
+      // Step 3: Set the customer data in context
+      setCustomerData(customerData);
+
+      // Step 4: Check if customer is admin (customerId === 1) and redirect accordingly
+      if (customerData.customerId === 1) {
+        navigate("/adminPage"); // Redirect to admin page
+      } else {
+        navigate("/home"); // Redirect to home page
+      }
     } catch (err) {
       setError(
         err.response?.data?.message || "An error occurred during login."

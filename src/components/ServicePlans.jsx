@@ -99,7 +99,7 @@ const ServicePlans = () => {
         Experience the Power of Unlimited Connections with Our Services!
       </h2>
 
-      <div className="service-select">
+      <div className="service-select-page">
         <button
           className={`service-button ${
             serviceType === "prepaid" ? "active" : ""

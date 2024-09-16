@@ -95,7 +95,8 @@ hr {
 }
 .mt-2 {
   background-color: #1E2A5A;
+  border-color: #1E2A5A;
 }
-.edit-button {
+.edit-button-profile {
   color: #ffffff; /* Adjust color as needed */
 }
