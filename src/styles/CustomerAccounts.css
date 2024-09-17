@@ -1,58 +1,106 @@
-/* Container and overall layout */
-.MuiPaper-root {
-    background-color: #f9f9f9; /* Light background color for the paper */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    overflow: hidden;
-  }
-  
-  /* Search Box styling */
-  .MuiBox-root {
-    background-color: #ffffff; /* White background for the search area */
-    border-bottom: 1px solid #e0e0e0; /* Light border for separation */
-  }
-  
-  .MuiTextField-root {
-    width: 100%;
-  }
-  
-  .MuiInputLabel-root {
-    color: #333333; /* Darker text color for the label */
-  }
-  
-  .MuiOutlinedInput-root {
-    border-radius: 4px; /* Rounded corners for input */
-  }
-  
-  /* Table styling */
-  .MuiTableContainer-root {
-    background-color: #ffffff; /* White background for the table container */
-    border: 1px solid #e0e0e0; /* Light border around the table */
-    border-radius: 4px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
-  .MuiTableHead-root {
-    background-color: #365486; /* Corporate color for header */
-    color: #ffffff; /* White text color for header */
-  }
-  
-  .MuiTableCell-root {
-    border-bottom: 1px solid #e0e0e0; /* Light border for cells */
-  }
-  
-  .MuiTableRow-hover:hover {
-    background-color: #f1f1f1; /* Hover effect for rows */
-  }
-  
-  .MuiTablePagination-root {
-    background-color: #f1f1f1; /* Background color for pagination */
-  }
-  
-  /* Responsive design adjustments */
-  @media (max-width: 768px) {
-    .MuiTableCell-root {
-      font-size: 0.875rem; /* Smaller font size for mobile */
-    }
-  }
-  
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #FFFFFF /* Almost white-ish background */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #365486; /* Navy Blue */
+}
+
+.text-field {
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto 0px auto;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  background-color: #FFFFFF; /* White background for the table */
+  border: 1px solid #ddd;
+}
+
+.customer-table th, .customer-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  color: #0F1035; /* Dark blue text color */
+}
+
+.customer-table th {
+  background-color: #DCF2F1;
+    color: #0F1035;
+    font-weight: bold;
+}
+
+.customer-table tr:nth-child(even) {
+  background-color: #f4f4f4; /* Light grey for even rows */
+}
+
+.customer-table tr:hover {
+  background-color: #e1e1e1; /* Light grey for hover effect */
+}
+
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+.activate-button, .delete-button {
+  background-color: #365486; /* Navy Blue */
+  color: #FFFFFF; /* White text color */
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.activate-button:hover, .delete-button:hover {
+  background-color: #0F1035; /* Sea blue on hover */
+}
+
+.select-pagination {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.select-pagination select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+.dialog-content {
+  font-size: 16px;
+}
+
+.dialog-actions button {
+  margin: 0 5px;
+}
+
+.snackbar-button {
+  color: #FFFFFF;
+}
+
+.search-input-cust {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0;
+}

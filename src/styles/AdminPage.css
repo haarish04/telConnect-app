@@ -14,11 +14,11 @@
   align-items: center;
   background-color: #365486; /* Navy blue */
   color: white;
-  padding: 10px 20px;
-  font-size: 1.2rem;
+  padding: 30px 20px;
+  font-size: 1.5rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin: 0;
-  height: 60px;
+  max-height: 20vh;
 }
 
 /* Main content and sidebar container */

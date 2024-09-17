@@ -84,7 +84,7 @@ const EditServicePlans = () => {
 
   return (
     <div className="available-services-container">
-      <h2 className="headline">Available Services</h2>
+      <h1>Available Services</h1>
 
       <div className="service-select">
         <label htmlFor="service-type">Select Service Type:</label>
@@ -99,7 +99,7 @@ const EditServicePlans = () => {
       </div>
 
       <div className="plans-table-container">
-        <table className="plans-table">
+        <table className="service-plans-table">
           <thead>
             <tr>
               <th>Plan ID</th>

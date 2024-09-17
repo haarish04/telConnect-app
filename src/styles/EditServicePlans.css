@@ -37,13 +37,13 @@
     overflow-y: auto; /* Enable scrolling if the table is too long */
 }
 
-.plans-table {
+.service-plans-table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed; /* Ensure consistent column widths */
 }
 
-.plans-table th, .plans-table td {
+.service-plans-table th, .service-plans-table td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
@@ -53,17 +53,17 @@
     text-overflow: ellipsis;
 }
 
-.plans-table th {
+.service-plans-table th {
     background-color: #DCF2F1;
     color: #0F1035;
     font-weight: bold;
 }
 
-.plans-table tr:nth-child(even) {
+.service-plans-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.plans-table tr:hover {
+.service-plans-table tr:hover {
     background-color: #f1f1f1;
 }
 
@@ -184,6 +184,13 @@
     background-color: #5a6268; /* Darker shade for hover effect */
     border-color: #545b62; /* Darker border color on hover */
   }
+
+  .headline {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #365486; /* Navy Blue */
+    font-size: large;
+}
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {

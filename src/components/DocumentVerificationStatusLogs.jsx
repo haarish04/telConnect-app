@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import { Box } from '@mui/material';
 import '../styles/DocumentVerificationStatusLogs.css'; // Import the CSS file
 
 // Define columns structure
@@ -44,15 +34,6 @@ export default function DocumentVerificationStatusLogs() {
             });
     }, []);
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -61,60 +42,69 @@ export default function DocumentVerificationStatusLogs() {
         row.customerId.toString().includes(searchTerm)
     );
 
+    // Function to determine status color
+    const getStatusColor = (status) => {
+        switch (status.toUpperCase()) {
+            case 'SUCCESS':
+                return 'green';
+            case 'FAILED':
+                return 'red';
+            default:
+                return 'black'; // Default color
+        }
+    };
+
     return (
-        <Paper className="document-verification-container">
-            <Box className="document-verification-content">
-                <TextField
-                    label="Search by ID"
-                    variant="outlined"
+        <div className="document-verification-container">
+            <h1>Document Verification Logs</h1>
+            <div className="search-container">
+                <input
+                    type="text"
+                    placeholder="Search by ID"
                     onChange={handleSearchChange}
                     value={searchTerm}
-                    className="search-input"
+                    className="search-input-doc"
                 />
-                <TableContainer className="table-container">
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align="left"
-                                        style={{ minWidth: column.minWidth }}
-                                        className="table-header-cell"
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {filteredRows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.verificationId}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align="left" className="table-body-cell">
-                                                    {value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={filteredRows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Box>
-        </Paper>
+            </div>
+            <table className="verification-table">
+                <thead>
+                    <tr>
+                        {columns.map((column) => (
+                            <th
+                                key={column.id}
+                                style={{ minWidth: column.minWidth }}
+                                className="table-header-cell"
+                            >
+                                {column.label}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredRows
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row) => (
+                            <tr key={row.verificationId}>
+                                {columns.map((column) => {
+                                    const value = row[column.id];
+                                    // Apply status color and uppercase transformation if column is 'requestStatus'
+                                    return (
+                                        <td
+                                            key={column.id}
+                                            className="table-body-cell"
+                                            style={{
+                                                color: column.id === 'requestStatus' ? getStatusColor(value) : 'inherit',
+                                                textTransform: column.id === 'requestStatus' ? 'uppercase' : 'none'
+                                            }}
+                                        >
+                                            {value}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                </tbody>
+            </table>
+        </div>
     );
 }

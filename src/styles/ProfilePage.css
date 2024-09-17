@@ -1,8 +1,8 @@
+
 .profile-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #afe7e4;
+  height: fit-content;
+  align-items: flex-start; /* Updated to align the content from the top */
+  background-color: #afe7e4;  
 }
 
 .profile-card {
@@ -13,7 +13,7 @@
   width: 100%;
   max-width: 800px;
   transition: transform 0.3s ease-in-out;
-  margin-bottom: 15%;
+  margin-bottom: 30px; /* Adjust margin for spacing between cards */
 }
 
 .profile-card:hover {
@@ -88,15 +88,51 @@ hr {
   font-size: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .profile-card {
-    max-width: 95%;
-  }
-}
 .mt-2 {
   background-color: #1E2A5A;
   border-color: #1E2A5A;
 }
+
 .edit-button-profile {
-  color: #ffffff; /* Adjust color as needed */
+  color: #ffffff;
+}
+
+.active-plan-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.active-plan-card:hover {
+  transform: scale(1.05);
+}
+
+.active-plan-card-header {
+  background: linear-gradient(135deg, #365486, #1E2A5A);
+  color: white;
+  padding: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.active-plan-card-body {
+  color: #0f1035;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+@media (max-width: 768px) {
+  .profile-card,
+  .active-plan-card {
+    max-width: 95%;
+  }
+}
+
+.active-plan{
+  /* transform: scaleX(1.05); */
 }

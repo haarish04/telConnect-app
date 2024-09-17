@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import { Box } from '@mui/material';
-import '../styles/CustomerAccounts.css' // Import the CSS file
-
-// Define columns structure
-const columns = [
-  { id: 'customerId', label: 'Customer ID', minWidth: 100 },
-  { id: 'customerName', label: 'Name', minWidth: 170 },
-  { id: 'customerEmail', label: 'Email', minWidth: 170 },
-  { id: 'customerPhno', label: 'Phone Number', minWidth: 170 },
-  { id: 'customerAddress', label: 'Address', minWidth: 170 },
-  { id: 'accountCreationDate', label: 'Account Creation Date', minWidth: 170 },
-  { id: 'customerDOB', label: 'Date of Birth', minWidth: 170 },
-];
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Alert, TextField } from '@mui/material';
+import '../styles/CustomerAccounts.css';
 
 export default function CustomerAccounts() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // 'success' or 'error'
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/customers?adminId=1')
@@ -48,75 +33,139 @@ export default function CustomerAccounts() {
       });
   }, []);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleDelete = (email) => {
+    setSelectedEmail(email);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedEmail('');
+  };
+
+  const handleConfirmDelete = () => {
+    axios.delete(`http://localhost:8082/api/customers/${encodeURIComponent(selectedEmail)}?adminId=1`)
+      .then(() => {
+        setData(prevData => prevData.filter(row => row.customerEmail !== selectedEmail));
+        setSnackbarMessage('User deleted successfully!');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        handleCloseDialog();
+      })
+      .catch(error => {
+        console.error('There was an error deleting the customer!', error);
+        setSnackbarMessage('Error deleting user.');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        handleCloseDialog();
+      });
+  };
+
   const filteredRows = data.filter(row =>
-    row.customerId.toString().includes(searchTerm)
+    row.customerId.toString().includes(searchTerm) || row.customerEmail.includes(searchTerm)
   );
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
-    <Paper>
-      <Box>
-        <TextField
-          label="Search by ID"
-          variant="outlined"
-          onChange={handleSearchChange}
-          value={searchTerm}
-        />
-      </Box>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align='left'
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredRows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.customerId}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align='left'>
-                        {value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={filteredRows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+    <div className="dashboard-container">
+      <h1>Customer Accounts</h1>
+      <Box sx={{ display: 'flex', alignItems: 'center', padding: 2 }}>
+      <input
+        type="text"
+        placeholder="Search by ID"
+        onChange={handleSearchChange}
+        value={searchTerm}
+        className="search-input-cust"
       />
-    </Paper>
+      </Box>
+      <table className="customer-table">
+        <thead>
+          <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Account Creation Date</th>
+            <th>Date of Birth</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredRows.length > 0 ? (
+            filteredRows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(row => (
+                <tr key={row.customerId}>
+                  <td>{row.customerId}</td>
+                  <td>{row.customerName}</td>
+                  <td>{row.customerEmail}</td>
+                  <td>{row.customerPhno}</td>
+                  <td>{row.customerAddress}</td>
+                  <td>{row.accountCreationDate}</td>
+                  <td>{row.customerDOB}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(row.customerEmail)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+          ) : (
+            <tr>
+              <td colSpan="8" className="no-data">No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirm Deletion</DialogTitle>
+        <DialogContent className="dialog-content">
+          Are you sure you want to delete this user?
+        </DialogContent>
+        <DialogActions className="dialog-actions">
+          <button onClick={handleCloseDialog} className='delete-button'>
+            Cancel
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className='delete-button'
+          >
+            Delete
+          </button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        action={
+          <Button className="snackbar-button" onClick={handleSnackbarClose}>
+            Close
+          </Button>
+        }
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }

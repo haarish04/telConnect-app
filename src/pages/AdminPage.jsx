@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "react-bootstrap";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
+import ActivateServicePlan from '../components/ActivateServicePlan';
 
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState('Overview');
@@ -28,7 +29,7 @@ const AdminPage = () => {
       case 'Overview':
         return <Overview />
       case 'ActivateServicePlan':
-        return <div className="admin-tab-content">Activate Service Plan Content</div>;
+        return <ActivateServicePlan />
       case 'CustomerAccounts':
         return <CustomerAccounts />
       case 'CreateServicePlan':

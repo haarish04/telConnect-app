@@ -3,39 +3,37 @@ import axios from "axios";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Green tick for verified
-import ErrorIcon from "@mui/icons-material/Error"; // Red cross or warning for unverified
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import { isDocumentVerified, handleAuthRedirect } from "../utils/authUtils"; // Import from authUtils
+import { isDocumentVerified } from "../utils/authUtils"; 
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import EditProfileModal from "./EditProfileModal"; // Import the modal component
+import EditProfileModal from "./EditProfileModal";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [documentVerified, setDocumentVerified] = useState(false); // For document verification status
-  const { customerData: contextCustomerData, logout } =  useContext(CustomerContext); // Access customerData and logout from context
+  const [documentVerified, setDocumentVerified] = useState(false);
+  const { customerData: contextCustomerData, logout } = useContext(CustomerContext);
   const navigate = useNavigate();
-
   const [customerData, setCustomerData] = useState(contextCustomerData);
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+  const [showModal, setShowModal] = useState(false);
+
+  const [activePlan, setActivePlan] = useState(null); // State for storing active plan details
+  const [planLoading, setPlanLoading] = useState(true); // Loading state for the plan
 
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
-        //Get details of customer to display in profile
         const response = await axios.get(
           `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
         setCustomerData(response.data);
 
-        // Check document verification status
-        const verified = await isDocumentVerified(response.data.customerId); // Use customerId for verification check
+        const verified = await isDocumentVerified(response.data.customerId);
         setDocumentVerified(verified);
       } catch (err) {
         setError(err);
@@ -48,6 +46,27 @@ const Profile = () => {
       fetchCustomerData();
     } else {
       setLoading(false);
+    }
+  }, [contextCustomerData]);
+
+  // Fetch active plan details
+  useEffect(() => {
+    const fetchActivePlan = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/plans/status`,
+          { withCredentials: true }
+        );
+        setActivePlan(response.data); // Set the active plan data
+      } catch (err) {
+        console.error("Error fetching active plan:", err);
+      } finally {
+        setPlanLoading(false);
+      }
+    };
+
+    if (contextCustomerData) {
+      fetchActivePlan();
     }
   }, [contextCustomerData]);
 
@@ -65,11 +84,9 @@ const Profile = () => {
       await axios.patch(
         `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
         updatedData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-      setCustomerData(updatedData); // Update state with the new data
+      setCustomerData(updatedData);
     } catch (err) {
       console.error("Error updating customer data:", err);
     }
@@ -88,9 +105,9 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <section className="profile-section vh-100">
-        <Container className="py-5 h-100">
+    <div className="profile-active-plans-container">
+      <section className="profile-section">
+        <Container className="py-5 container">
           <Row className="d-flex justify-content-center align-items-center h-100">
             <Col lg={8}>
               <Card className="profile-card">
@@ -106,7 +123,7 @@ const Profile = () => {
                         <Button
                           variant="link"
                           className="edit-button-profile"
-                          onClick={() => setShowModal(true)} // Show the modal
+                          onClick={() => setShowModal(true)}
                         >
                           <EditRoundedIcon />
                         </Button>
@@ -160,9 +177,7 @@ const Profile = () => {
                   <hr />
                   <Row className="pt-1">
                     <Col xs={12} className="mb-3">
-                      <p className="text-muted">
-                        {customerData.customerAddress}
-                      </p>
+                      <p className="text-muted">{customerData.customerAddress}</p>
                     </Col>
                   </Row>
                   <h6>Date of Birth</h6>
@@ -176,17 +191,46 @@ const Profile = () => {
               </Card>
             </Col>
           </Row>
+
+          {/* Active Plan Section */}
+          <Row className="d-flex justify-content-center align-items-center h-100 active-plan">
+            <Col lg={8}>
+              <Card className="profile-card">
+                <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
+                  <h5>
+                    Active Service Plans
+                    </h5>
+                </Card.Header>
+                <Card.Body>
+                  {planLoading ? (
+                    <div>Loading plan details...</div>
+                  ) : activePlan && activePlan.status === "Active" ? (
+                    <div>
+                      <p>
+                        <strong>Plan:</strong> {activePlan.planName}
+                      </p>
+                      <p>
+                        <strong>Status:</strong> {activePlan.status}
+                      </p>
+                    </div>
+                  ) : (
+                    <div>No existing plans</div>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
         </Container>
       </section>
 
-      {/* Include the EditProfileModal component */}
+      {/* Edit Profile Modal */}
       <EditProfileModal
         show={showModal}
         handleClose={() => setShowModal(false)}
         customerData={customerData}
         updateCustomerData={handleUpdateCustomerData}
       />
-    </>
+    </div>
   );
 };
 
