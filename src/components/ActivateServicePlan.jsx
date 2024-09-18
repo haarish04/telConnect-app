@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/ActivateServicePlan.css"; // Import the CSS file for styling
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -64,7 +63,7 @@ const ActivateServicePlan = () => {
 
     try {
       // Send a PATCH request to update the status in the backend
-      const response = await axios.patch(
+      await axios.patch(
         `http://localhost:8082/api/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
         {},
         {
@@ -74,20 +73,35 @@ const ActivateServicePlan = () => {
         }
       );
 
+      // Retrieve customer email and name
+      const customerResponse = await axios.get(
+        `http://localhost:8082/api/customers/Id=${selectedPlan.customerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use the token for authorization
+          },
+        }
+      );
+
+      const { customerEmail, customerName } = customerResponse.data;
+
+      // Send activation email to the customer
+      await axios.post(
+        `http://localhost:8082/api/emails/service-activation?recipient=${customerEmail}&name=${customerName}`
+      );
+
       // Show success snackbar
-      setSnackbarMessage("Plan activated successfully!");
+      setSnackbarMessage("Plan activated and email sent successfully!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
-      fetchPlans();
-
-      await axios.post();
 
       // Refetch the updated plans to reflect the changes
+      fetchPlans();
     } catch (error) {
-      console.error("Error activating plan:", error);
+      console.error("Error activating plan or sending email:", error);
 
       // Show error snackbar
-      setSnackbarMessage("Failed to activate plan.");
+      setSnackbarMessage("Failed to activate plan or send email.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     }
@@ -95,7 +109,6 @@ const ActivateServicePlan = () => {
     // Close the dialog after activation
     handleCloseDialog();
   };
-
   // Filter plans where status is 'Pending'
   const pendingPlans = plans.filter((plan) => plan.status === "Pending");
 
