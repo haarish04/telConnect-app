@@ -34,8 +34,8 @@ const Login = () => {
 
     try {
       // Step 1: Authenticate the user
-      await axios.post(
-        "http://localhost:8082/api/customers/login",
+      const res = await axios.post(
+        "http://localhost:8082/api/login",
         loginCredentials,
         {
           headers: {
@@ -43,6 +43,10 @@ const Login = () => {
           },
         }
       );
+
+      if (res.data.token) {
+        localStorage.setItem("bearerToken", res.data.token);
+      }
 
       // Step 2: Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
