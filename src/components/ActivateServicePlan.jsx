@@ -137,7 +137,7 @@ const ActivateServicePlan = () => {
             Cancel
           </button>
           <button onClick={handleConfirmActivate} className="activate-button">
-            Delete
+            Activate
           </button>
         </DialogActions>
       </Dialog>
