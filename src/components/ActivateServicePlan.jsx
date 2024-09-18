@@ -20,25 +20,29 @@ const ActivateServicePlan = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
+  const token = localStorage.getItem("bearerToken");
 
   // Fetch plans from API when the component mounts
+  const fetchPlans = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8082/api/admin/customers/plans",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the token in the Authorization header
+          },
+        }
+      );
+      setPlans(response.data); // Set plans to the API response
+      setLoading(false); // Set loading to false after fetching
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+      setLoading(false); // Set loading to false even on error
+    }
+  };
   useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8082/api/customers/plans?adminId=1"
-        );
-        setPlans(response.data); // Set plans to the API response
-        console.log(response.data);
-        setLoading(false); // Set loading to false after fetching
-      } catch (error) {
-        console.error("Error fetching plans:", error);
-        setLoading(false); // Set loading to false even on error
-      }
-    };
-
     fetchPlans();
-  }, []); // Empty dependency array means this runs only once on mount
+  }, []);
 
   // Function to handle opening the dialog
   const handleOpenDialog = (customerPlanId) => {
@@ -53,16 +57,42 @@ const ActivateServicePlan = () => {
   };
 
   // Function to handle confirming the activation
-  const handleConfirmActivate = () => {
-    const updatedPlans = plans.map((plan) =>
-      plan.customerPlanId === selectedPlanId
-        ? { ...plan, status: "Active" }
-        : plan
+  const handleConfirmActivate = async () => {
+    const selectedPlan = plans.find(
+      (plan) => plan.customerPlanId === selectedPlanId
     );
-    setPlans(updatedPlans);
-    setSnackbarMessage("Plan activated successfully!");
-    setSnackbarSeverity("success");
-    setSnackbarOpen(true);
+
+    try {
+      // Send a PATCH request to update the status in the backend
+      const response = await axios.patch(
+        `http://localhost:8082/api/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Show success snackbar
+      setSnackbarMessage("Plan activated successfully!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      fetchPlans();
+
+      await axios.post();
+
+      // Refetch the updated plans to reflect the changes
+    } catch (error) {
+      console.error("Error activating plan:", error);
+
+      // Show error snackbar
+      setSnackbarMessage("Failed to activate plan.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
+
+    // Close the dialog after activation
     handleCloseDialog();
   };
 
@@ -137,7 +167,7 @@ const ActivateServicePlan = () => {
             Cancel
           </button>
           <button onClick={handleConfirmActivate} className="activate-button">
-            Delete
+            Activate
           </button>
         </DialogActions>
       </Dialog>

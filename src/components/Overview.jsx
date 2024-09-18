@@ -1,26 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';  // Recharts for pie charts
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';  // Correct import for AdapterDayjs
-import axios from 'axios';  // Import Axios
-import '../styles/Overview.css'; // Custom CSS
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts"; // Recharts for pie charts
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // Correct import for AdapterDayjs
+import axios from "axios"; // Import Axios
+import "../styles/Overview.css"; // Custom CSS
 
 const Overview = () => {
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [inactiveUsersCount, setInactiveUsersCount] = useState(0);
   const [prepaidUsersCount, setPrepaidUsersCount] = useState(0);
   const [postpaidUsersCount, setPostpaidUsersCount] = useState(0);
+  const token = localStorage.getItem("bearerToken");
 
   useEffect(() => {
     // Function to fetch and process data
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/api/customers/plans?adminId=1');
+        const response = await axios.get(
+          "http://localhost:8082/api/admin/customers/plans",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = response.data;
 
         // Initialize counts
@@ -30,16 +38,16 @@ const Overview = () => {
         let postpaidCount = 0;
 
         // Process data
-        data.forEach(item => {
-          if (item.status === 'Active') {
+        data.forEach((item) => {
+          if (item.status === "Active") {
             activeCount++;
-          } else if (item.status === 'Expired') {
+          } else if (item.status === "Expired") {
             inactiveCount++;
           }
 
-          if (item.planId.startsWith('PREP')) {
+          if (item.planId.startsWith("PREP")) {
             prepaidCount++;
-          } else if (item.planId.startsWith('POST')) {
+          } else if (item.planId.startsWith("POST")) {
             postpaidCount++;
           }
         });
@@ -50,7 +58,7 @@ const Overview = () => {
         setPrepaidUsersCount(prepaidCount);
         setPostpaidUsersCount(postpaidCount);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -59,18 +67,18 @@ const Overview = () => {
 
   // Data for PieCharts
   const activeUsersData = [
-    { name: 'Active Users', value: activeUsersCount },
-    { name: 'Inactive Users', value: inactiveUsersCount },
+    { name: "Active Users", value: activeUsersCount },
+    { name: "Inactive Users", value: inactiveUsersCount },
   ];
 
   const prepaidPostpaidData = [
-    { name: 'Prepaid Users', value: prepaidUsersCount },
-    { name: 'Postpaid Users', value: postpaidUsersCount },
+    { name: "Prepaid Users", value: prepaidUsersCount },
+    { name: "Postpaid Users", value: postpaidUsersCount },
   ];
 
   // Updated COLORS array with theme colors
-  const COLORS_ACTIVE_INACTIVE = ['#365486', '#7FC7D9']; // Navy Blue and Sea Blue for active/inactive users
-  const COLORS_PREPAID_POSTPAID = ['#365486', '#7FC7D9']; 
+  const COLORS_ACTIVE_INACTIVE = ["#365486", "#7FC7D9"]; // Navy Blue and Sea Blue for active/inactive users
+  const COLORS_PREPAID_POSTPAID = ["#365486", "#7FC7D9"];
 
   return (
     <Container fluid className="overview-container">
@@ -91,7 +99,14 @@ const Overview = () => {
               fill="#007bff"
             >
               {activeUsersData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_ACTIVE_INACTIVE[index % COLORS_ACTIVE_INACTIVE.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    COLORS_ACTIVE_INACTIVE[
+                      index % COLORS_ACTIVE_INACTIVE.length
+                    ]
+                  }
+                />
               ))}
             </Pie>
             <Tooltip />
@@ -115,7 +130,14 @@ const Overview = () => {
               fill="#007bff"
             >
               {prepaidPostpaidData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS_PREPAID_POSTPAID[index % COLORS_PREPAID_POSTPAID.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    COLORS_PREPAID_POSTPAID[
+                      index % COLORS_PREPAID_POSTPAID.length
+                    ]
+                  }
+                />
               ))}
             </Pie>
             <Tooltip />
@@ -149,15 +171,15 @@ const Overview = () => {
         {/* Calendar Section */}
         <Col md={6} lg={5} className="calendar-container">
           <Typography variant="h6" gutterBottom className="section-title">
-            <CalendarTodayIcon style={{ marginRight: '10px' }} />
+            <CalendarTodayIcon style={{ marginRight: "10px" }} />
             Calendar
           </Typography>
           <Card>
             <Card.Body>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
-                  referenceDate={dayjs('2022-04-17')}
-                  views={['year', 'month', 'day']}
+                  referenceDate={dayjs("2022-04-17")}
+                  views={["year", "month", "day"]}
                 />
               </LocalizationProvider>
             </Card.Body>
