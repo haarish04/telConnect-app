@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Modal, Button, Form } from 'react-bootstrap';
-import '../styles/EditServicePlans.css'; // Import the CSS for styling
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Modal, Button, Form } from "react-bootstrap";
+import "../styles/EditServicePlans.css"; // Import the CSS for styling
 
 const EditServicePlans = () => {
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
-  const [serviceType, setServiceType] = useState('prepaid');
+  const [serviceType, setServiceType] = useState("prepaid");
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editedPlan, setEditedPlan] = useState({
-    planId: '',
-    planName: '',
-    planDescription: '',
-    planPrice: '',
-    planDuration: ''
+    planId: "",
+    planName: "",
+    planDescription: "",
+    planPrice: "",
+    planDuration: "",
   });
 
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/api/plans');
+        const response = await axios.get("http://localhost:8082/api/plans");
         setPlans(response.data);
       } catch (error) {
-        console.error('Error fetching plans:', error);
+        console.error("Error fetching plans:", error);
       }
     };
 
@@ -31,8 +31,10 @@ const EditServicePlans = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = plans.filter(plan =>
-      serviceType === 'prepaid' ? plan.planId.startsWith('PREP') : plan.planId.startsWith('POST')
+    const filtered = plans.filter((plan) =>
+      serviceType === "prepaid"
+        ? plan.planId.startsWith("PREP")
+        : plan.planId.startsWith("POST")
     );
     setFilteredPlans(filtered);
   }, [serviceType, plans]);
@@ -42,14 +44,16 @@ const EditServicePlans = () => {
   };
 
   const handleEdit = (planId) => {
-    const planToEdit = plans.find(plan => plan.planId === planId);
-    setEditedPlan(planToEdit || {
-      planId: '',
-      planName: '',
-      planDescription: '',
-      planPrice: '',
-      planDuration: ''
-    });
+    const planToEdit = plans.find((plan) => plan.planId === planId);
+    setEditedPlan(
+      planToEdit || {
+        planId: "",
+        planName: "",
+        planDescription: "",
+        planPrice: "",
+        planDuration: "",
+      }
+    );
     setSelectedPlanId(planId);
     setShowEditDialog(true);
   };
@@ -60,25 +64,31 @@ const EditServicePlans = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedPlan(prevState => ({
+    setEditedPlan((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSave = async () => {
     try {
-      await axios.patch(`http://localhost:8082/api/plans/${selectedPlanId}`, editedPlan, {
-        params: {
-          adminId: 1
-        },
-      });
-      setPlans(prevPlans => prevPlans.map(plan =>
-        plan.planId === selectedPlanId ? editedPlan : plan
-      ));
+      await axios.patch(
+        `http://localhost:8082/api/plans/${selectedPlanId}`,
+        editedPlan,
+        {
+          params: {
+            adminId: 1,
+          },
+        }
+      );
+      setPlans((prevPlans) =>
+        prevPlans.map((plan) =>
+          plan.planId === selectedPlanId ? editedPlan : plan
+        )
+      );
       setShowEditDialog(false);
     } catch (error) {
-      console.error('Error updating plan:', error);
+      console.error("Error updating plan:", error);
     }
   };
 
@@ -112,15 +122,20 @@ const EditServicePlans = () => {
           </thead>
           <tbody>
             {filteredPlans.length > 0 ? (
-              filteredPlans.map(plan => (
+              filteredPlans.map((plan) => (
                 <tr key={plan.planId}>
                   <td>{plan.planId}</td>
                   <td>{plan.planName}</td>
                   <td>{plan.planDescription}</td>
-                  <td>₹{plan.planPrice.replace('Rs.', '')}</td>
+                  <td>₹{plan.planPrice.replace("Rs.", "")}</td>
                   <td>{plan.planDuration}</td>
                   <td>
-                    <button className="edit-button" onClick={() => handleEdit(plan.planId)}>Edit</button>
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEdit(plan.planId)}
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))
@@ -186,10 +201,18 @@ const EditServicePlans = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" className="custom-cancel-button" onClick={handleDialogClose}>
+          <Button
+            variant="secondary"
+            className="custom-cancel-button"
+            onClick={handleDialogClose}
+          >
             Cancel
           </Button>
-          <Button variant="primary" className="custom-save-button" onClick={handleSave}>
+          <Button
+            variant="primary"
+            className="custom-save-button"
+            onClick={handleSave}
+          >
             Save Changes
           </Button>
         </Modal.Footer>

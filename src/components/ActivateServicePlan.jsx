@@ -1,7 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../styles/ActivateServicePlan.css'; // Import the CSS file for styling
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Alert } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../styles/ActivateServicePlan.css"; // Import the CSS file for styling
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 const ActivateServicePlan = () => {
   const [plans, setPlans] = useState([]); // Initialize as an empty array
@@ -9,19 +18,21 @@ const ActivateServicePlan = () => {
   const [openDialog, setOpenDialog] = useState(false); // State for dialog visibility
   const [selectedPlanId, setSelectedPlanId] = useState(null); // State for selected plan ID
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // 'success' or 'error'
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
 
   // Fetch plans from API when the component mounts
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/api/customers/plans?adminId=1');
+        const response = await axios.get(
+          "http://localhost:8082/api/customers/plans?adminId=1"
+        );
         setPlans(response.data); // Set plans to the API response
         console.log(response.data);
         setLoading(false); // Set loading to false after fetching
       } catch (error) {
-        console.error('Error fetching plans:', error);
+        console.error("Error fetching plans:", error);
         setLoading(false); // Set loading to false even on error
       }
     };
@@ -43,18 +54,20 @@ const ActivateServicePlan = () => {
 
   // Function to handle confirming the activation
   const handleConfirmActivate = () => {
-    const updatedPlans = plans.map(plan =>
-      plan.customerPlanId === selectedPlanId ? { ...plan, status: 'Active' } : plan
+    const updatedPlans = plans.map((plan) =>
+      plan.customerPlanId === selectedPlanId
+        ? { ...plan, status: "Active" }
+        : plan
     );
     setPlans(updatedPlans);
-    setSnackbarMessage('Plan activated successfully!');
-    setSnackbarSeverity('success');
+    setSnackbarMessage("Plan activated successfully!");
+    setSnackbarSeverity("success");
     setSnackbarOpen(true);
     handleCloseDialog();
   };
 
   // Filter plans where status is 'Pending'
-  const pendingPlans = plans.filter(plan => plan.status === 'Pending');
+  const pendingPlans = plans.filter((plan) => plan.status === "Pending");
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -92,7 +105,7 @@ const ActivateServicePlan = () => {
                   <td>{item.status}</td>
                   <td>
                     <button
-                      className='activate-button'
+                      className="activate-button"
                       onClick={() => handleOpenDialog(item.customerPlanId)}
                     >
                       Activate
@@ -102,7 +115,9 @@ const ActivateServicePlan = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-data">No pending plans available</td>
+                <td colSpan="7" className="no-data">
+                  No pending plans available
+                </td>
               </tr>
             )}
           </tbody>
@@ -116,17 +131,12 @@ const ActivateServicePlan = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">Confirm Activation</DialogTitle>
-        <DialogContent>
-          Are you sure you want to activate this service plan?
-        </DialogContent>
+        <DialogContent>Activate requested plan for this user?</DialogContent>
         <DialogActions>
-        <button onClick={handleCloseDialog} className='activate-button'>
+          <button onClick={handleCloseDialog} className="activate-button">
             Cancel
           </button>
-          <button
-            onClick={handleConfirmActivate}
-            className='activate-button'
-          >
+          <button onClick={handleConfirmActivate} className="activate-button">
             Delete
           </button>
         </DialogActions>
@@ -142,7 +152,11 @@ const ActivateServicePlan = () => {
           </Button>
         }
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>
