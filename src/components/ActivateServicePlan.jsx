@@ -28,7 +28,7 @@ const ActivateServicePlan = () => {
         "http://localhost:8082/api/admin/customers/plans",
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Add the token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
         }
       );
