@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 export default function ProfilePage() {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: 'max-content' }}>
       <NavBar />
       <Profile />
       <Footer />

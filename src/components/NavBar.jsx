@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../styles/NavBar.css";
-import logo from "../assets/logo.png";
-import search from "../assets/search.png";
+// import logo from "../assets/logo.png";
+// import search from "../assets/search.png";
 import PersonIcon from "@mui/icons-material/Person";
 import { Button, Stack } from "@mui/material";
 import {
@@ -57,7 +57,7 @@ const ButtonGroup = () => {
       <Link to="/servicePlans">
         <CustomButton label="Services" isActive={activeButton === "Services"} />
       </Link>
-      <CustomButton label="Recharge" isActive={activeButton === "Recharge"} />
+      {/* <CustomButton label="Recharge" isActive={activeButton === "Recharge"} /> */}
       <Link to="/support">
         <CustomButton label="Support" isActive={activeButton === "Support"} />
       </Link>
@@ -91,12 +91,12 @@ const NavBar = () => {
         className={`navbar-upper ${isScrolled ? "navbar-upper-hidden" : ""}`}
       >
         <Link to="/home">
-        <img src={logo} alt="Logo" className="logo" />
+          <img src='src\assets\logo.png' alt="Logo" className="logo" />
         </Link>
         <div className="search-login">
           <div className="search-box">
             <input type="text" placeholder="Search" />
-            <img src={search} alt="Search" className="search" />
+            <img src='src\assets\search.png' alt="Search" className="search" />
           </div>
           {/* Conditionally change the Link based on login state */}
           <Link to={customerData ? "/profile" : "/login"}>

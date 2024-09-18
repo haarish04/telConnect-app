@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for making API calls
 import "../styles/RegisterPage.css";
-import telconnectimg1 from "../assets/login-img.png";
+//import telconnectimg1 from "../assets/login-img.png";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -17,10 +17,11 @@ export default function Register() {
 
   // Function to send OTP
   const handleSendOtp = async () => {
-    const name = ""; // Change this to the actual name or make it dynamic if needed
+    const name = "";
     try {
+      //API call to invoke OTP service
       const response = await axios.post(
-        `http://localhost:8082/sendMail/OTP?recipient=${email}&name=${name}`
+        `http://localhost:8082/api/emails/OTP?recipient=${email}&name=${name}`
       );
       console.log(response.data); // Handle the response if needed
       setOtpSent(true); // Update the state to show OTP sent message
@@ -35,7 +36,7 @@ export default function Register() {
   const handleVerifyOtp = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8082/sendMail/verifyOTP?recipient=${email}&otp=${otp}`, // Your OTP verification API
+        `http://localhost:8082/api/emails/otp/verify?recipient=${email}&otp=${otp}`, // Your OTP verification API
         {} // Sending email and otp in the request body
       );
 
@@ -82,7 +83,7 @@ export default function Register() {
     <div>
       <div className="register-container">
         <div className="image-section">
-          <img src={telconnectimg1} alt="Animation" />
+          <img src="src\assets\login-img.png" alt="Animation" />
         </div>
         <div className="register-section">
           <h2>Sign Up</h2>

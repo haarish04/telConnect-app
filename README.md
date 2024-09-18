@@ -35,7 +35,8 @@ The TelConnect frontend provides an interactive user interface for managing cust
 To get started with the project, clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/your-username/telconnect-frontend.git
+git clone https://github.com/haarish04/telConnect-app.git
+
 npm install
 ```
 

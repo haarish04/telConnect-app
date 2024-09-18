@@ -17,7 +17,7 @@ export const getCustomerId = (customerData) => {
 export const isDocumentVerified = async (customerId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8082/verification/getStatus/${customerId}`,
+      `http://localhost:8082/api/verification/${customerId}/status`,
       { withCredentials: true }
     );
 
@@ -43,11 +43,11 @@ export const handleAuthRedirect = async (
   setAlertMessage // Function to set alert messages
 ) => {
   if (!isLoggedIn(customerData)) {
-    setAlertMessage('Please log in to proceed.');
+    setAlertMessage("Please log in to proceed.");
     setTimeout(() => {
-      setAlertMessage(''); // Clear alert after delay
+      setAlertMessage(""); // Clear alert after delay
       navigate(loginRedirect); // Redirect to login
-    }, 3000);
+    }, 2000);
     return;
   }
 
@@ -56,34 +56,39 @@ export const handleAuthRedirect = async (
   if (!customerId) {
     console.error("Customer ID not found.");
     setAlertMessage("Customer ID not found. Please log in again.");
-    setTimeout(() => setAlertMessage(''), 3000);
+    setTimeout(() => setAlertMessage(""), 2000);
     return;
   }
 
   try {
     const verified = await isDocumentVerified(customerId);
     if (verified) {
-      setAlertMessage('Redirecting to the Plan Confirmation Page...');
+      setAlertMessage("Redirecting to the Plan Confirmation Page...");
       setTimeout(() => {
-        setAlertMessage('');
+        setAlertMessage("");
         navigate(planConfirmationRedirect); // Redirect to plan confirmation
-      }, 3000);
+      }, 2000);
     } else {
-      setAlertMessage('Redirecting to the Document Verification Page...');
+      setAlertMessage("Redirecting to the Document Verification Page...");
       setTimeout(() => {
-        setAlertMessage('');
+        setAlertMessage("");
         navigate(verificationRedirect); // Redirect to document verification
-      }, 3000);
+      }, 2000);
     }
   } catch (error) {
     console.error("Error during document verification:", error);
-    setAlertMessage('Error occurred during the process. Please try again.');
-    setTimeout(() => setAlertMessage(''), 3000); // Clear alert after error
+    setAlertMessage("Error occurred during the process. Please try again.");
+    setTimeout(() => setAlertMessage(""), 2000); // Clear alert after error
   }
 };
 
 // Reusable handler for plan clicks
-export const onPlanClickHandler = async (navigate, customerData, planId, setAlertMessage) => {
+export const onPlanClickHandler = async (
+  navigate,
+  customerData,
+  planId,
+  setAlertMessage
+) => {
   console.log("Selected plan: ", planId);
   localStorage.setItem("planId", planId); // Save the selected plan to localStorage
 

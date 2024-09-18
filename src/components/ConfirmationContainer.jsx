@@ -1,8 +1,9 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import "../styles/ConfirmationPage.css";
 import axios from "axios";
 import ConfirmationPage from "../pages/ConfirmationPage";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function ConfirmationContainer() {
   const location = useLocation();
@@ -22,7 +23,7 @@ export default function ConfirmationContainer() {
       try {
         // Use the dynamic planId in the API call
         const response = await axios.get(
-          `http://localhost:8082/plan/getPlan/${planId}`
+          `http://localhost:8082/api/plans/${planId}`
         );
         console.log(response.data);
         setPlan(response.data);

@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
 import "../styles/Carousel.css"; // Your custom CSS
-import plan_image1 from "../assets/plan_image1.png";
-import plan_image2 from "../assets/plan_image2.png";
+// import plan_image1 from "../assets/plan_image1.png";
+// import plan_image2 from "../assets/plan_image2.png";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
 import { onPlanClickHandler } from "../utils/authUtils";
@@ -58,7 +58,7 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
           <Carousel.Item>
             <div className="d-flex align-items-center">
               <img
-                src={plan_image1}
+                src='src\assets\plan_image1.png'
                 alt={plan_carousel1.planName}
                 className="carousel-image"
               />
@@ -81,7 +81,7 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
           <Carousel.Item>
             <div className="d-flex align-items-center">
               <img
-                src={plan_image2}
+                src='src\assets\plan_image2.png'
                 alt={plan_carousel2.planName}
                 className="carousel-image"
               />

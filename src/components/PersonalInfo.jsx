@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React,{ useState, useRef } from "react";
 import axios from "axios";
 import "../styles/PersonalInfo.css";
 import { useNavigate } from "react-router-dom";
@@ -46,31 +46,38 @@ function PersonalInfo() {
       customerDOB: formData.dob,
     };
 
-    console.log(newcustomerData);
-
     try {
       // Register new customer
       const registerResponse = await axios.post(
-        "http://localhost:8082/customer/register",
+        "http://localhost:8082/api/customers/register",
         newcustomerData
       );
 
+      //Get details after registering
       const customerDetails = await axios.get(
-        `http://localhost:8082/customer/getCustomerDetails?customerEmail=${email}`
+        `http://localhost:8082/api/customers/${email}`
       );
       console.log("customerId:", customerDetails.data.customerId);
 
+      //Create new document entry
       const blankDocument = await axios.post(
-        `http://localhost:8082/document/save?customerId=${customerDetails.data.customerId}&DocumentType=Aadhar`
+        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents?DocumentType=Aadhar`
       );
 
+      //Get the documentId for the new entry
       const documentDetails = await axios.get(
-        `http://localhost:8082/document/get/${customerDetails.data.customerId}`
+        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents`
       );
       console.log("DocumentId:", documentDetails.data[0].documentId);
 
+      const newVerification = {
+        customerId: customerDetails.data.customerId,
+        documentId: documentDetails.data[0].documentId,
+      };
+      //Create new verification status as failed using documentId and customerId
       const newVerificationRequest = await axios.post(
-        `http://localhost:8082/verification/save?documentId=${documentDetails.data[0].documentId}&customerId=${customerDetails.data.customerId}`
+        "http://localhost:8082/api/verification",
+        newVerification
       );
       navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {
