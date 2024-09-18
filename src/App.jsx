@@ -15,6 +15,7 @@ import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AdminPage from "./pages/AdminPage";
+import ErrorPage from "./components/ErrorPage";
 
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
           <Route path="/termsOfService" element={<TermsOfServicePage />} />
           <Route path="/adminPage" element={<AdminPage />} />
+          <Route path="/notFound" element={<ErrorPage />} />
         </Routes>
       </Router>
       <div className=""></div>

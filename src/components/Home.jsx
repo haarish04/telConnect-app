@@ -88,7 +88,9 @@ const Home = () => {
   return (
     <div className="homepage-container">
       <header className="header">
+        <div className="whats-hot">
         <h1>What's hot?</h1>
+        </div>
         <CarouselComponent
           plan_carousel1={plan_carousel1}
           plan_carousel2={plan_carousel2}
