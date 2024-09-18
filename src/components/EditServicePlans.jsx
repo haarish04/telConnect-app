@@ -16,6 +16,7 @@ const EditServicePlans = () => {
     planPrice: "",
     planDuration: "",
   });
+  const token = localStorage.getItem("bearerToken");
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -73,11 +74,11 @@ const EditServicePlans = () => {
   const handleSave = async () => {
     try {
       await axios.patch(
-        `http://localhost:8082/api/plans/${selectedPlanId}`,
+        `http://localhost:8082/api/admin/${selectedPlanId}/edit`,
         editedPlan,
         {
-          params: {
-            adminId: 1,
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         }
       );
