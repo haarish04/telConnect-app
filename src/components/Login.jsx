@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../styles/LoginPage.css";
-import loginImg from "../assets/login-img.png";
+//import loginImg from "../assets/login-img.png";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
@@ -73,7 +73,7 @@ const Login = () => {
     <div>
       <div className="background">
         <div className="image-section">
-          <img src={loginImg} alt="Login Visual" />
+          <img src='src\assets\login-img.png' alt="Login Visual" />
         </div>
         <div className="login-section">
           <h2>Login</h2>

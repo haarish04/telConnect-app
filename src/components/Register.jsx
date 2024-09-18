@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for making API calls
 import "../styles/RegisterPage.css";
-import telconnectimg1 from "../assets/login-img.png";
+//import telconnectimg1 from "../assets/login-img.png";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ export default function Register() {
     <div>
       <div className="register-container">
         <div className="image-section">
-          <img src={telconnectimg1} alt="Animation" />
+          <img src="src\assets\login-img.png" alt="Animation" />
         </div>
         <div className="register-section">
           <h2>Sign Up</h2>
