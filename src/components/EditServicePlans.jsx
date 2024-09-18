@@ -128,7 +128,7 @@ const EditServicePlans = () => {
                   <td>{plan.planId}</td>
                   <td>{plan.planName}</td>
                   <td>{plan.planDescription}</td>
-                  <td>₹{plan.planPrice.replace("Rs.", "")}</td>
+                  <td>₹{plan.planPrice.replace("?", "")}</td>
                   <td>{plan.planDuration}</td>
                   <td>
                     <button
