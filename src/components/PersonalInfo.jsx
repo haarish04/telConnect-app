@@ -57,7 +57,7 @@ function PersonalInfo() {
       const customerDetails = await axios.get(
         `http://localhost:8082/api/customers/${email}`
       );
-      console.log("customerId:", customerDetails.data.customerId);
+      //console.log("customerId:", customerDetails.data.customerId);
 
       //Create new document entry
       const blankDocument = await axios.post(
@@ -68,7 +68,7 @@ function PersonalInfo() {
       const documentDetails = await axios.get(
         `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents`
       );
-      console.log("DocumentId:", documentDetails.data[0].documentId);
+      //console.log("DocumentId:", documentDetails.data[0].documentId);
 
       const newVerification = {
         customerId: customerDetails.data.customerId,

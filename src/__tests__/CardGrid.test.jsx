@@ -107,6 +107,6 @@ describe("CardGrid Component", () => {
       plan_card2: mockPlanCard,
       plan_card3: mockPlanCard,
     });
-    console.log(screen.debug());
+    //console.log(screen.debug());
   });
 });

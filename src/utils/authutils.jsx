@@ -89,7 +89,7 @@ export const onPlanClickHandler = async (
   planId,
   setAlertMessage
 ) => {
-  console.log("Selected plan: ", planId);
+  //console.log("Selected plan: ", planId);
   localStorage.setItem("planId", planId); // Save the selected plan to localStorage
 
   await handleAuthRedirect(

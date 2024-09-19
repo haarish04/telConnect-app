@@ -95,7 +95,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     }
 
     // Handle password change logic here (e.g., API call to update password)
-    console.log("Password changed successfully", passwordData);
+    //console.log("Password changed successfully", passwordData);
 
     // Optionally, update formData with the new password
     setFormData({

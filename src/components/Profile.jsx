@@ -54,8 +54,9 @@ const Profile = () => {
     const fetchActivePlan = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/plans/status`,
+          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
+          
         );
         setActivePlan(response.data); // Set the active plan data
       } catch (err) {

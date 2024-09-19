@@ -46,7 +46,7 @@ export default function ConfirmationPage({
   const handleConfirm = async () => {
     // Access customerData from context
     const email = customerData.customerEmail;
-    console.log(email);
+    //console.log(email);
     const name = " ";
 
     const utcStartDate = new Date(today.toUTCString());
@@ -70,7 +70,7 @@ export default function ConfirmationPage({
           status: "Pending",
         }
       );
-      console.log(res);
+      //console.log(res);
 
       // After successful requests, navigate to the thank-you page
       navigate("/thank-you");

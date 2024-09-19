@@ -83,7 +83,7 @@ const Home = () => {
     },
   };
 
-  console.log(plans_card);
+  //console.log(plans_card);
 
   return (
     <div className="homepage-container">

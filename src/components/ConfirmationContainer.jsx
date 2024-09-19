@@ -38,11 +38,9 @@ export default function ConfirmationContainer() {
   }, [planId]);
 
   const handleCancel = () => {
-    console.log("Cancellation initiated");
   };
 
   const handleConfirm = () => {
-    console.log("Confirmation initiated");
   };
 
   if (loading) {
