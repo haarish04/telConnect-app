@@ -1,17 +1,19 @@
 // src/pages/PlanForm.jsx
-import React, { useState } from "react";
-import axios from "axios";
-import "../styles/CreateServicePlan.css";
+import React, { useState } from 'react';
+import axios from 'axios';
+import '../styles/CreateServicePlan.css';
 
 const CreateServicePlan = () => {
   const [formData, setFormData] = useState({
-    planId: "",
-    planName: "",
-    planPrice: "",
-    planDescription: "",
-    planDuration: "",
+    planType: '', // Added missing planType field
+    planId: '',
+    planName: '',
+    planPrice: '',
+    planDescription: '',
+    planDuration: ''
   });
-  const token = localStorage.getItem("bearerToken");
+   const token = localStorage.getItem("bearerToken");
+
 
   const [submittedData, setSubmittedData] = useState(null);
   const [error, setError] = useState(null);
@@ -31,6 +33,7 @@ const CreateServicePlan = () => {
       planPrice: "",
       planDescription: "",
       planDuration: "",
+
     });
     setSubmittedData(null);
     setError(null);

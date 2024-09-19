@@ -4,10 +4,11 @@
     background-color: #FFFFFF; /* Almost white-ish background */
 }
 
-h1 {
+.document-verification-container h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #365486; /* Navy Blue */
+    padding-bottom: 25px;
 }
 
 .search-container {

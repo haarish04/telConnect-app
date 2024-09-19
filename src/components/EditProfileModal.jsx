@@ -136,8 +136,9 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
 
           <Form className="form">
             <Form.Group>
-              <Form.Label>Name</Form.Label>
+              <Form.Label htmlFor="customerName">Name</Form.Label>
               <Form.Control
+                id="customerName"
                 type="text"
                 name="customerName"
                 value={formData.customerName}
@@ -147,8 +148,9 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Email</Form.Label>
+              <Form.Label htmlFor="customerEmail">Email</Form.Label>
               <Form.Control
+                id="customerEmail"
                 type="email"
                 name="customerEmail"
                 value={formData.customerEmail}
@@ -158,8 +160,9 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Date of Birth</Form.Label>
+              <Form.Label htmlFor="customerDOB">Date of Birth</Form.Label>
               <Form.Control
+                id="customerDOB"
                 type="date"
                 name="customerDOB"
                 value={formData.customerDOB}
@@ -167,8 +170,9 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Address</Form.Label>
+              <Form.Label htmlFor="customerAddress">Address</Form.Label>
               <Form.Control
+                id="customerAddress"
                 as="textarea"
                 rows={3}
                 name="customerAddress"
@@ -208,9 +212,10 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
 
           <Form className="form">
             <Form.Group>
-              <Form.Label>Current Password</Form.Label>
+              <Form.Label htmlFor="currentPassword">Current Password</Form.Label>
               <div className="password-input-group">
                 <Form.Control
+                  id="currentPassword"
                   type={passwordVisible.currentPassword ? "text" : "password"}
                   name="currentPassword"
                   value={passwordData.currentPassword}
@@ -225,9 +230,10 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               </div>
             </Form.Group>
             <Form.Group>
-              <Form.Label>New Password</Form.Label>
+              <Form.Label htmlFor="newPassword">New Password</Form.Label>
               <div className="password-input-group">
                 <Form.Control
+                  id="newPassword"
                   type={passwordVisible.newPassword ? "text" : "password"}
                   name="newPassword"
                   value={passwordData.newPassword}
@@ -242,9 +248,10 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               </div>
             </Form.Group>
             <Form.Group>
-              <Form.Label>Confirm New Password</Form.Label>
+              <Form.Label htmlFor="confirmPassword">Confirm New Password</Form.Label>
               <div className="password-input-group">
                 <Form.Control
+                  id="confirmPassword"
                   type={passwordVisible.confirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={passwordData.confirmPassword}
@@ -265,7 +272,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
             Cancel
           </Button>
           <Button variant="primary" className="custom-save-button" onClick={handlePasswordSave}>
-            Save Password
+            Save New Password
           </Button>
         </Modal.Footer>
       </Modal>

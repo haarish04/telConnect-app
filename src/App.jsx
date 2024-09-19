@@ -15,6 +15,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/notFound" element={<ErrorPage />} />
         </Routes>
       </Router>
       <div className=""></div>

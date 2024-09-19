@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../styles/LoginPage.css";
-import loginImg from "../assets/login-img.png";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
@@ -15,10 +14,9 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if the user is redirected from the PersonalInfo page after registration
   useEffect(() => {
     if (location.state?.fromRegistration) {
-      setSuccessMessage("Login with your new credentials!"); // Set success message
+      setSuccessMessage("Login with your new credentials!");
     }
   }, [location]);
 
@@ -33,9 +31,10 @@ const Login = () => {
     };
 
     try {
-      // Step 1: Authenticate the user
+      //Authenticate the user
       const res = await axios.post(
         "http://localhost:8082/api/login",
+
         loginCredentials,
         {
           headers: {
@@ -47,7 +46,6 @@ const Login = () => {
       if (res.data.token) {
         localStorage.setItem("bearerToken", res.data.token);
       }
-
       // Step 2: Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
         `http://localhost:8082/api/customers/${email}`
@@ -55,14 +53,12 @@ const Login = () => {
 
       const customerData = customerDetailsResponse.data;
 
-      // Step 3: Set the customer data in context
       setCustomerData(customerData);
 
-      // Step 4: Check if customer is admin (customerId === 1) and redirect accordingly
       if (customerData.customerId === 1) {
-        navigate("/adminPage"); // Redirect to admin page
+        navigate("/adminPage");
       } else {
-        navigate("/home"); // Redirect to home page
+        navigate("/home");
       }
     } catch (err) {
       setError(
@@ -77,11 +73,10 @@ const Login = () => {
     <div>
       <div className="background">
         <div className="image-section">
-          <img src={loginImg} alt="Login Visual" />
+          <img src="src/assets/login-img.png" alt="Login Visual" />
         </div>
         <div className="login-section">
           <h2>Login</h2>
-          {/* Display the success message if the user came from registration */}
           {successMessage && (
             <p className="success-message">{successMessage}</p>
           )}
