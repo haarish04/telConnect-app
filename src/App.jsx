@@ -46,7 +46,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/notFound" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
       <div className=""></div>
