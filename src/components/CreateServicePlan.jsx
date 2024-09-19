@@ -1,19 +1,18 @@
 // src/pages/PlanForm.jsx
-import React, { useState } from 'react';
-import axios from 'axios';
-import '../styles/CreateServicePlan.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "../styles/CreateServicePlan.css";
 
 const CreateServicePlan = () => {
   const [formData, setFormData] = useState({
-    planType: '', // Added missing planType field
-    planId: '',
-    planName: '',
-    planPrice: '',
-    planDescription: '',
-    planDuration: ''
+    planType: "", // Added missing planType field
+    planId: "",
+    planName: "",
+    planPrice: "",
+    planDescription: "",
+    planDuration: "",
   });
-   const token = localStorage.getItem("bearerToken");
-
+  const token = localStorage.getItem("bearerToken");
 
   const [submittedData, setSubmittedData] = useState(null);
   const [error, setError] = useState(null);
@@ -33,7 +32,6 @@ const CreateServicePlan = () => {
       planPrice: "",
       planDescription: "",
       planDuration: "",
-
     });
     setSubmittedData(null);
     setError(null);
@@ -66,6 +64,7 @@ const CreateServicePlan = () => {
           <div className="plan-form-group">
             <label>Plan type :</label>
             <select
+              id="planType"
               name="planType"
               value={formData.planType}
               onChange={handleChange}
@@ -77,8 +76,9 @@ const CreateServicePlan = () => {
             </select>
           </div>
           <div className="plan-form-group">
-            <label>Plan ID :</label>
+            <label htmlFor="planId">Plan ID</label>
             <input
+              id="planId"
               type="text"
               name="planId"
               value={formData.planId}
@@ -87,8 +87,9 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label>Plan name :</label>
+            <label htmlFor="planName">Plan name :</label>
             <input
+              id="planName"
               type="text"
               name="planName"
               value={formData.planName}
@@ -97,8 +98,9 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label>Plan price :</label>
+            <label htmlFor="planPrice">Plan price :</label>
             <input
+              id="planPrice"
               type="text"
               name="planPrice"
               value={formData.planPrice}
@@ -107,8 +109,9 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label>Plan duration :</label>
+            <label htmlFor="planDuration">Plan duration :</label>
             <input
+              id="planDuration"
               type="text"
               name="planDuration"
               value={formData.planDuration}
@@ -117,8 +120,9 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label>Plan description :</label>
+            <label htmlFor="planDescription">Plan description :</label>
             <textarea
+              id="planDescription"
               name="planDescription"
               value={formData.planDescription}
               onChange={handleChange}
