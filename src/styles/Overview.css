@@ -5,6 +5,10 @@ body {
   background-color: #f8f9fa; /* Light grey background for the whole page */
 }
 
+.Active-chart-title {
+  padding-left: 50px;
+}
+
 .plan-form-container {
   background-color: #ffffff; /* White background for the form container */
   padding: 20px;
@@ -34,7 +38,7 @@ body {
 .plan-form-group textarea {
   flex: 1;
   padding: 10px;
-  border: 1px solid #7FC7D9; /* Sea blue border for inputs */
+  border: 1px solid #7fc7d9; /* Sea blue border for inputs */
   border-radius: 4px;
   font-size: 16px; /* Slightly larger text for readability */
 }
@@ -74,7 +78,7 @@ body {
   margin-top: 20px;
   padding: 15px;
   border: 1px solid #e0e0e0; /* Light grey border for the submitted info */
-  background-color: #DCF2F1; /* Almost white-ish background for the submitted info */
+  background-color: #dcf2f1; /* Almost white-ish background for the submitted info */
   border-radius: 4px;
 }
 
@@ -91,7 +95,7 @@ body {
 
 .submitted-info-value {
   flex: 1;
-  color: #0F1035; /* Dark blue for values */
+  color: #0f1035; /* Dark blue for values */
 }
 
 .error-message {

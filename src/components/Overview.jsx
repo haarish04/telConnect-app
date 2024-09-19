@@ -85,7 +85,7 @@ const Overview = () => {
       <Row className="justify-content-md-center mb-4">
         {/* Pie chart for number of active users */}
         <Col md={6} lg={5} className="pie-chart-container">
-          <Typography variant="h6" gutterBottom className="chart-title">
+          <Typography variant="h6" gutterBottom className="Active-chart-title">
             Number of Active Users
           </Typography>
           <PieChart width={350} height={350}>

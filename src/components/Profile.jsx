@@ -8,7 +8,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import { isDocumentVerified } from "../utils/authUtils"; 
+import { isDocumentVerified } from "../utils/authUtils";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import EditProfileModal from "./EditProfileModal";
 
@@ -16,7 +16,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [documentVerified, setDocumentVerified] = useState(false);
-  const { customerData: contextCustomerData, logout } = useContext(CustomerContext);
+  const { customerData: contextCustomerData, logout } =
+    useContext(CustomerContext);
   const navigate = useNavigate();
   const [customerData, setCustomerData] = useState(contextCustomerData);
   const [showModal, setShowModal] = useState(false);
@@ -56,11 +57,11 @@ const Profile = () => {
         const response = await axios.get(
           `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
-          
         );
-        setActivePlan(response.data); // Set the active plan data
+        setActivePlan(response.data);
       } catch (err) {
         console.error("Error fetching active plan:", err);
+        setActivePlan(null);
       } finally {
         setPlanLoading(false);
       }
@@ -75,6 +76,10 @@ const Profile = () => {
     logout();
     navigate("/home");
   };
+
+  useEffect(() => {
+    console.log("Active plan:", activePlan); // This will log whenever activePlan changes
+  }, [activePlan]);
 
   const redirectToDocumentVerification = () => {
     navigate("/documentVerification", { state: { fromProfile: true } });
@@ -178,7 +183,9 @@ const Profile = () => {
                   <hr />
                   <Row className="pt-1">
                     <Col xs={12} className="mb-3">
-                      <p className="text-muted">{customerData.customerAddress}</p>
+                      <p className="text-muted">
+                        {customerData.customerAddress}
+                      </p>
                     </Col>
                   </Row>
                   <h6>Date of Birth</h6>
@@ -198,9 +205,7 @@ const Profile = () => {
             <Col lg={8}>
               <Card className="profile-card">
                 <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
-                  <h5>
-                    Active Service Plans
-                    </h5>
+                  <h5>Active Service Plans</h5>
                 </Card.Header>
                 <Card.Body>
                   {planLoading ? (
@@ -208,7 +213,7 @@ const Profile = () => {
                   ) : activePlan && activePlan.status === "Active" ? (
                     <div>
                       <p>
-                        <strong>Plan:</strong> {activePlan.planName}
+                        <strong>Plan:</strong> {activePlan.planId}
                       </p>
                       <p>
                         <strong>Status:</strong> {activePlan.status}
