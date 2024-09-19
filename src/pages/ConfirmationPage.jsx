@@ -19,12 +19,15 @@ export default function ConfirmationPage({
 
   // Get today's date
   const today = new Date();
+  const localizedDate = today.toLocaleDateString();
   const durationInDays = parseInt(planDuration, 10) || 0;
 
   const calculateEndDate = (startDate, durationInDays) => {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + durationInDays);
-    return endDate.toLocaleDateString();
+    const utcIsoDate = new Date(endDate.toUTCString()).toISOString();
+    const isoDate = utcIsoDate.split("T")[0];
+    return isoDate;
   };
 
   const endDate = calculateEndDate(today, durationInDays);
@@ -45,17 +48,28 @@ export default function ConfirmationPage({
     console.log(email);
     const name = " ";
 
+    const utcStartDate = new Date(today.toUTCString());
+    const isoStartDate = utcStartDate.toISOString().split("T")[0];
+
     try {
       //Thank you mail after confirmation
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:8082/api/emails/thank-you?recipient=${email}&name=${name}`
       );
-      console.log(response);
 
-      // Second axios put request to another email endpoint, this should come after admin approves
-      // await axios.post(
-      //   `http://localhost:8082/sendMail/serviceActivation?recipient=${email}&name=${name}`
-      // );
+      // Create mapping of customer and chosen plan and mark status as pending,this is to be approved by admin
+
+      const res = await axios.post(
+        "http://localhost:8082/api/customers/plans",
+        {
+          customerId: customerData.customerId,
+          planId: planId,
+          startDate: isoStartDate,
+          endDate: endDate,
+          status: "Pending",
+        }
+      );
+      console.log(res);
 
       // After successful requests, navigate to the thank-you page
       navigate("/thank-you");

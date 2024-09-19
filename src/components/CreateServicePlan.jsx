@@ -12,6 +12,8 @@ const CreateServicePlan = () => {
     planDescription: '',
     planDuration: ''
   });
+   const token = localStorage.getItem("bearerToken");
+
 
   const [submittedData, setSubmittedData] = useState(null);
   const [error, setError] = useState(null);
@@ -20,18 +22,18 @@ const CreateServicePlan = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleCancel = () => {
     setFormData({
-      planType: '', // Reset added field
-      planId: '',
-      planName: '',
-      planPrice: '',
-      planDescription: '',
-      planDuration: ''
+      planId: "",
+      planName: "",
+      planPrice: "",
+      planDescription: "",
+      planDuration: "",
+
     });
     setSubmittedData(null);
     setError(null);
@@ -39,26 +41,31 @@ const CreateServicePlan = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post('http://localhost:8082/api/plans?adminId=1', formData);
-      // Log the response data to ensure it's what we expect
-      console.log('Response data:', response.data);
-      // Directly use the form data for submittedData
+      const response = await axios.post(
+        "http://localhost:8082/api/admin/newPlan",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Use the form data for submittedData
       setSubmittedData(formData);
     } catch (err) {
-      setError('Error submitting form data.');
+      setError("Error submitting form data.");
       console.error(err);
     }
   };
 
   return (
-    <div className='create-container'>
+    <div className="create-container">
       <div className="plan-form-container">
         <h2>Fill the Details:</h2>
         <form>
           <div className="plan-form-group">
-            <label htmlFor="planType">Plan type :</label>
+            <label>Plan type :</label>
             <select
-              id="planType"
               name="planType"
               value={formData.planType}
               onChange={handleChange}
@@ -70,9 +77,8 @@ const CreateServicePlan = () => {
             </select>
           </div>
           <div className="plan-form-group">
-            <label htmlFor="planId">Plan ID :</label>
+            <label>Plan ID :</label>
             <input
-              id="planId"
               type="text"
               name="planId"
               value={formData.planId}
@@ -81,9 +87,8 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label htmlFor="planName">Plan name :</label>
+            <label>Plan name :</label>
             <input
-              id="planName"
               type="text"
               name="planName"
               value={formData.planName}
@@ -92,9 +97,8 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label htmlFor="planPrice">Plan price :</label>
+            <label>Plan price :</label>
             <input
-              id="planPrice"
               type="text"
               name="planPrice"
               value={formData.planPrice}
@@ -103,9 +107,8 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label htmlFor="planDuration">Plan duration :</label>
+            <label>Plan duration :</label>
             <input
-              id="planDuration"
               type="text"
               name="planDuration"
               value={formData.planDuration}
@@ -114,9 +117,8 @@ const CreateServicePlan = () => {
             />
           </div>
           <div className="plan-form-group">
-            <label htmlFor="planDescription">Plan description :</label>
+            <label>Plan description :</label>
             <textarea
-              id="planDescription"
               name="planDescription"
               value={formData.planDescription}
               onChange={handleChange}
@@ -144,19 +146,27 @@ const CreateServicePlan = () => {
             </div>
             <div className="submitted-info-row">
               <div className="submitted-info-label">Plan name :</div>
-              <div className="submitted-info-value">{submittedData.planName}</div>
+              <div className="submitted-info-value">
+                {submittedData.planName}
+              </div>
             </div>
             <div className="submitted-info-row">
               <div className="submitted-info-label">Plan price :</div>
-              <div className="submitted-info-value">{submittedData.planPrice}</div>
+              <div className="submitted-info-value">
+                {submittedData.planPrice}
+              </div>
             </div>
             <div className="submitted-info-row">
               <div className="submitted-info-label">Plan duration :</div>
-              <div className="submitted-info-value">{submittedData.planDuration}</div>
+              <div className="submitted-info-value">
+                {submittedData.planDuration}
+              </div>
             </div>
             <div className="submitted-info-row">
               <div className="submitted-info-label">Plan description :</div>
-              <div className="submitted-info-value">{submittedData.planDescription}</div>
+              <div className="submitted-info-value">
+                {submittedData.planDescription}
+              </div>
             </div>
           </div>
         )}

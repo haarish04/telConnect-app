@@ -22,11 +22,16 @@ export default function CustomerAccounts() {
   const [selectedEmail, setSelectedEmail] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const token = localStorage.getItem("bearerToken");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/customers?adminId=1")
+      .get("http://localhost:8082/api/admin/customers", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         const fetchedData = response.data.map((customer) => ({
           customerId: customer.customerId,
@@ -61,9 +66,14 @@ export default function CustomerAccounts() {
   const handleConfirmDelete = () => {
     axios
       .delete(
-        `http://localhost:8082/api/customers/${encodeURIComponent(
+        `http://localhost:8082/api/admin/customers/${encodeURIComponent(
           selectedEmail
-        )}?adminId=1`
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then(() => {
         setData((prevData) =>

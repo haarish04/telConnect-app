@@ -7,16 +7,11 @@ import { useLocation } from "react-router-dom";
 
 export default function ConfirmationContainer() {
   const location = useLocation();
-  console.log("Location object:", location);
   const planId = location.state?.planId || localStorage.getItem("planId");
-
-  console.log("Plan ID (ConfirmationContainer):", planId); // Log planId here
 
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(planId);
 
   useEffect(() => {
     const fetchPlan = async () => {
@@ -25,7 +20,6 @@ export default function ConfirmationContainer() {
         const response = await axios.get(
           `http://localhost:8082/api/plans/${planId}`
         );
-        console.log(response.data);
         setPlan(response.data);
         setLoading(false);
       } catch (error) {

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/ActivateServicePlan.css"; // Import the CSS file for styling
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -20,25 +19,29 @@ const ActivateServicePlan = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
+  const token = localStorage.getItem("bearerToken");
 
   // Fetch plans from API when the component mounts
+  const fetchPlans = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8082/api/admin/customers/plans",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPlans(response.data); // Set plans to the API response
+      setLoading(false); // Set loading to false after fetching
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+      setLoading(false); // Set loading to false even on error
+    }
+  };
   useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8082/api/customers/plans?adminId=1"
-        );
-        setPlans(response.data); // Set plans to the API response
-        console.log(response.data);
-        setLoading(false); // Set loading to false after fetching
-      } catch (error) {
-        console.error("Error fetching plans:", error);
-        setLoading(false); // Set loading to false even on error
-      }
-    };
-
     fetchPlans();
-  }, []); // Empty dependency array means this runs only once on mount
+  }, []);
 
   // Function to handle opening the dialog
   const handleOpenDialog = (customerPlanId) => {
@@ -53,19 +56,59 @@ const ActivateServicePlan = () => {
   };
 
   // Function to handle confirming the activation
-  const handleConfirmActivate = () => {
-    const updatedPlans = plans.map((plan) =>
-      plan.customerPlanId === selectedPlanId
-        ? { ...plan, status: "Active" }
-        : plan
+  const handleConfirmActivate = async () => {
+    const selectedPlan = plans.find(
+      (plan) => plan.customerPlanId === selectedPlanId
     );
-    setPlans(updatedPlans);
-    setSnackbarMessage("Plan activated successfully!");
-    setSnackbarSeverity("success");
-    setSnackbarOpen(true);
+
+    try {
+      // Send a PATCH request to update the status in the backend
+      await axios.patch(
+        `http://localhost:8082/api/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Retrieve customer email and name
+      const customerResponse = await axios.get(
+        `http://localhost:8082/api/customers/Id=${selectedPlan.customerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use the token for authorization
+          },
+        }
+      );
+
+      const { customerEmail, customerName } = customerResponse.data;
+
+      // Send activation email to the customer
+      await axios.post(
+        `http://localhost:8082/api/emails/service-activation?recipient=${customerEmail}&name=${customerName}`
+      );
+
+      // Show success snackbar
+      setSnackbarMessage("Plan activated and email sent successfully!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+
+      // Refetch the updated plans to reflect the changes
+      fetchPlans();
+    } catch (error) {
+      console.error("Error activating plan or sending email:", error);
+
+      // Show error snackbar
+      setSnackbarMessage("Failed to activate plan or send email.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
+
+    // Close the dialog after activation
     handleCloseDialog();
   };
-
   // Filter plans where status is 'Pending'
   const pendingPlans = plans.filter((plan) => plan.status === "Pending");
 
