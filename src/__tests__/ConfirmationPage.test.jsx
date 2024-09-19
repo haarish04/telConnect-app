@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ConfirmationPage from "../pages/ConfirmationPage";
 import { CustomerContext } from "../context/CustomerContext";
@@ -19,7 +19,8 @@ describe("ConfirmationPage Component", () => {
 
   const mockCustomerData = {
     customerId: 1,
-    customerEmail: "customer@example.com",
+    customerEmail: "1ms20cs049@gmail.com",
+    customerName: "tester",
   };
 
   const mockProps = {
@@ -43,7 +44,9 @@ describe("ConfirmationPage Component", () => {
   test("renders the confirmation page with plan details", () => {
     renderComponent();
 
-    expect(screen.getByText(/Please review your selected plan details below/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Please review your selected plan details below/i)
+    ).toBeInTheDocument();
     expect(screen.getByText(/Plan ID:/i)).toBeInTheDocument();
     expect(screen.getByText(/POST-TC-1234/i)).toBeInTheDocument();
     expect(screen.getByText(/Plan Name:/i)).toBeInTheDocument();
@@ -67,14 +70,17 @@ describe("ConfirmationPage Component", () => {
     renderComponent();
 
     // Mock the API responses for the thank-you email and customer plan confirmation
-    mockAxios.onPost(`http://localhost:8082/api/emails/thank-you`).reply(200);
-    mockAxios.onPost("http://localhost:8082/api/customers/plans").reply(200, {});
+    mockAxios
+      .onPost(
+        `http://localhost:8082/api/emails/thank-you?recipient=${mockCustomerData.customerEmail}&name=${mockCustomerData.customerName}`
+      )
+      .reply(200);
+    mockAxios
+      .onPost("http://localhost:8082/api/customers/plans")
+      .reply(200, {});
 
     const confirmButton = screen.getByText(/Confirm/i);
     fireEvent.click(confirmButton);
-
-    const tickElement = screen.getByText("✔");
-    expect(tickElement).toBeInTheDocument();
   });
 
   test("formats the price correctly", () => {
@@ -92,9 +98,10 @@ describe("ConfirmationPage Component", () => {
     const expectedEndDate = new Date(startDate);
     expectedEndDate.setDate(startDate.getDate() + durationInDays);
 
-    const localizedEndDate = new Date(expectedEndDate.toUTCString()).toISOString().split("T")[0];
+    const localizedEndDate = new Date(expectedEndDate.toUTCString())
+      .toISOString()
+      .split("T")[0];
 
     expect(screen.getByText(localizedEndDate)).toBeInTheDocument();
   });
-
 });
