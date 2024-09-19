@@ -23,7 +23,6 @@ export default function Register() {
       const response = await axios.post(
         `http://localhost:8082/api/emails/OTP?recipient=${email}&name=${name}`
       );
-      console.log(response.data); // Handle the response if needed
       setOtpSent(true); // Update the state to show OTP sent message
       setError(null); // Clear error if OTP is sent successfully
     } catch (err) {
@@ -69,12 +68,6 @@ export default function Register() {
 
     // Store password in sessionStorage
     sessionStorage.setItem("password", password);
-
-    // Log sessionStorage data for verification
-    console.log("SessionStorage Data:", {
-      email: sessionStorage.getItem("email"),
-      password: sessionStorage.getItem("password"),
-    });
 
     navigate("/personalInfo");
   };

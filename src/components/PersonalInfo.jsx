@@ -1,4 +1,4 @@
-import React,{ useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import "../styles/PersonalInfo.css";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ function PersonalInfo() {
     try {
       // Register new customer
       const registerResponse = await axios.post(
-        "http://localhost:8082/api/customers/register",
+        "http://localhost:8082/api/register",
         newcustomerData
       );
 
