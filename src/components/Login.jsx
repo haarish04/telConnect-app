@@ -14,11 +14,26 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  let logoutTimer;
+
   useEffect(() => {
     if (location.state?.fromRegistration) {
       setSuccessMessage("Login with your new credentials!");
     }
   }, [location]);
+
+  useEffect(() => {
+    const checkTokenExpiration = () => {
+      const tokenExpiration = localStorage.getItem("tokenExpiration");
+      if (tokenExpiration && new Date().getTime() > parseInt(tokenExpiration, 10)) {
+        localStorage.removeItem("bearerToken");
+        localStorage.removeItem("tokenExpiration");
+        navigate("/login");
+      }
+    };
+
+    checkTokenExpiration();
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,10 +46,9 @@ const Login = () => {
     };
 
     try {
-      //Authenticate the user
+      // Authenticate the user
       const res = await axios.post(
         "http://localhost:8082/api/login",
-
         loginCredentials,
         {
           headers: {
@@ -44,9 +58,27 @@ const Login = () => {
       );
 
       if (res.data.token) {
-        localStorage.setItem("bearerToken", res.data.token);
+        const token = res.data.token;
+        const expiresIn = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const expirationTime = new Date().getTime() + expiresIn;
+
+        localStorage.setItem("bearerToken", token);
+        localStorage.setItem("tokenExpiration", expirationTime.toString());
+
+        // Clear existing logout timer if any
+        if (logoutTimer) {
+          clearTimeout(logoutTimer);
+        }
+
+        // Set logout timer
+        logoutTimer = setTimeout(() => {
+          localStorage.removeItem("bearerToken");
+          localStorage.removeItem("tokenExpiration");
+          navigate("/login");
+        }, expiresIn);
       }
-      // Step 2: Fetch customer details after successful login
+
+      // Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
         `http://localhost:8082/api/customers/${email}`
       );
