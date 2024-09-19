@@ -15,7 +15,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   return (
