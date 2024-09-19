@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/ConfirmationPage.css";
 import NavBar from "../components/NavBar";

@@ -65,7 +65,7 @@ describe('EditServicePlans Component', () => {
 
     await waitFor(() => {
       expect(axios.patch).toHaveBeenCalledWith(
-        expect.stringContaining('http://localhost:8082/api/plans/PREP001'),
+        expect.stringContaining('http://localhost:8082/api/admin/PREP001/edit'),
         expect.objectContaining({
           planName: 'Updated Prepaid Plan',
           planPrice: 'Rs. 150',
