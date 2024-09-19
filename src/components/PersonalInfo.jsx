@@ -87,8 +87,11 @@ function PersonalInfo() {
   };
 
   const openDatePicker = () => {
-    if (dateInputRef.current) {
-      dateInputRef.current.showPicker(); // Programmatically open the calendar
+    if (
+      dateInputRef.current &&
+      typeof dateInputRef.current.showPicker === "function"
+    ) {
+      dateInputRef.current.showPicker();
     }
   };
 

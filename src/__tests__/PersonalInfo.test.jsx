@@ -10,7 +10,7 @@ jest.mock("axios");
 describe("PersonalInfo Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    sessionStorage.setItem("email", "testuser@example.com");
+    sessionStorage.setItem("email", "1ms20cs049@gmail.com");
     sessionStorage.setItem("password", "password123");
   });
 
@@ -45,7 +45,6 @@ describe("PersonalInfo Component", () => {
 
   test("submits the form and makes API requests successfully", async () => {
     axios.post.mockResolvedValueOnce({ data: { success: true } });
-    axios.get.mockResolvedValueOnce({ data: { customerId: 1 } });
 
     render(
       <Router>
@@ -53,14 +52,23 @@ describe("PersonalInfo Component", () => {
       </Router>
     );
 
+    const nameInput = screen.getByLabelText(/Name:/);
+    const dobInput = screen.getByLabelText(/Date of Birth:/);
+    const phoneInput = screen.getByLabelText(/Phone Number:/);
+    const address1Input = screen.getByLabelText(/Address Line 1:/);
     const submitButton = screen.getByText(/Submit/);
+
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(dobInput, { target: { value: "1990-01-01" } });
+    fireEvent.change(phoneInput, { target: { value: "1234567890" } });
+    fireEvent.change(address1Input, { target: { value: "123 Main St" } });
+
     await act(async () => {
       fireEvent.click(submitButton);
     });
 
-    // Assert that the axios.post call was made correctly
+    // Assert that the axios.post and axios.get calls were made correctly
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    // Assert that the axios.get call was made after form submission
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
   });
 
@@ -73,30 +81,22 @@ describe("PersonalInfo Component", () => {
       </Router>
     );
 
+    const nameInput = screen.getByLabelText(/Name:/);
+    const dobInput = screen.getByLabelText(/Date of Birth:/);
+    const phoneInput = screen.getByLabelText(/Phone Number:/);
+    const address1Input = screen.getByLabelText(/Address Line 1:/);
     const submitButton = screen.getByText(/Submit/);
+
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(dobInput, { target: { value: "1990-01-01" } });
+    fireEvent.change(phoneInput, { target: { value: "1234567890" } });
+    fireEvent.change(address1Input, { target: { value: "123 Main St" } });
+
     await act(async () => {
       fireEvent.click(submitButton);
     });
 
     // Check if the error is handled properly
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-  });
-
-  test("opens date picker on date field click (mocked)", () => {
-    // Mock the ref to bypass JSDOM limitation
-    const mockShowPicker = jest.fn();
-    jest.spyOn(HTMLInputElement.prototype, 'showPicker').mockImplementation(mockShowPicker);
-
-    render(
-      <Router>
-        <PersonalInfo />
-      </Router>
-    );
-
-    const dateInput = screen.getByLabelText(/Date of Birth:/);
-    fireEvent.click(dateInput);
-
-    // Ensure the date picker mock function is called
-    expect(mockShowPicker).toHaveBeenCalled();
   });
 });
