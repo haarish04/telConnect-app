@@ -47,6 +47,8 @@ const AdminPage = () => {
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem('bearerToken');
+    localStorage.removeItem('tokenExpiration');
     navigate("/home");
   };
 
