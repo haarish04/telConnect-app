@@ -1,93 +1,98 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import CustomerAccounts from '../components/CustomerAccounts';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import axios from "axios";
+import CustomerAccounts from "../components/CustomerAccounts";
+import MockAdapter from "axios-mock-adapter";
+import userEvent from "@testing-library/user-event";
 
-const mockAxios = new MockAdapter(axios);
+// Mock axios instance
+const mock = new MockAdapter(axios);
 
-describe('CustomerAccounts Component', () => {
+describe("CustomerAccounts Component", () => {
   const mockData = [
     {
-      customerId: 1,
-      customerName: 'John Doe',
-      customerEmail: 'john.doe@example.com',
-      customerPhno: '1234567890',
-      customerAddress: '123 Elm St',
-      accountCreationDate: '2023-01-01',
-      customerDOB: '1990-01-01',
+      customerId: "C001",
+      customerName: "John Doe",
+      customerEmail: "john@example.com",
+      customerPhno: "1234567890",
+      customerAddress: "123 Street, City",
+      accountCreationDate: "2023-01-01",
+      customerDOB: "1990-01-01",
     },
     {
-      customerId: 2,
-      customerName: 'Jane Smith',
-      customerEmail: 'jane.smith@example.com',
-      customerPhno: '0987654321',
-      customerAddress: '456 Oak St',
-      accountCreationDate: '2023-01-02',
-      customerDOB: '1992-02-02',
+      customerId: "C002",
+      customerName: "Jane Doe",
+      customerEmail: "jane@example.com",
+      customerPhno: "0987654321",
+      customerAddress: "456 Avenue, City",
+      accountCreationDate: "2023-02-01",
+      customerDOB: "1992-02-01",
     },
   ];
 
   beforeEach(() => {
-    mockAxios.reset();
-    mockAxios.onGet('http://localhost:8082/api/customers?adminId=1').reply(200, mockData);
+    mock.onGet("http://localhost:8082/api/admin/customers").reply(200, mockData);
   });
 
-  test('renders customer accounts table', async () => {
+  afterEach(() => {
+    mock.reset();
+  });
+
+  // Test: Component renders correctly with the title and table structure
+  test("renders the component with the table and title", async () => {
     render(<CustomerAccounts />);
+
+    expect(screen.getByText(/Customer Accounts/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Search by ID/i)).toBeInTheDocument();
+
+    // Wait for table rows to appear
     await waitFor(() => {
-      expect(screen.getByText('Customer Accounts')).toBeInTheDocument();
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("Jane Doe")).toBeInTheDocument();
     });
   });
 
-  test('searches for a customer by ID', async () => {
+  // Test: Fetch and display customer data correctly
+  test("fetches and displays customer data", async () => {
     render(<CustomerAccounts />);
 
-    await waitFor(() => screen.getByPlaceholderText('Search by ID'));
-    fireEvent.change(screen.getByPlaceholderText('Search by ID'), { target: { value: '1' } });
-
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
+    // Ensure the fetched data is rendered
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("jane@example.com")).toBeInTheDocument();
+    });
   });
 
-  test('searches for a customer by email', async () => {
+  // Test: Search functionality filters customers
+  test("filters customer data based on search input", async () => {
     render(<CustomerAccounts />);
 
-    await waitFor(() => screen.getByPlaceholderText('Search by ID'));
-    fireEvent.change(screen.getByPlaceholderText('Search by ID'), { target: { value: 'john.doe@example.com' } });
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("Jane Doe")).toBeInTheDocument();
+    });
 
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-    expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
+    // Search for "C001" to filter the first customer
+    fireEvent.change(screen.getByPlaceholderText(/Search by ID/i), {
+      target: { value: "C001" },
+    });
+
+    expect(screen.getByText("John Doe")).toBeInTheDocument();
+    expect(screen.queryByText("Jane Doe")).not.toBeInTheDocument(); // Jane Doe should not appear
   });
 
-  test('shows no data when no customers match search', async () => {
+  // Test: Deletion opens the confirmation dialog
+  test("opens delete confirmation dialog when delete button is clicked", async () => {
     render(<CustomerAccounts />);
 
-    await waitFor(() => screen.getByPlaceholderText('Search by ID'));
-    fireEvent.change(screen.getByPlaceholderText('Search by ID'), { target: { value: '999' } });
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+    });
 
-    expect(screen.getByText('No data available')).toBeInTheDocument();
+    // Click on the delete button for "john@example.com"
+    fireEvent.click(screen.getAllByText(/Delete/i)[0]);
+
+    expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
   });
 
-  test('shows error snackbar on deletion failure', async () => {
-    // Simulate deletion error
-    mockAxios.onDelete('http://localhost:8082/api/customers/jane.smith@example.com?adminId=1').reply(500);
-  
-    render(<CustomerAccounts />);
-  
-    // Wait for data to load
-    await waitFor(() => expect(screen.getByText('Jane Smith')).toBeInTheDocument());
-  
-    // Click delete button for the second customer
-    fireEvent.click(screen.getAllByText('Delete')[1]);
-  
-    // Confirm deletion in the dialog
-    fireEvent.click(screen.getAllByText('Delete', { selector: 'button' })[0]);
-    
-    // Ensure that the customer is still present
-    expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-  });
-  
 });

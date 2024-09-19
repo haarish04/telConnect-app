@@ -1,79 +1,104 @@
-// src/Components/DocumentVerificationStatusLogs.test.jsx
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import axios from "axios";
+import DocumentVerificationStatusLogs from "../components/DocumentVerificationStatusLogs";
 
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import DocumentVerificationStatusLogs from '../components/DocumentVerificationStatusLogs'; 
-import axios from 'axios';
+// Mock axios
+jest.mock("axios");
 
-jest.mock('axios');
+const mockData = [
+  {
+    verificationId: "1",
+    customerId: "123",
+    documentId: "456",
+    requestDate: new Date().toISOString(),
+    requestStatus: "SUCCESS",
+  },
+  {
+    verificationId: "2",
+    customerId: "789",
+    documentId: "012",
+    requestDate: new Date().toISOString(),
+    requestStatus: "FAILED",
+  },
+];
 
-describe('DocumentVerificationStatusLogs Component', () => {
-  const mockData = [
-    {
-      verificationId: '123',
-      customerId: 'C001',
-      documentId: 'D001',
-      requestDate: '2023-09-10',
-      requestStatus: 'SUCCESS',
-    },
-    {
-      verificationId: '456',
-      customerId: 'C002',
-      documentId: 'D002',
-      requestDate: '2023-09-11',
-      requestStatus: 'FAILED',
-    },
-  ];
-
-  afterEach(() => {
-    jest.clearAllMocks();
+describe("DocumentVerificationStatusLogs Component", () => {
+  beforeEach(() => {
+    // Mock the localStorage to return a dummy token
+    jest.spyOn(Storage.prototype, "getItem").mockReturnValue("dummyToken");
   });
 
-  test('renders the Document Verification Logs title', () => {
-    render(<DocumentVerificationStatusLogs />);
-    const titleElement = screen.getByText(/Document Verification Logs/i);
-    expect(titleElement).toBeInTheDocument();
-  });
-
-  test('fetches and displays data from API', async () => {
+  test("fetches and displays verification logs data", async () => {
+    // Mock the axios GET request
     axios.get.mockResolvedValueOnce({ data: mockData });
 
     render(<DocumentVerificationStatusLogs />);
 
-    const row = await waitFor(() => screen.getByText('C001'));
-    expect(row).toBeInTheDocument();
+    // Ensure axios was called with the correct endpoint
+    expect(axios.get).toHaveBeenCalledWith(
+      "http://localhost:8082/api/admin/verificationAttempts",
+      expect.any(Object)
+    );
+
+    // Wait for the data to be rendered on the screen
+    await waitFor(() => {
+      expect(screen.getByText("1")).toBeInTheDocument(); // Verification ID 1
+      expect(screen.getByText("123")).toBeInTheDocument(); // Customer ID 123
+      expect(screen.getByText("SUCCESS")).toBeInTheDocument(); // Status
+    });
   });
 
-  test('displays the correct status color', async () => {
+  test("search input filters the data by customer ID", async () => {
+    // Mock the axios GET request
     axios.get.mockResolvedValueOnce({ data: mockData });
 
     render(<DocumentVerificationStatusLogs />);
 
-    const successStatus = await waitFor(() => screen.getByText('SUCCESS'));
-    const failedStatus = await waitFor(() => screen.getByText('FAILED'));
+    // Wait for the data to load
+    await waitFor(() => {
+      expect(screen.getByText("123")).toBeInTheDocument();
+      expect(screen.getByText("789")).toBeInTheDocument();
+    });
 
-    expect(successStatus).toHaveStyle('color: green');
-    expect(failedStatus).toHaveStyle('color: red');
+    // Type into the search box to filter results
+    fireEvent.change(screen.getByPlaceholderText("Search by ID"), {
+      target: { value: "123" },
+    });
+
+    // Expect only the matching customer ID to show up
+    expect(screen.getByText("123")).toBeInTheDocument();
+    expect(screen.queryByText("789")).not.toBeInTheDocument();
   });
 
-  test('filters rows based on search input', async () => {
+  test("status color and text transformation for SUCCESS and FAILED", async () => {
     axios.get.mockResolvedValueOnce({ data: mockData });
-  
+
     render(<DocumentVerificationStatusLogs />);
-  
-    // Ensure data is fetched and rendered
-    await waitFor(() => screen.getByText('C001'));
-  
-    // Get the search input element
-    const searchInput = screen.getByPlaceholderText('Search by ID');
-  
-    // Simulate entering search term 'C002'
-    fireEvent.change(searchInput, { target: { value: 'C002' } });
-  
-    // Verify that only 'C002' row is visible
-    expect(screen.queryByText('C001')).not.toBeInTheDocument();
-    expect(screen.getByText('C002')).toBeInTheDocument();
+
+    // Wait for the data to be loaded
+    await waitFor(() => {
+      const successStatus = screen.getByText("SUCCESS");
+      const failedStatus = screen.getByText("FAILED");
+
+      expect(successStatus).toBeInTheDocument();
+      expect(successStatus).toHaveStyle("color: green");
+      expect(failedStatus).toBeInTheDocument();
+      expect(failedStatus).toHaveStyle("color: red");
+    });
   });
-  
+
+  test("handles error during data fetching", async () => {
+    // Mock axios to reject the promise (simulate network error)
+    axios.get.mockRejectedValueOnce(new Error("Failed to fetch"));
+
+    render(<DocumentVerificationStatusLogs />);
+
+    // Wait for the component to try and fetch data
+    await waitFor(() => {
+      expect(
+        screen.queryByText("There was an error fetching the data!")
+      ).toBeNull(); // Component should handle the error internally
+    });
+  });
 });

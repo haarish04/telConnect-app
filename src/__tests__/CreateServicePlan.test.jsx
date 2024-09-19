@@ -1,125 +1,153 @@
+// src/__tests__/CreateServicePlan.test.jsx
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import CreateServicePlan from '../components/CreateServicePlan'; // Adjust the path if needed
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import CreateServicePlan from '../components/CreateServicePlan';
 
-// Mocking axios for API requests
 jest.mock('axios');
 
 describe('CreateServicePlan Component', () => {
-  beforeEach(() => {
-    // Reset all mocks before each test
-    jest.clearAllMocks();
-  });
-
-  it('should render the form with all inputs and buttons', () => {
-    render(<CreateServicePlan />);
-
-    // Check for form elements
-    expect(screen.getByLabelText(/Plan type :/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Plan ID :/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Plan name :/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Plan price :/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Plan duration :/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Plan description :/i)).toBeInTheDocument();
-    expect(screen.getByText(/Cancel/i)).toBeInTheDocument();
-    expect(screen.getByText(/Add/i)).toBeInTheDocument();
-  });
-
-  it('should handle form input and call API on Add button click', async () => {
-    // Define the formData object with the same structure as in CreateServicePlan
-    const formData = {
-      planType: 'Prepaid',
-      planId: 'PREP-TC-1234',
-      planName: 'Basic Plan',
-      planPrice: '100',
-      planDescription: 'A basic plan for everyone.',
-      planDuration: '30 days'
+  const setup = () => {
+    const utils = render(<CreateServicePlan />);
+    const planType = utils.getByRole('combobox', { name: /plan type/i }); // Select element
+    const planId = utils.getByPlaceholderText(/Plan ID/i); // Using placeholder for inputs
+    const planName = utils.getByPlaceholderText(/Plan name/i);
+    const planPrice = utils.getByPlaceholderText(/Plan price/i);
+    const planDuration = utils.getByPlaceholderText(/Plan duration/i);
+    const planDescription = utils.getByPlaceholderText(/Plan description/i);
+    const addButton = utils.getByRole('button', { name: /add/i });
+    const cancelButton = utils.getByRole('button', { name: /cancel/i });
+    return {
+      ...utils,
+      planType,
+      planId,
+      planName,
+      planPrice,
+      planDuration,
+      planDescription,
+      addButton,
+      cancelButton,
     };
+  };
 
-    // Mock API response
-    axios.post.mockResolvedValueOnce({ data: formData });
+  beforeEach(() => {
+    axios.post.mockClear();
+  });
 
-    render(<CreateServicePlan />);
+  test('renders form elements correctly', () => {
+    const { planType, planId, planName, planPrice, planDuration, planDescription } = setup();
 
-    // Simulate user input for form fields
-    fireEvent.change(screen.getByLabelText(/Plan type :/i), { target: { value: formData.planType } });
-    fireEvent.change(screen.getAllByLabelText(/Plan ID :/i)[0], { target: { value: formData.planId } });
-    fireEvent.change(screen.getAllByLabelText(/Plan name :/i)[0], { target: { value: formData.planName } });
-    fireEvent.change(screen.getAllByLabelText(/Plan price :/i)[0], { target: { value: formData.planPrice } });
-    fireEvent.change(screen.getAllByLabelText(/Plan duration :/i)[0], { target: { value: formData.planDuration } });
-    fireEvent.change(screen.getAllByLabelText(/Plan description :/i)[0], { target: { value: formData.planDescription } });
+    expect(planType).toBeInTheDocument();
+    expect(planId).toBeInTheDocument();
+    expect(planName).toBeInTheDocument();
+    expect(planPrice).toBeInTheDocument();
+    expect(planDuration).toBeInTheDocument();
+    expect(planDescription).toBeInTheDocument();
+  });
 
-    // Simulate form submission
-    fireEvent.click(screen.getByText(/Add/i));
+  test('updates form fields on user input', () => {
+    const { planId, planName, planPrice, planDuration, planDescription } = setup();
 
-    // Wait for axios calls to be made
+    fireEvent.change(planId, { target: { value: 'PREP-TC-0001' } });
+    fireEvent.change(planName, { target: { value: 'Basic Plan' } });
+    fireEvent.change(planPrice, { target: { value: '10' } });
+    fireEvent.change(planDuration, { target: { value: '30 days' } });
+    fireEvent.change(planDescription, { target: { value: 'A basic prepaid plan' } });
+
+    expect(planId.value).toBe('PREP-TC-0001');
+    expect(planName.value).toBe('Basic Plan');
+    expect(planPrice.value).toBe('10');
+    expect(planDuration.value).toBe('30 days');
+    expect(planDescription.value).toBe('A basic prepaid plan');
+  });
+
+  test('submits the form and makes API requests successfully', async () => {
+    const { planId, planName, planPrice, planDuration, planDescription, addButton } = setup();
+
+    fireEvent.change(planId, { target: { value: 'PREP-TC-0001' } });
+    fireEvent.change(planName, { target: { value: 'Basic Plan' } });
+    fireEvent.change(planPrice, { target: { value: '10' } });
+    fireEvent.change(planDuration, { target: { value: '30 days' } });
+    fireEvent.change(planDescription, { target: { value: 'A basic prepaid plan' } });
+
+    axios.post.mockResolvedValueOnce({ data: {} });
+
+    fireEvent.click(addButton);
+
     await waitFor(() => {
+      expect(axios.post).toHaveBeenCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
-        'http://localhost:8082/api/plans?adminId=1',
-        expect.objectContaining(formData)
+        'http://localhost:8082/api/admin/newPlan',
+        {
+          planType: '',  // If you're passing planType, you'll need to change this in the test.
+          planId: 'PREP-TC-0001',
+          planName: 'Basic Plan',
+          planPrice: '10',
+          planDescription: 'A basic prepaid plan',
+          planDuration: '30 days',
+        },
+        { headers: { Authorization: `Bearer null` } }
       );
     });
-
-    // Check that submittedData is displayed
-    expect(screen.getByText(/Submitted Information:/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Plan ID :/i)[0]).toBeInTheDocument();
-    expect(screen.getByText(formData.planId)).toBeInTheDocument();
   });
 
-  it('should handle form cancellation and reset form data', () => {
-    render(<CreateServicePlan />);
+  test('handles form submission errors', async () => {
+    const { planId, planName, planPrice, planDuration, planDescription, addButton } = setup();
 
-    // Simulate user input for form fields
-    fireEvent.change(screen.getByLabelText(/Plan type :/i), { target: { value: 'Postpaid' } });
-    fireEvent.change(screen.getByLabelText(/Plan ID :/i), { target: { value: 'POST-TC-5678' } });
-    fireEvent.change(screen.getByLabelText(/Plan name :/i), { target: { value: 'Premium Plan' } });
-    fireEvent.change(screen.getByLabelText(/Plan price :/i), { target: { value: '200' } });
-    fireEvent.change(screen.getByLabelText(/Plan duration :/i), { target: { value: '60 days' } });
-    fireEvent.change(screen.getByLabelText(/Plan description :/i), { target: { value: 'A premium plan with extra benefits.' } });
+    fireEvent.change(planId, { target: { value: 'PREP-TC-0001' } });
+    fireEvent.change(planName, { target: { value: 'Basic Plan' } });
+    fireEvent.change(planPrice, { target: { value: '10' } });
+    fireEvent.change(planDuration, { target: { value: '30 days' } });
+    fireEvent.change(planDescription, { target: { value: 'A basic prepaid plan' } });
 
-    // Simulate form cancellation
-    fireEvent.click(screen.getByText(/Cancel/i));
+    axios.post.mockRejectedValueOnce(new Error('Error submitting form data'));
 
-    // Check that form fields are reset
-    expect(screen.getByLabelText(/Plan type :/i).value).toBe('');
-    expect(screen.getByLabelText(/Plan ID :/i).value).toBe('');
-    expect(screen.getByLabelText(/Plan name :/i).value).toBe('');
-    expect(screen.getByLabelText(/Plan price :/i).value).toBe('');
-    expect(screen.getByLabelText(/Plan duration :/i).value).toBe('');
-    expect(screen.getByLabelText(/Plan description :/i).value).toBe('');
-  });
+    fireEvent.click(addButton);
 
-  it('should handle API error and display error message', async () => {
-    // Mock console.error to check for error logging
-    console.error = jest.fn();
-
-    // Mock axios post to fail
-    axios.post.mockRejectedValueOnce(new Error('Error submitting form data.'));
-
-    render(<CreateServicePlan />);
-
-    // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Plan type :/i), { target: { value: 'Prepaid' } });
-    fireEvent.change(screen.getByLabelText(/Plan ID :/i), { target: { value: 'PREP-TC-1234' } });
-    fireEvent.change(screen.getByLabelText(/Plan name :/i), { target: { value: 'Basic Plan' } });
-    fireEvent.change(screen.getByLabelText(/Plan price :/i), { target: { value: '100' } });
-    fireEvent.change(screen.getByLabelText(/Plan duration :/i), { target: { value: '30 days' } });
-    fireEvent.change(screen.getByLabelText(/Plan description :/i), { target: { value: 'A basic plan for everyone.' } });
-
-    // Simulate form submission
-    fireEvent.click(screen.getByText(/Add/i));
-
-    // Wait for the error handling to be triggered
     await waitFor(() => {
-      // Check that axios.post was called
       expect(axios.post).toHaveBeenCalledTimes(1);
-      
-      // Check that the error message is displayed
-      expect(screen.getByText(/Error submitting form data./i)).toBeInTheDocument();
+      expect(screen.getByText(/Error submitting form data/i)).toBeInTheDocument();
+    });
+  });
 
-      // Check that console.error was called with the expected message
-      expect(console.error).toHaveBeenCalledWith(expect.any(Error));
+  test('clears the form on cancel', () => {
+    const { planId, planName, planPrice, planDuration, planDescription, cancelButton } = setup();
+
+    fireEvent.change(planId, { target: { value: 'PREP-TC-0001' } });
+    fireEvent.change(planName, { target: { value: 'Basic Plan' } });
+    fireEvent.change(planPrice, { target: { value: '10' } });
+    fireEvent.change(planDuration, { target: { value: '30 days' } });
+    fireEvent.change(planDescription, { target: { value: 'A basic prepaid plan' } });
+
+    fireEvent.click(cancelButton);
+
+    expect(planId.value).toBe('');
+    expect(planName.value).toBe('');
+    expect(planPrice.value).toBe('');
+    expect(planDuration.value).toBe('');
+    expect(planDescription.value).toBe('');
+  });
+
+  test('displays submitted data after submission', async () => {
+    const { planId, planName, planPrice, planDuration, planDescription, addButton } = setup();
+
+    fireEvent.change(planId, { target: { value: 'PREP-TC-0001' } });
+    fireEvent.change(planName, { target: { value: 'Basic Plan' } });
+    fireEvent.change(planPrice, { target: { value: '10' } });
+    fireEvent.change(planDuration, { target: { value: '30 days' } });
+    fireEvent.change(planDescription, { target: { value: 'A basic prepaid plan' } });
+
+    axios.post.mockResolvedValueOnce({ data: {} });
+
+    fireEvent.click(addButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Submitted Information/i)).toBeInTheDocument();
+      expect(screen.getByText('PREP-TC-0001')).toBeInTheDocument();
+      expect(screen.getByText('Basic Plan')).toBeInTheDocument();
+      expect(screen.getByText('10')).toBeInTheDocument();
+      expect(screen.getByText('30 days')).toBeInTheDocument();
+      expect(screen.getByText('A basic prepaid plan')).toBeInTheDocument();
     });
   });
 });

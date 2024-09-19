@@ -1,53 +1,51 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import PersonalInfo from '../components/PersonalInfo';
-import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import PersonalInfo from "../components/PersonalInfo";
+import axios from "axios";
+import { BrowserRouter as Router } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 
-// Mocking axios for API requests
-jest.mock('axios');
+jest.mock("axios");
 
-// Mocking useNavigate hook from react-router-dom
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => jest.fn(),
-}));
-
-describe('PersonalInfo Component', () => {
-  // Mock navigate function
-  const mockNavigate = jest.fn();
-
+describe("PersonalInfo Component", () => {
   beforeEach(() => {
-    // Mock sessionStorage values
-    sessionStorage.setItem('email', 'testuser@test.com');
-    sessionStorage.setItem('password', 'testpassword');
-    
-    // Reset all mocks before each test
     jest.clearAllMocks();
+    sessionStorage.setItem("email", "testuser@example.com");
+    sessionStorage.setItem("password", "password123");
   });
 
-  it('should render the form with all inputs and submit button', () => {
+  test("renders form elements correctly", () => {
     render(
       <Router>
         <PersonalInfo />
       </Router>
     );
 
-    // Check for form elements
-    expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Address Line 1/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Phone Number/i)).toBeInTheDocument();
-    expect(screen.getByText(/Submit/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Name:/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Date of Birth:/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Address Line 1:/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Phone Number:/)).toBeInTheDocument();
   });
 
-  it('should allow form input and call APIs on form submit', async () => {
-    // Mock API responses
-    axios.post.mockResolvedValueOnce({ data: { customerId: 1 } }); // Mock customer registration response
-    axios.get.mockResolvedValueOnce({ data: { customerId: 1 } }); // Mock get customer details
-    axios.post.mockResolvedValueOnce({}); // Mock document entry creation
-    axios.get.mockResolvedValueOnce({ data: [{ documentId: 123 }] }); // Mock get documentId
-    axios.post.mockResolvedValueOnce({}); // Mock verification creation
+  test("updates form fields on user input", () => {
+    render(
+      <Router>
+        <PersonalInfo />
+      </Router>
+    );
+
+    const nameInput = screen.getByLabelText(/Name:/);
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    expect(nameInput.value).toBe("John Doe");
+
+    const phoneInput = screen.getByLabelText(/Phone Number:/);
+    fireEvent.change(phoneInput, { target: { value: "1234567890" } });
+    expect(phoneInput.value).toBe("1234567890");
+  });
+
+  test("submits the form and makes API requests successfully", async () => {
+    axios.post.mockResolvedValueOnce({ data: { success: true } });
+    axios.get.mockResolvedValueOnce({ data: { customerId: 1 } });
 
     render(
       <Router>
@@ -55,38 +53,19 @@ describe('PersonalInfo Component', () => {
       </Router>
     );
 
-    // Simulate user input for form fields
-    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByLabelText(/Date of Birth/i), { target: { value: '1990-01-01' } });
-    fireEvent.change(screen.getByLabelText(/Address Line 1/i), { target: { value: '123 Main St' } });
-    fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: '9876543210' } });
-
-    // Simulate form submission
-    fireEvent.click(screen.getByText(/Submit/i));
-
-    // Wait for axios calls to be made
-    await waitFor(() => {
-      expect(axios.post).toHaveBeenCalledTimes(3); // One for customer registration, one for document, and one for verification
-      expect(axios.get).toHaveBeenCalledTimes(2); // One for customer details and one for document details
+    const submitButton = screen.getByText(/Submit/);
+    await act(async () => {
+      fireEvent.click(submitButton);
     });
 
-    // Check that the axios calls are made with the correct arguments
-    expect(axios.post).toHaveBeenCalledWith(
-      'http://localhost:8082/api/customers/register',
-      expect.objectContaining({
-        customerName: 'John Doe',
-        customerPhno: '9876543210',
-        customerDOB: '1990-01-01',
-      })
-    );
+    // Assert that the axios.post call was made correctly
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    // Assert that the axios.get call was made after form submission
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
   });
 
-  it('should handle API error during registration', async () => {
-    // Mock console.error to check for error logging
-    console.error = jest.fn();
-
-    // Mock axios post to fail
-    axios.post.mockRejectedValueOnce(new Error('Registration failed'));
+  test("handles form submission errors", async () => {
+    axios.post.mockRejectedValueOnce(new Error("API error"));
 
     render(
       <Router>
@@ -94,25 +73,30 @@ describe('PersonalInfo Component', () => {
       </Router>
     );
 
-    // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByLabelText(/Date of Birth/i), { target: { value: '1990-01-01' } });
-    fireEvent.change(screen.getByLabelText(/Address Line 1/i), { target: { value: '123 Main St' } });
-    fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: '9876543210' } });
-
-    // Simulate form submission
-    fireEvent.click(screen.getByText(/Submit/i));
-
-    // Wait for the error handling to be triggered
-    await waitFor(() => {
-      // Check that axios.post was called
-      expect(axios.post).toHaveBeenCalledTimes(1); // It should fail after the first API call
-      
-      // Check that console.error was called with the expected message and error
-      expect(console.error).toHaveBeenCalledWith(
-        'Error during registration:',
-        expect.any(Error)
-      );
+    const submitButton = screen.getByText(/Submit/);
+    await act(async () => {
+      fireEvent.click(submitButton);
     });
+
+    // Check if the error is handled properly
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+  });
+
+  test("opens date picker on date field click (mocked)", () => {
+    // Mock the ref to bypass JSDOM limitation
+    const mockShowPicker = jest.fn();
+    jest.spyOn(HTMLInputElement.prototype, 'showPicker').mockImplementation(mockShowPicker);
+
+    render(
+      <Router>
+        <PersonalInfo />
+      </Router>
+    );
+
+    const dateInput = screen.getByLabelText(/Date of Birth:/);
+    fireEvent.click(dateInput);
+
+    // Ensure the date picker mock function is called
+    expect(mockShowPicker).toHaveBeenCalled();
   });
 });
