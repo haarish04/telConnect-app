@@ -7,7 +7,7 @@
 
 .confirmation-heading {
   margin-top: 2em;
-  color: #1E2A5A;
+  color: #1e2a5a;
   font-size: 2em;
   line-height: 1.3;
   padding-bottom: 40px;
@@ -22,7 +22,7 @@
 
 .confirmation-content {
   background-color: white;
-  color: #1E2A5A;
+  color: #1e2a5a;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   width: 85%;
@@ -41,23 +41,17 @@
   margin-top: 20px;
 }
 
-.cancel-button,
+.cancelConfirm-button,
 .confirm-button {
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
+  margin-left: 20px;
+  margin-top: 30px;
   border-radius: 4px;
   font-size: 1em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.cancel-button {
-  background-color: #1E2A5A;
-  color: #ffffff;
-}
-
-.confirm-button {
-  background-color: #1E2A5A;
+  background-color: #1e2a5a;
   color: #ffffff;
 }
 

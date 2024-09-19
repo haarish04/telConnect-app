@@ -100,14 +100,14 @@ export default function ConfirmationPage({
             <strong>Plan Duration:</strong> {planDuration}
           </p>
           <p>
-            <strong>Start Date:</strong> {today.toLocaleDateString()}
+            <strong>Start Date:</strong> {today.toISOString().split("T")[0]}
           </p>
           <p>
             <strong>End Date:</strong> {endDate}
           </p>
           <div className="button-container">
             <Link to="/servicePlans">
-              <button className="cancel-button" onClick={onCancel}>
+              <button className="cancelConfirm-button" onClick={onCancel}>
                 Cancel
               </button>
             </Link>
