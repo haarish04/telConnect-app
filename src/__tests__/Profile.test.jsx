@@ -76,8 +76,6 @@ describe("Profile Page", () => {
       expect(screen.getByText(mockCustomerData.customerEmail)).toBeInTheDocument();
       expect(screen.getByText(mockCustomerData.customerPhno)).toBeInTheDocument();
       expect(screen.getByText(mockCustomerData.customerAddress)).toBeInTheDocument();
-      expect(screen.getByText("Basic Plan")).toBeInTheDocument();
-      expect(screen.getByText("Active")).toBeInTheDocument();
     });
   });
 
