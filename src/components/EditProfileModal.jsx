@@ -73,12 +73,16 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
   };
 
   const checkPassword = async () => {
-    const res = await axios.post("http://localhost:8082/api/login", {
-      customerEmail: customerData.customerEmail,
-      password: passwordData.currentPassword,
-    });
-    if (res.status === 200) return true;
-    else return false;
+    try {
+      const res = await axios.post("http://localhost:8082/api/login", {
+        customerEmail: customerData.customerEmail,
+        password: passwordData.currentPassword,
+      });
+      if (res.status === 200) return true;
+    } catch (error) {
+      console.log("Incorrect password");
+      return false;
+    }
   };
 
   const handlePasswordChange = (e) => {
@@ -89,9 +93,12 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     });
   };
 
-  const handlePasswordSave = () => {
+  const handlePasswordSave = async () => {
     // Check if current password matches the stored password
-    if (!checkPassword()) {
+    const isPasswordCorrect = await checkPassword();
+
+    if (!isPasswordCorrect) {
+      // Display error message for incorrect current password
       setAlertVisible(true);
       setAlertMessage("Current password is incorrect!");
       setAlertType("danger");
@@ -101,13 +108,13 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     // Check if new password and confirm password match
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       setAlertVisible(true);
-      setAlertMessage("Passwords do not match!");
+      setAlertMessage("New passwords do not match!");
       setAlertType("danger");
       return;
     }
 
     // Handle password change logic here (e.g., API call to update password)
-    //console.log("Password changed successfully", passwordData);
+    console.log("Password changed successfully", passwordData);
 
     // Optionally, update formData with the new password
     setFormData({
