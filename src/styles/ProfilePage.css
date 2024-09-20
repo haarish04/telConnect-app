@@ -26,8 +26,6 @@
   display: flex;
   align-items: center;
   padding: 20px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
 }
 
 .profile-icon {
@@ -44,8 +42,6 @@
   color: #0f1035;
   padding: 20px;
   background-color: #f9f9f9;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
 }
 
 h6 {
@@ -101,9 +97,11 @@ hr {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   width: 100%;
   max-width: 800px;
   transition: transform 0.3s ease-in-out;
+  margin-bottom: 30px; 
 }
 
 .active-plan-card:hover {
@@ -112,27 +110,34 @@ hr {
 
 .active-plan-card-header {
   background: linear-gradient(135deg, #365486, #1E2A5A);
-  color: white;
-  padding: 20px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+    color: white;
+    padding: 20px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .active-plan-card-body {
   color: #0f1035;
   padding: 20px;
+  padding-left: 35px;
+  padding-right: 70px;
   background-color: #f9f9f9;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  display: flex;
+  border-radius: 15px;
+  justify-content: space-between;
+  /* gap: 100px */
+}
+.active-plan-card-body  p{
+  margin: 10px;
 }
 
 @media (max-width: 768px) {
   .profile-card,
-  .active-plan-card {
-    max-width: 95%;
-  }
+  .active-plan-card 
 }
 
-.active-plan{
-  /* transform: scaleX(1.05); */
+strong {
+  color: #365486;
+  font-weight: bold;
+  font-size: medium;
 }

@@ -4,15 +4,15 @@ import "../styles/ConfirmationPage.css";
 import axios from "axios";
 import ConfirmationPage from "../pages/ConfirmationPage";
 import { useLocation } from "react-router-dom";
-
+ 
 export default function ConfirmationContainer() {
   const location = useLocation();
   const planId = location.state?.planId || localStorage.getItem("planId");
-
+ 
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     const fetchPlan = async () => {
       try {
@@ -28,7 +28,7 @@ export default function ConfirmationContainer() {
         setLoading(false);
       }
     };
-
+ 
     if (planId) {
       fetchPlan(); // Only call the API if planId is available
     } else {
@@ -36,21 +36,21 @@ export default function ConfirmationContainer() {
       setLoading(false);
     }
   }, [planId]);
-
+ 
   const handleCancel = () => {
   };
-
+ 
   const handleConfirm = () => {
   };
-
+ 
   if (loading) {
     return <p>Loading...</p>;
   }
-
+ 
   if (error) {
     return <p>{error}</p>;
   }
-
+ 
   return plan ? (
     <ConfirmationPage
       planId={plan.planId}
@@ -65,3 +65,5 @@ export default function ConfirmationContainer() {
     <p>No plan data available</p>
   );
 }
+ 
+ 

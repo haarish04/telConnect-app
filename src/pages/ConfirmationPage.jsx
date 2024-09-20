@@ -6,7 +6,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { CustomerContext } from "../context/CustomerContext";
 import Footer from "../components/Footer";
-
+ 
 export default function ConfirmationPage({
   planId,
   planName,
@@ -17,12 +17,12 @@ export default function ConfirmationPage({
 }) {
   const navigate = useNavigate();
   const { customerData } = useContext(CustomerContext);
-
+ 
   // Get today's date
   const today = new Date();
   const localizedDate = today.toLocaleDateString();
   const durationInDays = parseInt(planDuration, 10) || 0;
-
+ 
   const calculateEndDate = (startDate, durationInDays) => {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + durationInDays);
@@ -30,9 +30,9 @@ export default function ConfirmationPage({
     const isoDate = utcIsoDate.split("T")[0];
     return isoDate;
   };
-
+ 
   const endDate = calculateEndDate(today, durationInDays);
-
+ 
   const formatPrice = (price) => {
     if (typeof price !== "string") {
       return "Price not available"; // Handle undefined/null price
@@ -40,26 +40,26 @@ export default function ConfirmationPage({
     const numericPrice = parseFloat(price.replace(/[^\d.-]/g, "")) || 0;
     return `₹${numericPrice.toFixed(2)}`;
   };
-
+ 
   const formattedPrice = formatPrice(planPrice);
-
+ 
   const handleConfirm = async () => {
     // Access customerData from context
     const email = customerData.customerEmail;
     //console.log(email);
     const name = " ";
-
+ 
     const utcStartDate = new Date(today.toUTCString());
     const isoStartDate = utcStartDate.toISOString().split("T")[0];
-
+ 
     try {
       //Thank you mail after confirmation
       await axios.post(
         `http://localhost:8082/api/emails/thank-you?recipient=${email}&name=${name}`
       );
-
+ 
       // Create mapping of customer and chosen plan and mark status as pending,this is to be approved by admin
-
+ 
       const res = await axios.post(
         "http://localhost:8082/api/customers/plans",
         {
@@ -71,14 +71,14 @@ export default function ConfirmationPage({
         }
       );
       //console.log(res);
-
+ 
       // After successful requests, navigate to the thank-you page
       navigate("/thank-you");
     } catch (error) {
       console.error("Error sending emails:", error);
     }
   };
-
+ 
   return (
     <>
       <NavBar />
