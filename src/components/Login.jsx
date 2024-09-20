@@ -25,7 +25,10 @@ const Login = () => {
   useEffect(() => {
     const checkTokenExpiration = () => {
       const tokenExpiration = localStorage.getItem("tokenExpiration");
-      if (tokenExpiration && new Date().getTime() > parseInt(tokenExpiration, 10)) {
+      if (
+        tokenExpiration &&
+        new Date().getTime() > parseInt(tokenExpiration, 10)
+      ) {
         localStorage.removeItem("bearerToken");
         localStorage.removeItem("tokenExpiration");
         navigate("/login");
@@ -56,6 +59,9 @@ const Login = () => {
           },
         }
       );
+
+      localStorage.setItem("Password", password);
+      console.log(password);
 
       if (res.data.token) {
         const token = res.data.token;

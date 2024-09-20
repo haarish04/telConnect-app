@@ -117,7 +117,7 @@ export default function DocumentVerification() {
       const response = await axios.patch(
         `http://localhost:8082/api/verification/${customerId}/status?status=success`
       );
-      //console.log(response.data);
+      console.log(response.data);
       // If the status update is successful, return true
       return response.status === 200;
     } catch (error) {

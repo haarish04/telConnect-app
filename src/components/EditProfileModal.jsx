@@ -2,21 +2,23 @@ import React, { useState, useContext } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { CustomerContext } from "../context/CustomerContext"; // Import the context
 import "../styles/EditProfileModal.css"; // Make sure to import the CSS file
+import axios from "axios";
 
 const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
   // Access customerData and logout from CustomerContext
+
   const { customerData } = useContext(CustomerContext);
 
   // Alert state variables
   const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertType, setAlertType] = useState(''); // 'success' or 'danger'
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState(""); // 'success' or 'danger'
 
   const [showPasswordModal, setShowPasswordModal] = useState(false); // Toggle between modals
   const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+    currentPassword: "",
   });
 
   const [formData, setFormData] = useState({
@@ -27,6 +29,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     password: "", // Start with an empty password
   });
 
+  console.log();
   const [passwordVisible, setPasswordVisible] = useState({
     currentPassword: false,
     newPassword: false,
@@ -69,6 +72,15 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     handleClose();
   };
 
+  const checkPassword = async () => {
+    const res = await axios.post("http://localhost:8082/api/login", {
+      customerEmail: customerData.customerEmail,
+      password: passwordData.currentPassword,
+    });
+    if (res.status === 200) return true;
+    else return false;
+  };
+
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
     setPasswordData({
@@ -79,7 +91,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
 
   const handlePasswordSave = () => {
     // Check if current password matches the stored password
-    if (passwordData.currentPassword !== customerData.password) {
+    if (!checkPassword()) {
       setAlertVisible(true);
       setAlertMessage("Current password is incorrect!");
       setAlertType("danger");
@@ -122,14 +134,22 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
   return (
     <>
       {/* Main Edit Profile Modal */}
-      <Modal show={show && !showPasswordModal} onHide={handleClose} className="edit-profile-modal">
+      <Modal
+        show={show && !showPasswordModal}
+        onHide={handleClose}
+        className="edit-profile-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title className="modal-title-white">Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Alert Section */}
           {alertVisible && (
-            <Alert variant={alertType} onClose={() => setAlertVisible(false)} dismissible>
+            <Alert
+              variant={alertType}
+              onClose={() => setAlertVisible(false)}
+              dismissible
+            >
               {alertMessage}
             </Alert>
           )}
@@ -181,38 +201,62 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
               />
             </Form.Group>
             <div className="change-password-section">
-              <Button variant="link" className="btn-link" onClick={handlePasswordModalOpen}>
+              <Button
+                variant="link"
+                className="btn-link"
+                onClick={handlePasswordModalOpen}
+              >
                 Change Password
               </Button>
             </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" className="custom-cancel-button" onClick={handleClose}>
+          <Button
+            variant="secondary"
+            className="custom-cancel-button"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
-          <Button variant="primary" className="custom-save-button" onClick={handleSaveChanges}>
+          <Button
+            variant="primary"
+            className="custom-save-button"
+            onClick={handleSaveChanges}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
 
       {/* Password Change Modal */}
-      <Modal show={showPasswordModal} onHide={handlePasswordModalClose} className="password-modal">
+      <Modal
+        show={showPasswordModal}
+        onHide={handlePasswordModalClose}
+        className="password-modal"
+      >
         <Modal.Header closeButton>
-          <Modal.Title className="modal-title-white">Change Password</Modal.Title>
+          <Modal.Title className="modal-title-white">
+            Change Password
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Alert Section */}
           {alertVisible && (
-            <Alert variant={alertType} onClose={() => setAlertVisible(false)} dismissible>
+            <Alert
+              variant={alertType}
+              onClose={() => setAlertVisible(false)}
+              dismissible
+            >
               {alertMessage}
             </Alert>
           )}
 
           <Form className="form">
             <Form.Group>
-              <Form.Label htmlFor="currentPassword">Current Password</Form.Label>
+              <Form.Label htmlFor="currentPassword">
+                Current Password
+              </Form.Label>
               <div className="password-input-group">
                 <Form.Control
                   id="currentPassword"
@@ -223,7 +267,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
                 />
                 <Button
                   variant="outline-secondary"
-                  onClick={() => togglePasswordVisibility('currentPassword')}
+                  onClick={() => togglePasswordVisibility("currentPassword")}
                 >
                   {passwordVisible.currentPassword ? "Hide" : "Show"}
                 </Button>
@@ -241,14 +285,16 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
                 />
                 <Button
                   variant="outline-secondary"
-                  onClick={() => togglePasswordVisibility('newPassword')}
+                  onClick={() => togglePasswordVisibility("newPassword")}
                 >
                   {passwordVisible.newPassword ? "Hide" : "Show"}
                 </Button>
               </div>
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="confirmPassword">Confirm New Password</Form.Label>
+              <Form.Label htmlFor="confirmPassword">
+                Confirm New Password
+              </Form.Label>
               <div className="password-input-group">
                 <Form.Control
                   id="confirmPassword"
@@ -259,7 +305,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
                 />
                 <Button
                   variant="outline-secondary"
-                  onClick={() => togglePasswordVisibility('confirmPassword')}
+                  onClick={() => togglePasswordVisibility("confirmPassword")}
                 >
                   {passwordVisible.confirmPassword ? "Hide" : "Show"}
                 </Button>
@@ -268,10 +314,18 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" className="custom-cancel-button" onClick={handlePasswordModalClose}>
+          <Button
+            variant="secondary"
+            className="custom-cancel-button"
+            onClick={handlePasswordModalClose}
+          >
             Cancel
           </Button>
-          <Button variant="primary" className="custom-save-button" onClick={handlePasswordSave}>
+          <Button
+            variant="primary"
+            className="custom-save-button"
+            onClick={handlePasswordSave}
+          >
             Save New Password
           </Button>
         </Modal.Footer>

@@ -58,13 +58,13 @@ const Profile = () => {
           `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
         );
-        console.log(response.data)
-        response.data.forEach((plan)=>{
-          if(plan.status==="Active"){
-            setActivePlan(plan)
-            console.log(plan)
+        // console.log(response.data);
+        response.data.forEach((plan) => {
+          if (plan.status === "Active") {
+            setActivePlan(plan);
+            // console.log(plan);
           }
-        })
+        });
       } catch (err) {
         console.error("Error fetching active plan:", err);
         setActivePlan(null);
@@ -84,7 +84,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    console.log("Active plan:", activePlan); // This will log whenever activePlan changes
+    // console.log("Active plan:", activePlan); // This will log whenever activePlan changes
   }, [activePlan]);
 
   const redirectToDocumentVerification = () => {
@@ -207,17 +207,17 @@ const Profile = () => {
           </Row>
 
           {/* Active Plan Section */}
-          
+
           <Row className="d-flex justify-content-center align-items-center h-100 active-plan">
             <Col lg={8}>
               <Card className="active-plan-card">
-              <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
+                <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
                   <h5>Active Service Plans</h5>
                 </Card.Header>
                 <Card.Body className="active-plan-card-body">
                   {planLoading ? (
                     <div>Loading plan details...</div>
-                  ) : activePlan && true? (
+                  ) : activePlan && true ? (
                     <div>
                       <p>
                         <strong>Plan:</strong> {activePlan?.planId}
@@ -241,10 +241,9 @@ const Profile = () => {
                       src="src\assets\connected-img.jpg"
                       alt="Plan illustration"
                       className="img-fluid"
-                      style={{ maxHeight: '200px', marginLeft: '20px' }}
+                      style={{ maxHeight: "200px", marginLeft: "20px" }}
                     />
                   </div>
-          
                 </Card.Body>
               </Card>
             </Col>
