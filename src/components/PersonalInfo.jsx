@@ -68,7 +68,7 @@ function PersonalInfo() {
       const documentDetails = await axios.get(
         `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents`
       );
-      //console.log("DocumentId:", documentDetails.data[0].documentId);
+      console.log("DocumentId:", documentDetails.data[0].documentId);
 
       const newVerification = {
         customerId: customerDetails.data.customerId,
@@ -78,6 +78,11 @@ function PersonalInfo() {
       const newVerificationRequest = await axios.post(
         "http://localhost:8082/api/verification",
         newVerification
+      );
+
+      //Send welcome email after account creation
+      await axios.post(
+        `http://localhost:8082/api/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
       );
       navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {
