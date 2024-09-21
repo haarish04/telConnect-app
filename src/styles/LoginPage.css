@@ -36,17 +36,18 @@
 }
 
 .login-section h2 {
-  margin-bottom: 2rem;
   text-align: center;
   width: 100%;
-  margin-bottom: 1.5rem;
-  padding-right: 10%;
+  padding-right: 5%;
 }
 
 .login-section form {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  justify-content: center;
+  padding-left: 3%;
 }
 
 .login-section form input {
@@ -84,6 +85,12 @@
   margin-top: 2rem;
   text-align: center;
   width: 100%;
+  font-size: large;
+}
+
+.success-message {
+  /* padding-bottom: 40px; */
+  padding-right: 4%;
 }
 
 .login-section a {
@@ -91,6 +98,3 @@
   text-decoration: none;
 }
 
-.success-message {
-  font-size: 1rem;
-}
