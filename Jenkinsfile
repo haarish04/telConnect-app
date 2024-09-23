@@ -15,13 +15,14 @@ pipeline {
                 bat "docker pull alpine"
             }
         }
-        stage('Install Dependencies') {
+        stage('Test && Install Dependencies') {
             steps {
                 bat '''
                 C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\node -v
                 C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\npm -v
                 dir
                 dir node_modules/.bin
+                C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\npm run test
                 C:\\Users\\e031882\\software\\node-v20.16.0-win-x64\\node-v20.16.0-win-x64\\npm install
                 '''
             }
