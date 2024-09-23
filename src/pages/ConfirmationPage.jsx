@@ -87,6 +87,7 @@ export default function ConfirmationPage({
           <p>Please review your selected plan details below:</p>
         </h1>
         <div className="confirmation-content">
+          <div className="text-box">
           <p>
             <strong>Plan ID:</strong> {planId}
           </p>
@@ -105,6 +106,7 @@ export default function ConfirmationPage({
           <p>
             <strong>End Date:</strong> {endDate}
           </p>
+          </div>
           <div className="button-container">
             <Link to="/servicePlans">
               <button className="cancelConfirm-button" onClick={onCancel}>

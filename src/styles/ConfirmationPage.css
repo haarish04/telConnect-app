@@ -31,7 +31,12 @@
   margin: 0 auto;
   text-align: left;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 2;
+}
+
+.text-box strong {
+  font-size: 18px;
+
 }
 
 .button-container {
