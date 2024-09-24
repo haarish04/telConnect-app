@@ -3,11 +3,11 @@ import axios from "axios";
 import "../styles/ServicePlans.css";
 import { useNavigate } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
-import { onPlanClickHandler } from "../utils/authUtils";
+import { onPlanClickHandler } from "../utils/authutils";
 import Alert from "@mui/material/Alert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import duration icon
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
- 
+
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
@@ -16,7 +16,7 @@ const ServicePlans = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const { customerData } = useContext(CustomerContext);
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -29,7 +29,7 @@ const ServicePlans = () => {
     };
     fetchPlans();
   }, []);
- 
+
   useEffect(() => {
     const filtered = plans.filter((plan) =>
       serviceType === "prepaid"
@@ -38,16 +38,16 @@ const ServicePlans = () => {
     );
     setFilteredPlans(filtered);
   }, [serviceType, plans]);
- 
+
   const handleServiceChange = (type) => {
     setServiceType(type);
   };
- 
+
   const handlePlanSelect = (planId) => {
     setSelectedPlan(planId);
     setAlertMessage(""); // Clear previous alert message
   };
- 
+
   const handleClick = async () => {
     if (selectedPlan) {
       try {
@@ -64,7 +64,7 @@ const ServicePlans = () => {
       setAlertMessage("Please select a plan.");
     }
   };
- 
+
   return (
     <div className="service-plans-container">
       {alertMessage && (
@@ -94,11 +94,11 @@ const ServicePlans = () => {
           </Alert>
         </div>
       )}
- 
+
       <h2 className="headline">
         Experience the Power of Unlimited Connections with Our Services!
       </h2>
- 
+
       <div className="service-select-page">
         <button
           className={`service-button ${
@@ -117,7 +117,7 @@ const ServicePlans = () => {
           Postpaid
         </button>
       </div>
- 
+
       <div className="plans-box">
         <div className="plans-grid">
           {filteredPlans.length > 0 ? (
@@ -148,13 +148,12 @@ const ServicePlans = () => {
           )}
         </div>
       </div>
- 
+
       <button className="activate-button" onClick={handleClick}>
         Activate
       </button>
     </div>
   );
 };
- 
+
 export default ServicePlans;
- 

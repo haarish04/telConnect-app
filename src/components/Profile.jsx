@@ -8,7 +8,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import { isDocumentVerified } from "../utils/authUtils";
+import { isDocumentVerified } from "../utils/authutils";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import EditProfileModal from "./EditProfileModal";
 
