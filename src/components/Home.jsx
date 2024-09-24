@@ -9,7 +9,7 @@ import CardGrid from "../components/CardGrid";
 
 const fetchAndStorePlans = async () => {
   try {
-    const response = await axios.get("http://localhost:8082/api/plans", {
+    const response = await axios.get("${process.env.REACT_APP_API_BASE_URL}/plans", {
       withCredentials: true,
     });
     const plans = response.data;

@@ -74,7 +74,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
 
   const checkPassword = async () => {
     try {
-      const res = await axios.post("http://localhost:8082/api/login", {
+      const res = await axios.post("${process.env.REACT_APP_API_BASE_URL}/login", {
         customerEmail: customerData.customerEmail,
         password: passwordData.currentPassword,
       });

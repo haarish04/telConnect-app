@@ -49,24 +49,24 @@ function PersonalInfo() {
     try {
       // Register new customer
       const registerResponse = await axios.post(
-        "http://localhost:8082/api/register",
+        "${process.env.REACT_APP_API_BASE_URL}/register",
         newcustomerData
       );
 
       //Get details after registering
       const customerDetails = await axios.get(
-        `http://localhost:8082/api/customers/${email}`
+        `${process.env.REACT_APP_API_BASE_URL}/customers/${email}`
       );
       //console.log("customerId:", customerDetails.data.customerId);
 
       //Create new document entry
       const blankDocument = await axios.post(
-        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents?DocumentType=Aadhar`
+        `${process.env.REACT_APP_API_BASE_URL}/customers/${customerDetails.data.customerId}/documents?DocumentType=Aadhar`
       );
 
       //Get the documentId for the new entry
       const documentDetails = await axios.get(
-        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents`
+        `${process.env.REACT_APP_API_BASE_URL}/customers/${customerDetails.data.customerId}/documents`
       );
       console.log("DocumentId:", documentDetails.data[0].documentId);
 
@@ -76,13 +76,13 @@ function PersonalInfo() {
       };
       //Create new verification status as failed using documentId and customerId
       const newVerificationRequest = await axios.post(
-        "http://localhost:8082/api/verification",
+        "${process.env.REACT_APP_API_BASE_URL}/verification",
         newVerification
       );
 
       //Send welcome email after account creation
       await axios.post(
-        `http://localhost:8082/api/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
+        `${process.env.REACT_APP_API_BASE_URL}/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
       );
       navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {

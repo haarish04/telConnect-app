@@ -31,7 +31,7 @@ describe("CustomerAccounts Component", () => {
   ];
 
   beforeEach(() => {
-    mock.onGet("http://localhost:8082/api/admin/customers").reply(200, mockData);
+    mock.onGet("${process.env.REACT_APP_API_BASE_URL}/admin/customers").reply(200, mockData);
   });
 
   afterEach(() => {

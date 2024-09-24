@@ -17,7 +17,7 @@ export const getCustomerId = (customerData) => {
 export const isDocumentVerified = async (customerId) => {
   try {
     const response = await axios.get(
-      `http://localhost:8082/api/verification/${customerId}/status`,
+      `${process.env.REACT_APP_API_BASE_URL}/verification/${customerId}/status`,
       { withCredentials: true }
     );
 

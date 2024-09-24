@@ -66,8 +66,8 @@ describe("Profile Page", () => {
     };
 
     // Mock the API responses for customer and document verification
-    mockAxios.onGet(`http://localhost:8082/api/customers/${mockCustomerData.customerEmail}`).reply(200, mockCustomerData);
-    mockAxios.onGet(`http://localhost:8082/api/customers/plans/${mockCustomerData.customerId}/plans/status`).reply(200, mockActivePlan);
+    mockAxios.onGet(`${process.env.REACT_APP_API_BASE_URL}/customers/${mockCustomerData.customerEmail}`).reply(200, mockCustomerData);
+    mockAxios.onGet(`${process.env.REACT_APP_API_BASE_URL}/customers/plans/${mockCustomerData.customerId}/plans/status`).reply(200, mockActivePlan);
 
     renderWithContext(<Profile />, { providerProps });
 
@@ -88,8 +88,8 @@ describe("Profile Page", () => {
     };
 
     // Mock customer data and document not verified
-    mockAxios.onGet(`http://localhost:8082/api/customers/${mockCustomerData.customerEmail}`).reply(200, mockCustomerData);
-    mockAxios.onGet(`http://localhost:8082/api/customers/plans/${mockCustomerData.customerId}/plans/status`).reply(200, mockActivePlan);
+    mockAxios.onGet(`${process.env.REACT_APP_API_BASE_URL}/customers/${mockCustomerData.customerEmail}`).reply(200, mockCustomerData);
+    mockAxios.onGet(`${process.env.REACT_APP_API_BASE_URL}/customers/plans/${mockCustomerData.customerId}/plans/status`).reply(200, mockActivePlan);
 
     renderWithContext(<Profile />, { providerProps });
 

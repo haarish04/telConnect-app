@@ -57,8 +57,8 @@ describe("DocumentVerification Component", () => {
   });
 
   test("uploads a valid document and shows success message", async () => {
-    mockAxios.onPost("http://localhost:8082/api/ocr/recognize").reply(200);
-    mockAxios.onPatch("http://localhost:8082/api/verification/12345/status?status=success").reply(200);
+    mockAxios.onPost("${process.env.REACT_APP_API_BASE_URL}/ocr/recognize").reply(200);
+    mockAxios.onPatch("${process.env.REACT_APP_API_BASE_URL}/verification/12345/status?status=success").reply(200);
 
     renderComponent();
     
@@ -80,7 +80,7 @@ describe("DocumentVerification Component", () => {
   });
 
   test("shows an error message when document verification fails", async () => {
-    mockAxios.onPost("http://localhost:8082/api/ocr/recognize").reply(500);
+    mockAxios.onPost("${process.env.REACT_APP_API_BASE_URL}/ocr/recognize").reply(500);
 
     renderComponent();
 

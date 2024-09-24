@@ -37,7 +37,7 @@ describe("DocumentVerificationStatusLogs Component", () => {
 
     // Ensure axios was called with the correct endpoint
     expect(axios.get).toHaveBeenCalledWith(
-      "http://localhost:8082/api/admin/verificationAttempts",
+      "${process.env.REACT_APP_API_BASE_URL}/admin/verificationAttempts",
       expect.any(Object)
     );
 

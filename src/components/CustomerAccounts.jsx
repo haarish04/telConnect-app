@@ -27,7 +27,7 @@ export default function CustomerAccounts() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/admin/customers", {
+      .get("${process.env.REACT_APP_API_BASE_URL}/admin/customers", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -66,7 +66,7 @@ export default function CustomerAccounts() {
   const handleConfirmDelete = () => {
     axios
       .delete(
-        `http://localhost:8082/api/admin/customers/${encodeURIComponent(
+        `${process.env.REACT_APP_API_BASE_URL}/admin/customers/${encodeURIComponent(
           selectedEmail
         )}`,
         {

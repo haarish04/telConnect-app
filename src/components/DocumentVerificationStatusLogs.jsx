@@ -17,7 +17,7 @@ export default function DocumentVerificationStatusLogs() {
   const token = localStorage.getItem("bearerToken");
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/admin/verificationAttempts", {
+      .get("${process.env.REACT_APP_API_BASE_URL}/admin/verificationAttempts", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

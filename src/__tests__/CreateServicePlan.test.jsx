@@ -88,7 +88,7 @@ describe("CreateServicePlan Component", () => {
       const token = localStorage.getItem("bearerToken"); // Retrieve token from localStorage
       expect(axios.post).toHaveBeenCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
-        "http://localhost:8082/api/admin/newPlan",
+        "${process.env.REACT_APP_API_BASE_URL}/admin/newPlan",
         {
           planId: "PREP-TC-0001",
           planName: "Basic Plan",

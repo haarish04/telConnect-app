@@ -89,7 +89,7 @@ test("shows error alert when passwords do not match", async () => {
   renderComponent(true);
 
   // Mock API response for correct password change
-  mockAxios.onPost("http://localhost:8082/api/login").reply(200);
+  mockAxios.onPost("${process.env.REACT_APP_API_BASE_URL}/login").reply(200);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));
@@ -115,7 +115,7 @@ test("shows error alert when current password is incorrect", async () => {
   renderComponent(true);
 
   // Mock API response for incorrect current password
-  mockAxios.onPost("http://localhost:8082/api/login").reply(400);
+  mockAxios.onPost("${process.env.REACT_APP_API_BASE_URL}/login").reply(400);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));
@@ -137,7 +137,7 @@ test("shows success alert when password is changed successfully", async () => {
   renderComponent(true);
 
   // Mock API response for correct password change
-  mockAxios.onPost("http://localhost:8082/api/login").reply(200);
+  mockAxios.onPost("${process.env.REACT_APP_API_BASE_URL}/login").reply(200);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));

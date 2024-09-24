@@ -22,7 +22,7 @@ const Overview = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8082/api/admin/customers/plans",
+          "${process.env.REACT_APP_API_BASE_URL}/admin/customers/plans",
           {
             headers: {
               Authorization: `Bearer ${token}`,

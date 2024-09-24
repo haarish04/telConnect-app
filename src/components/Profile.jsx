@@ -29,7 +29,7 @@ const Profile = () => {
     const fetchCustomerData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
+          `${process.env.REACT_APP_API_BASE_URL}/customers/${contextCustomerData.customerEmail}`,
           { withCredentials: true }
         );
         setCustomerData(response.data);
@@ -55,7 +55,7 @@ const Profile = () => {
     const fetchActivePlan = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/status`,
+          `${process.env.REACT_APP_API_BASE_URL}/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
         );
         // console.log(response.data);
@@ -94,7 +94,7 @@ const Profile = () => {
   const handleUpdateCustomerData = async (updatedData) => {
     try {
       await axios.patch(
-        `http://localhost:8082/api/customers/${contextCustomerData.customerEmail}`,
+        `${process.env.REACT_APP_API_BASE_URL}/customers/${contextCustomerData.customerEmail}`,
         updatedData,
         { withCredentials: true }
       );

@@ -21,7 +21,7 @@ export default function Register() {
     try {
       //API call to invoke OTP service
       const response = await axios.post(
-        `http://localhost:8082/api/emails/OTP?recipient=${email}&name=${name}`
+        `${process.env.REACT_APP_API_BASE_URL}/emails/OTP?recipient=${email}&name=${name}`
       );
       setOtpSent(true); // Update the state to show OTP sent message
       setError(null); // Clear error if OTP is sent successfully
@@ -35,7 +35,7 @@ export default function Register() {
   const handleVerifyOtp = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8082/api/emails/otp/verify?recipient=${email}&otp=${otp}`, // Your OTP verification API
+        `${process.env.REACT_APP_API_BASE_URL}/emails/otp/verify?recipient=${email}&otp=${otp}`, // Your OTP verification API
         {} // Sending email and otp in the request body
       );
 

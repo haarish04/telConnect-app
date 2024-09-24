@@ -17,7 +17,7 @@ describe('Overview Component', () => {
       { planId: 'POST-002', status: 'Expired' },
     ];
 
-    mockAxios.onGet('http://localhost:8082/api/customers/plans?adminId=1').reply(200, mockResponse);
+    mockAxios.onGet('${process.env.REACT_APP_API_BASE_URL}/customers/plans?adminId=1').reply(200, mockResponse);
 
     render(<Overview />);
 
@@ -41,7 +41,7 @@ describe('Overview Component', () => {
   test('handles API errors gracefully', async () => {
     const mockErrorHandler = jest.spyOn(console, 'error').mockImplementation(() => {});
   
-    mockAxios.onGet('http://localhost:8082/api/customers/plans?adminId=1').reply(500);
+    mockAxios.onGet('${process.env.REACT_APP_API_BASE_URL}/customers/plans?adminId=1').reply(500);
   
     render(<Overview />);
   

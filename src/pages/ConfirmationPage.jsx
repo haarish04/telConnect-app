@@ -55,13 +55,13 @@ export default function ConfirmationPage({
     try {
       //Thank you mail after confirmation
       await axios.post(
-        `http://localhost:8082/api/emails/thank-you?recipient=${email}&name=${name}`
+        `${process.env.REACT_APP_API_BASE_URL}/emails/thank-you?recipient=${email}&name=${name}`
       );
  
       // Create mapping of customer and chosen plan and mark status as pending,this is to be approved by admin
  
       const res = await axios.post(
-        "http://localhost:8082/api/customers/plans",
+        "${process.env.REACT_APP_API_BASE_URL}/customers/plans",
         {
           customerId: customerData.customerId,
           planId: planId,

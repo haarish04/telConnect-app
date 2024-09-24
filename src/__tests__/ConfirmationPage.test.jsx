@@ -72,11 +72,11 @@ describe("ConfirmationPage Component", () => {
     // Mock the API responses for the thank-you email and customer plan confirmation
     mockAxios
       .onPost(
-        `http://localhost:8082/api/emails/thank-you?recipient=${mockCustomerData.customerEmail}&name=${mockCustomerData.customerName}`
+        `${process.env.REACT_APP_API_BASE_URL}/emails/thank-you?recipient=${mockCustomerData.customerEmail}&name=${mockCustomerData.customerName}`
       )
       .reply(200);
     mockAxios
-      .onPost("http://localhost:8082/api/customers/plans")
+      .onPost("${process.env.REACT_APP_API_BASE_URL}/customers/plans")
       .reply(200, {});
 
     const confirmButton = screen.getByText(/Confirm/i);

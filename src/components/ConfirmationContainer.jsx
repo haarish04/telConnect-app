@@ -18,7 +18,7 @@ export default function ConfirmationContainer() {
       try {
         // Use the dynamic planId in the API call
         const response = await axios.get(
-          `http://localhost:8082/api/plans/${planId}`
+          `${process.env.REACT_APP_API_BASE_URL}/plans/${planId}`
         );
         setPlan(response.data);
         setLoading(false);

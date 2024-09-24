@@ -63,7 +63,7 @@ export default function DocumentVerification() {
     try {
       setIsLoading(true); // Set loading to true before the request
       const response = await axios.post(
-        "http://localhost:8082/api/ocr/recognize",
+        "${process.env.REACT_APP_API_BASE_URL}/ocr/recognize",
         formData,
         {
           headers: {
@@ -115,7 +115,7 @@ export default function DocumentVerification() {
   const updateVerificationStatus = async (customerId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8082/api/verification/${customerId}/status?status=success`
+        `${process.env.REACT_APP_API_BASE_URL}/verification/${customerId}/status?status=success`
       );
       console.log(response.data);
       // If the status update is successful, return true

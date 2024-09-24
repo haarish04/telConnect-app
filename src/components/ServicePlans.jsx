@@ -20,7 +20,7 @@ const ServicePlans = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/api/plans");
+        const response = await axios.get("${process.env.REACT_APP_API_BASE_URL}/plans");
         setPlans(response.data);
       } catch (error) {
         console.error("Error fetching plans:", error);

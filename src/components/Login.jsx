@@ -51,7 +51,7 @@ const Login = () => {
     try {
       // Authenticate the user
       const res = await axios.post(
-        "http://localhost:8082/api/login",
+        "${process.env.REACT_APP_API_BASE_URL}/login",
         loginCredentials,
         {
           headers: {
@@ -86,7 +86,7 @@ const Login = () => {
 
       // Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
-        `http://localhost:8082/api/customers/${email}`
+        `${process.env.REACT_APP_API_BASE_URL}/customers/${email}`
       );
 
       const customerData = customerDetailsResponse.data;

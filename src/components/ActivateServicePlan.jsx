@@ -25,7 +25,7 @@ const ActivateServicePlan = () => {
   const fetchPlans = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8082/api/admin/customers/plans",
+        "${process.env.REACT_APP_API_BASE_URL}/admin/customers/plans",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ const ActivateServicePlan = () => {
     try {
       // Send a PATCH request to update the status in the backend
       await axios.patch(
-        `http://localhost:8082/api/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
+        `${process.env.REACT_APP_API_BASE_URL}/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
         {},
         {
           headers: {
@@ -75,7 +75,7 @@ const ActivateServicePlan = () => {
 
       // Retrieve customer email and name
       const customerResponse = await axios.get(
-        `http://localhost:8082/api/customers/Id=${selectedPlan.customerId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/customers/Id=${selectedPlan.customerId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Use the token for authorization
@@ -87,7 +87,7 @@ const ActivateServicePlan = () => {
 
       // Send activation email to the customer
       await axios.post(
-        `http://localhost:8082/api/emails/service-activation?recipient=${customerEmail}&name=${customerName}`
+        `${process.env.REACT_APP_API_BASE_URL}/emails/service-activation?recipient=${customerEmail}&name=${customerName}`
       );
 
       // Show success snackbar

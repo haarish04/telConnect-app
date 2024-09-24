@@ -40,7 +40,7 @@ const CreateServicePlan = () => {
   const handleAdd = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8082/api/admin/newPlan",
+        "${process.env.REACT_APP_API_BASE_URL}/admin/newPlan",
         formData,
         {
           headers: {
