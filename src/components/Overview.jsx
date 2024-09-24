@@ -16,19 +16,17 @@ const Overview = () => {
   const [prepaidUsersCount, setPrepaidUsersCount] = useState(0);
   const [postpaidUsersCount, setPostpaidUsersCount] = useState(0);
   const token = localStorage.getItem("bearerToken");
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     // Function to fetch and process data
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "${process.env.REACT_APP_API_BASE_URL}/admin/customers/plans",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${baseUrl}/admin/customers/plans`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = response.data;
 
         // Initialize counts

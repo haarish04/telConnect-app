@@ -16,6 +16,7 @@ export default function DocumentVerification() {
   const navigate = useNavigate(); // For navigation
   const location = useLocation(); // To get the source of navigation
   const [isFromProfile, setIsFromProfile] = useState(false); // To track if user came from profile
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   // Check if the user came from the profile page
   useEffect(() => {
@@ -62,15 +63,11 @@ export default function DocumentVerification() {
 
     try {
       setIsLoading(true); // Set loading to true before the request
-      const response = await axios.post(
-        "${process.env.REACT_APP_API_BASE_URL}/ocr/recognize",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${baseUrl}/ocr/recognize`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status === 200) {
         // If document verification is successful, attempt to update verification status
@@ -115,7 +112,7 @@ export default function DocumentVerification() {
   const updateVerificationStatus = async (customerId) => {
     try {
       const response = await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/verification/${customerId}/status?status=success`
+        `${baseUrl}/verification/${customerId}/status?status=success`
       );
       console.log(response.data);
       // If the status update is successful, return true

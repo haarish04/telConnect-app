@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { isDocumentVerified } from "../utils/authutils";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import EditProfileModal from "./EditProfileModal";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const Profile = () => {
     const fetchCustomerData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/customers/${contextCustomerData.customerEmail}`,
+          `${baseUrl}/customers/${contextCustomerData.customerEmail}`,
           { withCredentials: true }
         );
         setCustomerData(response.data);
@@ -55,7 +56,7 @@ const Profile = () => {
     const fetchActivePlan = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/customers/plans/${contextCustomerData.customerId}/status`,
+          `${baseUrl}/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
         );
         // console.log(response.data);
@@ -94,7 +95,7 @@ const Profile = () => {
   const handleUpdateCustomerData = async (updatedData) => {
     try {
       await axios.patch(
-        `${process.env.REACT_APP_API_BASE_URL}/customers/${contextCustomerData.customerEmail}`,
+        `${baseUrl}/customers/${contextCustomerData.customerEmail}`,
         updatedData,
         { withCredentials: true }
       );

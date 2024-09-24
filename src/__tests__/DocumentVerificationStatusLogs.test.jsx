@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import axios from "axios";
 import DocumentVerificationStatusLogs from "../components/DocumentVerificationStatusLogs";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Mock axios
 jest.mock("axios");
@@ -37,7 +38,7 @@ describe("DocumentVerificationStatusLogs Component", () => {
 
     // Ensure axios was called with the correct endpoint
     expect(axios.get).toHaveBeenCalledWith(
-      "${process.env.REACT_APP_API_BASE_URL}/admin/verificationAttempts",
+      `${baseUrl}/admin/verificationAttempts`,
       expect.any(Object)
     );
 

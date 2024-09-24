@@ -13,6 +13,7 @@ const CreateServicePlan = () => {
     planDuration: "",
   });
   const token = localStorage.getItem("bearerToken");
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [submittedData, setSubmittedData] = useState(null);
   const [error, setError] = useState(null);
@@ -39,15 +40,11 @@ const CreateServicePlan = () => {
 
   const handleAdd = async () => {
     try {
-      const response = await axios.post(
-        "${process.env.REACT_APP_API_BASE_URL}/admin/newPlan",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${baseUrl}/admin/newPlan`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       // Use the form data for submittedData
       setSubmittedData(formData);
     } catch (err) {

@@ -3,6 +3,7 @@ import React from "react";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import CreateServicePlan from "../components/CreateServicePlan";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 jest.mock("axios");
 
@@ -88,7 +89,7 @@ describe("CreateServicePlan Component", () => {
       const token = localStorage.getItem("bearerToken"); // Retrieve token from localStorage
       expect(axios.post).toHaveBeenCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
-        "${process.env.REACT_APP_API_BASE_URL}/admin/newPlan",
+        `${baseUrl}/admin/newPlan`,
         {
           planId: "PREP-TC-0001",
           planName: "Basic Plan",

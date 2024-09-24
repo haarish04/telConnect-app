@@ -13,7 +13,8 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-  const [error, setError] = useState(null); // Add error state
+  const [error, setError] = useState(null);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   // Function to send OTP
   const handleSendOtp = async () => {
@@ -21,7 +22,7 @@ export default function Register() {
     try {
       //API call to invoke OTP service
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/emails/OTP?recipient=${email}&name=${name}`
+        `${baseUrl}/emails/OTP?recipient=${email}&name=${name}`
       );
       setOtpSent(true); // Update the state to show OTP sent message
       setError(null); // Clear error if OTP is sent successfully
@@ -35,7 +36,7 @@ export default function Register() {
   const handleVerifyOtp = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/emails/otp/verify?recipient=${email}&otp=${otp}`, // Your OTP verification API
+        `${baseUrl}/emails/otp/verify?recipient=${email}&otp=${otp}`, // Your OTP verification API
         {} // Sending email and otp in the request body
       );
 
