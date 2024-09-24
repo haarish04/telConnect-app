@@ -4,20 +4,15 @@ import "../styles/ConfirmationPage.css";
 import axios from "axios";
 import ConfirmationPage from "../pages/ConfirmationPage";
 import { useLocation } from "react-router-dom";
-
+ 
 export default function ConfirmationContainer() {
   const location = useLocation();
-  console.log("Location object:", location);
   const planId = location.state?.planId || localStorage.getItem("planId");
-
-  console.log("Plan ID (ConfirmationContainer):", planId); // Log planId here
-
+ 
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(planId);
-
+ 
   useEffect(() => {
     const fetchPlan = async () => {
       try {
@@ -25,7 +20,6 @@ export default function ConfirmationContainer() {
         const response = await axios.get(
           `http://localhost:8082/api/plans/${planId}`
         );
-        console.log(response.data);
         setPlan(response.data);
         setLoading(false);
       } catch (error) {
@@ -34,7 +28,7 @@ export default function ConfirmationContainer() {
         setLoading(false);
       }
     };
-
+ 
     if (planId) {
       fetchPlan(); // Only call the API if planId is available
     } else {
@@ -42,23 +36,21 @@ export default function ConfirmationContainer() {
       setLoading(false);
     }
   }, [planId]);
-
+ 
   const handleCancel = () => {
-    console.log("Cancellation initiated");
   };
-
+ 
   const handleConfirm = () => {
-    console.log("Confirmation initiated");
   };
-
+ 
   if (loading) {
     return <p>Loading...</p>;
   }
-
+ 
   if (error) {
     return <p>{error}</p>;
   }
-
+ 
   return plan ? (
     <ConfirmationPage
       planId={plan.planId}
@@ -73,3 +65,5 @@ export default function ConfirmationContainer() {
     <p>No plan data available</p>
   );
 }
+ 
+ 

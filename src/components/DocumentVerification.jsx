@@ -28,7 +28,7 @@ export default function DocumentVerification() {
   // Function to handle document type change
   const handleuserDocumentTypeChange = (e) => {
     setuserDocumentType(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   // Function to handle file change

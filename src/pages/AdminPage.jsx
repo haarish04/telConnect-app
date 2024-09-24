@@ -1,21 +1,21 @@
-import React, { useState, useContext } from 'react';
-import '../styles/AdminPage.css'; // Updated CSS file for styling
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import NavBar from '../components/NavBar';
-import Overview from '../components/Overview';
-import CreateServicePlan from '../components/CreateServicePlan';
-import EditServicePlans from '../components/EditServicePlans';
-import DocumentVerificationStatusLogs from '../components/DocumentVerificationStatusLogs';
-import CustomerAccounts from '../components/CustomerAccounts';
+import React, { useState, useContext } from "react";
+import "../styles/AdminPage.css"; // Updated CSS file for styling
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import NavBar from "../components/NavBar";
+import Overview from "../components/Overview";
+import CreateServicePlan from "../components/CreateServicePlan";
+import EditServicePlans from "../components/EditServicePlans";
+import DocumentVerificationStatusLogs from "../components/DocumentVerificationStatusLogs";
+import CustomerAccounts from "../components/CustomerAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "react-bootstrap";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import ActivateServicePlan from '../components/ActivateServicePlan';
+import ActivateServicePlan from "../components/ActivateServicePlan";
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState('Overview');
-  const { logout } =  useContext(CustomerContext); 
+  const [activeTab, setActiveTab] = useState("Overview");
+  const { logout } = useContext(CustomerContext);
   const navigate = useNavigate();
 
   // Function to handle tab change
@@ -26,25 +26,29 @@ const AdminPage = () => {
   // Render content based on the active tab
   const renderContent = () => {
     switch (activeTab) {
-      case 'Overview':
-        return <Overview />
-      case 'ActivateServicePlan':
-        return <ActivateServicePlan />
-      case 'CustomerAccounts':
-        return <CustomerAccounts />
-      case 'CreateServicePlan':
-        return <CreateServicePlan />
-      case 'EditServicePlans':
-        return <EditServicePlans />
-      case 'DocumentVerificationStatusLogs':
-        return <DocumentVerificationStatusLogs />
+      case "Overview":
+        return <Overview />;
+      case "ActivateServicePlan":
+        return <ActivateServicePlan />;
+      case "CustomerAccounts":
+        return <CustomerAccounts />;
+      case "CreateServicePlan":
+        return <CreateServicePlan />;
+      case "EditServicePlans":
+        return <EditServicePlans />;
+      case "DocumentVerificationStatusLogs":
+        return <DocumentVerificationStatusLogs />;
       default:
-        return <div className="admin-tab-content">Select a tab to view content.</div>;
+        return (
+          <div className="admin-tab-content">Select a tab to view content.</div>
+        );
     }
   };
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem('bearerToken');
+    localStorage.removeItem('tokenExpiration');
     navigate("/home");
   };
 
@@ -60,8 +64,8 @@ const AdminPage = () => {
         />
         <div className="admin-header-left">Welcome Admin!</div>
         <Button className="logout-button-admin" onClick={handleLogout}>
-            <LogoutIcon />
-              Logout
+          <LogoutIcon />
+          Logout
         </Button>
       </div>
 
@@ -70,38 +74,52 @@ const AdminPage = () => {
         {/* Vertical Sidebar */}
         <div className="admin-sidebar">
           <div
-            className={`admin-tab ${activeTab === 'Overview' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('Overview')}
+            className={`admin-tab ${
+              activeTab === "Overview" ? "admin-active-tab" : ""
+            }`}
+            onClick={() => handleTabClick("Overview")}
           >
             Overview
           </div>
           <div
-            className={`admin-tab ${activeTab === 'ActivateServicePlan' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('ActivateServicePlan')}
+            className={`admin-tab ${
+              activeTab === "ActivateServicePlan" ? "admin-active-tab" : ""
+            }`}
+            onClick={() => handleTabClick("ActivateServicePlan")}
           >
             Activate Service Plan
           </div>
           <div
-            className={`admin-tab ${activeTab === 'CustomerAccounts' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('CustomerAccounts')}
+            className={`admin-tab ${
+              activeTab === "CustomerAccounts" ? "admin-active-tab" : ""
+            }`}
+            onClick={() => handleTabClick("CustomerAccounts")}
           >
             Customer Accounts
           </div>
           <div
-            className={`admin-tab ${activeTab === 'CreateServicePlan' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('CreateServicePlan')}
+            className={`admin-tab ${
+              activeTab === "CreateServicePlan" ? "admin-active-tab" : ""
+            }`}
+            onClick={() => handleTabClick("CreateServicePlan")}
           >
             Create Service Plan
           </div>
           <div
-            className={`admin-tab ${activeTab === 'EditServicePlans' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('EditServicePlans')}
+            className={`admin-tab ${
+              activeTab === "EditServicePlans" ? "admin-active-tab" : ""
+            }`}
+            onClick={() => handleTabClick("EditServicePlans")}
           >
             Edit Service Plans
           </div>
           <div
-            className={`admin-tab ${activeTab === 'DocumentVerificationStatusLogs' ? 'admin-active-tab' : ''}`}
-            onClick={() => handleTabClick('DocumentVerificationStatusLogs')}
+            className={`admin-tab ${
+              activeTab === "DocumentVerificationStatusLogs"
+                ? "admin-active-tab"
+                : ""
+            }`}
+            onClick={() => handleTabClick("DocumentVerificationStatusLogs")}
           >
             Document Verification Status Logs
           </div>

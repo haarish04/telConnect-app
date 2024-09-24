@@ -1,4 +1,3 @@
-//import React from 'react'
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -15,8 +14,8 @@ import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AdminPage from "./pages/AdminPage";
-import ErrorPage from "./components/ErrorPage";
-
+import ProtectedRoute from "./utils/ProtectedRoute";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   return (
@@ -25,7 +24,6 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          {/* <Route path="/TestHomePage" element={<TestHomePage />} /> */}
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={<HomePage />} />
@@ -37,12 +35,18 @@ const App = () => {
           />
           <Route path="/personalInfo" element={<PersonalInfoPage />} />
           <Route path="/planConfirmation" element={<ConfirmationContainer />} />
-          {/* <Route path="/planConfirmation" element={<ConfirmationPage />} /> */}
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
           <Route path="/termsOfService" element={<TermsOfServicePage />} />
-          <Route path="/adminPage" element={<AdminPage />} />
-          <Route path="/notFound" element={<ErrorPage />} />
+          <Route
+            path="/adminPage"
+            element={
+              <ProtectedRoute>
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
       <div className=""></div>

@@ -13,19 +13,21 @@ const columns = [
 
 export default function DocumentVerificationStatusLogs() {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const token = localStorage.getItem("bearerToken");
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/verification?adminId=1")
+      .get("http://localhost:8082/api/admin/verificationAttempts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         const mappedData = response.data.map((verification) => ({
           verificationId: verification.verificationId,
           customerId: verification.customerId,
           documentId: verification.documentId,
-          requestDate: verification.requestDate,
+          requestDate: new Date(verification.requestDate).toLocaleString(),
           requestStatus: verification.requestStatus,
         }));
         setData(mappedData);

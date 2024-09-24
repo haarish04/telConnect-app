@@ -8,7 +8,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import "../styles/ProfilePage.css";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
-import { isDocumentVerified } from "../utils/authUtils"; 
+import { isDocumentVerified } from "../utils/authUtils";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import EditProfileModal from "./EditProfileModal";
 
@@ -16,7 +16,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [documentVerified, setDocumentVerified] = useState(false);
-  const { customerData: contextCustomerData, logout } = useContext(CustomerContext);
+  const { customerData: contextCustomerData, logout } =
+    useContext(CustomerContext);
   const navigate = useNavigate();
   const [customerData, setCustomerData] = useState(contextCustomerData);
   const [showModal, setShowModal] = useState(false);
@@ -54,12 +55,19 @@ const Profile = () => {
     const fetchActivePlan = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/plans/status`,
+          `http://localhost:8082/api/customers/plans/${contextCustomerData.customerId}/status`,
           { withCredentials: true }
         );
-        setActivePlan(response.data); // Set the active plan data
+        // console.log(response.data);
+        response.data.forEach((plan) => {
+          if (plan.status === "Active") {
+            setActivePlan(plan);
+            // console.log(plan);
+          }
+        });
       } catch (err) {
         console.error("Error fetching active plan:", err);
+        setActivePlan(null);
       } finally {
         setPlanLoading(false);
       }
@@ -74,6 +82,10 @@ const Profile = () => {
     logout();
     navigate("/home");
   };
+
+  useEffect(() => {
+    // console.log("Active plan:", activePlan); // This will log whenever activePlan changes
+  }, [activePlan]);
 
   const redirectToDocumentVerification = () => {
     navigate("/documentVerification", { state: { fromProfile: true } });
@@ -177,7 +189,9 @@ const Profile = () => {
                   <hr />
                   <Row className="pt-1">
                     <Col xs={12} className="mb-3">
-                      <p className="text-muted">{customerData.customerAddress}</p>
+                      <p className="text-muted">
+                        {customerData.customerAddress}
+                      </p>
                     </Col>
                   </Row>
                   <h6>Date of Birth</h6>
@@ -193,29 +207,43 @@ const Profile = () => {
           </Row>
 
           {/* Active Plan Section */}
+
           <Row className="d-flex justify-content-center align-items-center h-100 active-plan">
             <Col lg={8}>
-              <Card className="profile-card">
+              <Card className="active-plan-card">
                 <Card.Header className="profile-card-header d-flex justify-content-between align-items-center">
-                  <h5>
-                    Active Service Plans
-                    </h5>
+                  <h5>Active Service Plans</h5>
                 </Card.Header>
-                <Card.Body>
+                <Card.Body className="active-plan-card-body">
                   {planLoading ? (
                     <div>Loading plan details...</div>
-                  ) : activePlan && activePlan.status === "Active" ? (
+                  ) : activePlan && true ? (
                     <div>
                       <p>
-                        <strong>Plan:</strong> {activePlan.planName}
+                        <strong>Plan:</strong> {activePlan?.planId}
                       </p>
                       <p>
-                        <strong>Status:</strong> {activePlan.status}
+                        <strong>Status:</strong> {activePlan?.status}
+                      </p>
+                      <p>
+                        <strong>Start Date:</strong> {activePlan?.startDate}
+                      </p>
+                      <p>
+                        <strong>End Date:</strong> {activePlan?.endDate}
                       </p>
                     </div>
                   ) : (
                     <div>No existing plans</div>
                   )}
+                  {/* Image Column */}
+                  <div className="ml-auto">
+                    <img
+                      src="src\assets\connected-img.jpg"
+                      alt="Plan illustration"
+                      className="img-fluid"
+                      style={{ maxHeight: "200px", marginLeft: "20px" }}
+                    />
+                  </div>
                 </Card.Body>
               </Card>
             </Col>

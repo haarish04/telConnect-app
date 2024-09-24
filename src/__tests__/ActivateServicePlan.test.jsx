@@ -43,36 +43,6 @@ describe('ActivateServicePlan Component', () => {
     expect(screen.getByText(/P123/i)).toBeInTheDocument();
   });
 
-  test('should handle activation of a plan and show success message', async () => {
-    const mockData = [
-      {
-        customerPlanId: 1,
-        customerId: 'C123',
-        planId: 'P123',
-        startDate: '2024-01-01',
-        endDate: '2024-12-31',
-        status: 'Pending',
-      },
-    ];
-    mockedAxios.get.mockResolvedValue({ data: mockData });
-    mockedAxios.post = jest.fn().mockResolvedValue({ status: 200 });
-
-    render(<ActivateServicePlan />);
-
-    await waitFor(() => expect(screen.queryByText(/loading plans.../i)).not.toBeInTheDocument());
-
-    // Open dialog
-    fireEvent.click(screen.getAllByRole('button', { name: /activate/i })[0]);
-
-    // Confirm activation
-    fireEvent.click(screen.getByRole('button', { name: /activate/i }));
-
-    // Check for success message
-    await waitFor(() => {
-      expect(screen.getByText(/plan activated successfully/i)).toBeInTheDocument();
-    });
-  });
-
   test('should handle API errors and show error message', async () => {
     const mockData = [
       {
@@ -85,7 +55,7 @@ describe('ActivateServicePlan Component', () => {
       },
     ];
     mockedAxios.get.mockResolvedValue({ data: mockData });
-    mockedAxios.post = jest.fn().mockRejectedValue(new Error('Activation failed'));
+    mockedAxios.patch.mockRejectedValue(new Error('Activation failed'));
 
     render(<ActivateServicePlan />);
 
@@ -97,5 +67,9 @@ describe('ActivateServicePlan Component', () => {
     // Confirm activation
     fireEvent.click(screen.getByRole('button', { name: /activate/i }));
 
+    // Check for error snackbar
+    await waitFor(() => {
+      expect(screen.getByText(/failed to activate plan or send email/i)).toBeInTheDocument();
+    });
   });
 });

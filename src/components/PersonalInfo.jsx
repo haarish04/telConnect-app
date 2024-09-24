@@ -1,4 +1,4 @@
-import React,{ useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import "../styles/PersonalInfo.css";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ function PersonalInfo() {
     try {
       // Register new customer
       const registerResponse = await axios.post(
-        "http://localhost:8082/api/customers/register",
+        "http://localhost:8082/api/register",
         newcustomerData
       );
 
@@ -57,7 +57,7 @@ function PersonalInfo() {
       const customerDetails = await axios.get(
         `http://localhost:8082/api/customers/${email}`
       );
-      console.log("customerId:", customerDetails.data.customerId);
+      //console.log("customerId:", customerDetails.data.customerId);
 
       //Create new document entry
       const blankDocument = await axios.post(
@@ -79,6 +79,11 @@ function PersonalInfo() {
         "http://localhost:8082/api/verification",
         newVerification
       );
+
+      //Send welcome email after account creation
+      await axios.post(
+        `http://localhost:8082/api/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
+      );
       navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {
       console.error("Error during registration:", err);
@@ -87,8 +92,11 @@ function PersonalInfo() {
   };
 
   const openDatePicker = () => {
-    if (dateInputRef.current) {
-      dateInputRef.current.showPicker(); // Programmatically open the calendar
+    if (
+      dateInputRef.current &&
+      typeof dateInputRef.current.showPicker === "function"
+    ) {
+      dateInputRef.current.showPicker();
     }
   };
 

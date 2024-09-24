@@ -18,9 +18,10 @@ const CardGrid = ({ plan_card1, plan_card2, plan_card3 }) => {
     setSelectedPlan(plan);
     if (plan?.planId) {
       await onPlanClickHandler(navigate, customerData, plan.planId, setAlertMessage);
-    } else {
-      console.log("No plan selected");
-    }
+    } 
+    // else {
+    //   console.log("No plan selected");
+    // }
   };
 
   const handleViewDetails = (plan) => {

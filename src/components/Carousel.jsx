@@ -21,9 +21,10 @@ const CarouselComponent = ({ plan_carousel1, plan_carousel2 }) => {
     if (plan?.planId) {
       // Ensure selectedPlan is set and pass planId
       await onPlanClickHandler(navigate, customerData, plan.planId, setAlertMessage);
-    } else {
-      console.log("No plan selected");
-    }
+    } 
+    // else {
+    //   console.log("No plan selected");
+    // }
   };
 
   return (
