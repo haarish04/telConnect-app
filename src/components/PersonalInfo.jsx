@@ -15,6 +15,7 @@ function PersonalInfo() {
   });
 
   const dateInputRef = useRef(null);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,24 +50,22 @@ function PersonalInfo() {
     try {
       // Register new customer
       const registerResponse = await axios.post(
-        "http://localhost:8082/api/register",
+        `${baseUrl}/register`,
         newcustomerData
       );
 
       //Get details after registering
-      const customerDetails = await axios.get(
-        `http://localhost:8082/api/customers/${email}`
-      );
+      const customerDetails = await axios.get(`${baseUrl}/customers/${email}`);
       //console.log("customerId:", customerDetails.data.customerId);
 
       //Create new document entry
       const blankDocument = await axios.post(
-        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents?DocumentType=Aadhar`
+        `${baseUrl}/customers/${customerDetails.data.customerId}/documents?DocumentType=Aadhar`
       );
 
       //Get the documentId for the new entry
       const documentDetails = await axios.get(
-        `http://localhost:8082/api/customers/${customerDetails.data.customerId}/documents`
+        `${baseUrl}/customers/${customerDetails.data.customerId}/documents`
       );
       console.log("DocumentId:", documentDetails.data[0].documentId);
 
@@ -76,13 +75,13 @@ function PersonalInfo() {
       };
       //Create new verification status as failed using documentId and customerId
       const newVerificationRequest = await axios.post(
-        "http://localhost:8082/api/verification",
+        `${baseUrl}/verification`,
         newVerification
       );
 
       //Send welcome email after account creation
       await axios.post(
-        `http://localhost:8082/api/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
+        `${baseUrl}/emails/welcome?recipient=${email}&name=${customerDetails.data.customerName}`
       );
       navigate("/login", { state: { fromRegistration: true } });
     } catch (err) {

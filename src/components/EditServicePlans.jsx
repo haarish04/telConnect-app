@@ -17,11 +17,12 @@ const EditServicePlans = () => {
     planDuration: "",
   });
   const token = localStorage.getItem("bearerToken");
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/api/plans");
+        const response = await axios.get(`${baseUrl}/plans`);
         setPlans(response.data);
       } catch (error) {
         console.error("Error fetching plans:", error);
@@ -73,15 +74,11 @@ const EditServicePlans = () => {
 
   const handleSave = async () => {
     try {
-      await axios.patch(
-        `http://localhost:8082/api/admin/${selectedPlanId}/edit`,
-        editedPlan,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.patch(`${baseUrl}/admin/${selectedPlanId}/edit`, editedPlan, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setPlans((prevPlans) =>
         prevPlans.map((plan) =>
           plan.planId === selectedPlanId ? editedPlan : plan

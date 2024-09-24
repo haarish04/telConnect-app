@@ -24,10 +24,11 @@ export default function CustomerAccounts() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const token = localStorage.getItem("bearerToken");
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/admin/customers", {
+      .get(`${baseUrl}/admin/customers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -66,9 +67,7 @@ export default function CustomerAccounts() {
   const handleConfirmDelete = () => {
     axios
       .delete(
-        `http://localhost:8082/api/admin/customers/${encodeURIComponent(
-          selectedEmail
-        )}`,
+        `${baseUrl}/admin/customers/${encodeURIComponent(selectedEmail)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

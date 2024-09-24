@@ -6,10 +6,11 @@ import AboutUs from "../assets/About_us.jfif";
 import WhyUs1 from "../assets/WhyUs1.png";
 import WhyUs2 from "../assets/WhyUs2.png";
 import CardGrid from "../components/CardGrid";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchAndStorePlans = async () => {
   try {
-    const response = await axios.get("http://localhost:8082/api/plans", {
+    const response = await axios.get(`${baseUrl}/plans`, {
       withCredentials: true,
     });
     const plans = response.data;
@@ -89,7 +90,7 @@ const Home = () => {
     <div className="homepage-container">
       <header className="header">
         <div className="whats-hot">
-        <h1>What's hot?</h1>
+          <h1>What's hot?</h1>
         </div>
         <CarouselComponent
           plan_carousel1={plan_carousel1}

@@ -4,6 +4,7 @@ import axios from "axios";
 import CustomerAccounts from "../components/CustomerAccounts";
 import MockAdapter from "axios-mock-adapter";
 import userEvent from "@testing-library/user-event";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Mock axios instance
 const mock = new MockAdapter(axios);
@@ -31,7 +32,7 @@ describe("CustomerAccounts Component", () => {
   ];
 
   beforeEach(() => {
-    mock.onGet("http://localhost:8082/api/admin/customers").reply(200, mockData);
+    mock.onGet(`${baseUrl}/admin/customers`).reply(200, mockData);
   });
 
   afterEach(() => {
@@ -94,5 +95,4 @@ describe("CustomerAccounts Component", () => {
 
     expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
   });
-
 });

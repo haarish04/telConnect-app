@@ -5,6 +5,7 @@ import { CustomerContext } from "../context/CustomerContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 describe("ConfirmationPage Component", () => {
   let mockAxios;
@@ -72,12 +73,10 @@ describe("ConfirmationPage Component", () => {
     // Mock the API responses for the thank-you email and customer plan confirmation
     mockAxios
       .onPost(
-        `http://localhost:8082/api/emails/thank-you?recipient=${mockCustomerData.customerEmail}&name=${mockCustomerData.customerName}`
+        `${baseUrl}/emails/thank-you?recipient=${mockCustomerData.customerEmail}&name=${mockCustomerData.customerName}`
       )
       .reply(200);
-    mockAxios
-      .onPost("http://localhost:8082/api/customers/plans")
-      .reply(200, {});
+    mockAxios.onPost(`${baseUrl}/customers/plans`).reply(200, {});
 
     const confirmButton = screen.getByText(/Confirm/i);
     fireEvent.click(confirmButton);

@@ -13,6 +13,7 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   let logoutTimer;
 
@@ -50,15 +51,11 @@ const Login = () => {
 
     try {
       // Authenticate the user
-      const res = await axios.post(
-        "http://localhost:8082/api/login",
-        loginCredentials,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axios.post(`${baseUrl}/login`, loginCredentials, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       localStorage.setItem("Password", password);
       console.log(password);
@@ -86,7 +83,7 @@ const Login = () => {
 
       // Fetch customer details after successful login
       const customerDetailsResponse = await axios.get(
-        `http://localhost:8082/api/customers/${email}`
+        `${baseUrl}/customers/${email}`
       );
 
       const customerData = customerDetailsResponse.data;

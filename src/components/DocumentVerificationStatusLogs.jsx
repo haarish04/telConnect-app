@@ -15,9 +15,11 @@ export default function DocumentVerificationStatusLogs() {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const token = localStorage.getItem("bearerToken");
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/admin/verificationAttempts", {
+      .get(`${baseUrl}/admin/verificationAttempts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

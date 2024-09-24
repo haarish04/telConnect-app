@@ -4,6 +4,7 @@ import { CustomerContext } from "../context/CustomerContext";
 import EditProfileModal from "../components/EditProfileModal";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Mock axios for API requests
 const mockAxios = new MockAdapter(axios);
@@ -65,7 +66,9 @@ test("shows success alert after saving profile changes", async () => {
   fireEvent.click(screen.getByText("Save Changes"));
 
   await waitFor(() => {
-    expect(screen.getByText("Profile updated successfully!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Profile updated successfully!")
+    ).toBeInTheDocument();
   });
 });
 
@@ -89,7 +92,7 @@ test("shows error alert when passwords do not match", async () => {
   renderComponent(true);
 
   // Mock API response for correct password change
-  mockAxios.onPost("http://localhost:8082/api/login").reply(200);
+  mockAxios.onPost(`${baseUrl}/login`).reply(200);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));
@@ -108,14 +111,13 @@ test("shows error alert when passwords do not match", async () => {
   await waitFor(() => {
     expect(screen.getByText("New passwords do not match!")).toBeInTheDocument();
   });
-
 });
 
 test("shows error alert when current password is incorrect", async () => {
   renderComponent(true);
 
   // Mock API response for incorrect current password
-  mockAxios.onPost("http://localhost:8082/api/login").reply(400);
+  mockAxios.onPost(`${baseUrl}/login`).reply(400);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));
@@ -129,7 +131,9 @@ test("shows error alert when current password is incorrect", async () => {
   fireEvent.click(screen.getByText("Save New Password"));
 
   await waitFor(() => {
-    expect(screen.getByText("Current password is incorrect!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Current password is incorrect!")
+    ).toBeInTheDocument();
   });
 });
 
@@ -137,7 +141,7 @@ test("shows success alert when password is changed successfully", async () => {
   renderComponent(true);
 
   // Mock API response for correct password change
-  mockAxios.onPost("http://localhost:8082/api/login").reply(200);
+  mockAxios.onPost(`${baseUrl}/login`).reply(200);
 
   // Open Change Password modal
   fireEvent.click(screen.getByText("Change Password"));
@@ -154,6 +158,8 @@ test("shows success alert when password is changed successfully", async () => {
   fireEvent.click(screen.getByText("Save New Password"));
 
   await waitFor(() => {
-    expect(screen.getByText("Password changed successfully!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Password changed successfully!")
+    ).toBeInTheDocument();
   });
 });

@@ -20,6 +20,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
     confirmPassword: "",
     currentPassword: "",
   });
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [formData, setFormData] = useState({
     customerName: customerData.customerName,
@@ -74,7 +75,7 @@ const EditProfileModal = ({ show, handleClose, updateCustomerData }) => {
 
   const checkPassword = async () => {
     try {
-      const res = await axios.post("http://localhost:8082/api/login", {
+      const res = await axios.post(`${baseUrl}/login`, {
         customerEmail: customerData.customerEmail,
         password: passwordData.currentPassword,
       });

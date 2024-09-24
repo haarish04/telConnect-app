@@ -7,6 +7,7 @@ import { onPlanClickHandler } from "../utils/authutils";
 import Alert from "@mui/material/Alert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import duration icon
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const ServicePlans = () => {
   const [plans, setPlans] = useState([]);
@@ -20,7 +21,7 @@ const ServicePlans = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/api/plans");
+        const response = await axios.get(`${baseUrl}/plans`);
         setPlans(response.data);
       } catch (error) {
         console.error("Error fetching plans:", error);
