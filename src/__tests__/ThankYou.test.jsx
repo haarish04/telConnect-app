@@ -3,6 +3,9 @@ import { render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import ThankYou from "../components/ThankYou";
 
+// Mock Confetti component to avoid issues with canvas context
+jest.mock('react-confetti', () => () => <div>Mocked Confetti</div>);
+
 // Test to check if the "Return to Homepage" button renders and has the correct href attribute
 test("displays return to homepage button", () => {
   render(<ThankYou />);
