@@ -7,9 +7,9 @@ import { onPlanClickHandler } from "../utils/authutils";
 import Alert from "@mui/material/Alert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import duration icon
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const ServicePlans = () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
   const [serviceType, setServiceType] = useState("prepaid");

@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { isDocumentVerified } from "../utils/authutils";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import EditProfileModal from "./EditProfileModal";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Profile = () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [documentVerified, setDocumentVerified] = useState(false);

@@ -1,5 +1,4 @@
 import axios from "axios";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Check if the user is logged in (i.e., customerData is present)
 export const isLoggedIn = (customerData) => {
@@ -16,6 +15,8 @@ export const getCustomerId = (customerData) => {
 
 // API call to check if the document is verified
 export const isDocumentVerified = async (customerId) => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   try {
     const response = await axios.get(
       `${baseUrl}/verification/${customerId}/status`,

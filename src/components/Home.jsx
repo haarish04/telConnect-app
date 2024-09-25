@@ -6,9 +6,10 @@ import AboutUs from "../assets/About_us.jfif";
 import WhyUs1 from "../assets/WhyUs1.png";
 import WhyUs2 from "../assets/WhyUs2.png";
 import CardGrid from "../components/CardGrid";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchAndStorePlans = async () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   try {
     const response = await axios.get(`${baseUrl}/plans`, {
       withCredentials: true,
