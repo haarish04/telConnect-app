@@ -7,7 +7,6 @@ import { CustomerContext } from "../context/CustomerContext";
 import { MemoryRouter } from "react-router-dom";
 import axiosMock from "axios-mock-adapter";
 import EditProfileModal from "../components/EditProfileModal";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Set up the Axios mock adapter
 const mockAxios = new axiosMock(axios);
@@ -38,6 +37,8 @@ const renderWithContext = (ui, { providerProps, ...renderOptions }) => {
 };
 
 describe("Profile Page", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   beforeEach(() => {
     // Reset the mock before each test
     mockAxios.reset();

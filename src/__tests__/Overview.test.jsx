@@ -3,11 +3,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import Overview from "../components/Overview";
 import MockAdapter from "axios-mock-adapter";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const mockAxios = new MockAdapter(axios);
 
 describe("Overview Component", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   afterEach(() => {
     mockAxios.reset();
   });

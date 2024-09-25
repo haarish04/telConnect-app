@@ -8,6 +8,8 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 jest.mock("axios");
 
 describe("EditServicePlans Component", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   const plans = [
     {
       planId: "PREP001",

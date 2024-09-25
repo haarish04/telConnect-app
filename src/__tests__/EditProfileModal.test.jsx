@@ -4,7 +4,6 @@ import { CustomerContext } from "../context/CustomerContext";
 import EditProfileModal from "../components/EditProfileModal";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Mock axios for API requests
 const mockAxios = new MockAdapter(axios);
@@ -89,6 +88,8 @@ test("handles password visibility toggle correctly", () => {
 });
 
 test("shows error alert when passwords do not match", async () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   renderComponent(true);
 
   // Mock API response for correct password change
@@ -115,6 +116,7 @@ test("shows error alert when passwords do not match", async () => {
 
 test("shows error alert when current password is incorrect", async () => {
   renderComponent(true);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   // Mock API response for incorrect current password
   mockAxios.onPost(`${baseUrl}/login`).reply(400);
@@ -139,6 +141,7 @@ test("shows error alert when current password is incorrect", async () => {
 
 test("shows success alert when password is changed successfully", async () => {
   renderComponent(true);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   // Mock API response for correct password change
   mockAxios.onPost(`${baseUrl}/login`).reply(200);

@@ -5,7 +5,6 @@ import { CustomerContext } from "../context/CustomerContext";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { BrowserRouter as Router } from "react-router-dom";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const mockAxios = new MockAdapter(axios);
 
@@ -24,6 +23,8 @@ const renderComponent = () => {
 };
 
 describe("DocumentVerification Component", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   beforeEach(() => {
     mockAxios.reset();
   });

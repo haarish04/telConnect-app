@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import axios from "axios";
 import DocumentVerificationStatusLogs from "../components/DocumentVerificationStatusLogs";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 // Mock axios
 jest.mock("axios");
@@ -25,6 +24,8 @@ const mockData = [
 ];
 
 describe("DocumentVerificationStatusLogs Component", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   beforeEach(() => {
     // Mock the localStorage to return a dummy token
     jest.spyOn(Storage.prototype, "getItem").mockReturnValue("dummyToken");

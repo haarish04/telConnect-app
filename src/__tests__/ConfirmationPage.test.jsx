@@ -5,10 +5,10 @@ import { CustomerContext } from "../context/CustomerContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 describe("ConfirmationPage Component", () => {
   let mockAxios;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   beforeEach(() => {
     mockAxios = new MockAdapter(axios);

@@ -3,11 +3,12 @@ import React from "react";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import CreateServicePlan from "../components/CreateServicePlan";
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 jest.mock("axios");
 
 describe("CreateServicePlan Component", () => {
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   const setup = () => {
     const utils = render(<CreateServicePlan />);
     const planId = utils.getByLabelText(/plan id/i); // Plan ID field
