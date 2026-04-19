@@ -6,6 +6,8 @@ import AboutUs from "../assets/About_us.jfif";
 import WhyUs1 from "../assets/WhyUs1.png";
 import WhyUs2 from "../assets/WhyUs2.png";
 import CardGrid from "../components/CardGrid";
+import ChatWindow from "../components/ChatWindow";
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchAndStorePlans = async () => {
@@ -15,7 +17,6 @@ const fetchAndStorePlans = async () => {
     });
     const plans = response.data;
 
-    // Add an id property to each plan, starting from 1
     const plansWithIds = plans.map((plan, index) => ({
       id: index + 1,
       ...plan,
@@ -50,7 +51,6 @@ const Home = () => {
   }, []);
 
   const fetchPlanById = (id) => {
-    // console.dir(plans.find((p) => p.id === id) || null);
     return plans.find((p) => p.id === id) || null;
   };
 
@@ -59,7 +59,7 @@ const Home = () => {
   const plan_card1 = fetchPlanById(24);
   const plan_card2 = fetchPlanById(11);
   const plan_card3 = fetchPlanById(10);
-  // console.log(plan_card1);
+
   const plans_card = {
     pc1: {
       planId: "PREP-TC-1999",
@@ -83,8 +83,6 @@ const Home = () => {
       description: plan_card3?.planDescription,
     },
   };
-
-  //console.log(plans_card);
 
   return (
     <div className="homepage-container">
@@ -115,7 +113,6 @@ const Home = () => {
 
       <section className="why-us">
         <div className="why-us-container">
-          {/* First section: Text on the left, Image on the right */}
           <div className="row align-items-center">
             <div className="col-md-6">
               <h2>Why Choose Us?</h2>
@@ -130,7 +127,7 @@ const Home = () => {
                 remote areas, TelConnect ensures you stay connected with your
                 loved ones, business associates, and the world. Our
                 state-of-the-art infrastructure, powered by cutting-edge
-                technology, guarantees 99.9% uptime, so you’re never out of
+                technology, guarantees 99.9% uptime, so you're never out of
                 touch, no matter where your journey takes you.
               </p>
             </div>
@@ -139,7 +136,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Second section: Image on the left, Text on the right */}
           <div className="row align-items-center mt-5">
             <div className="col-md-6">
               <img src={WhyUs2} alt="Our Commitment" className="img-fluid2" />
@@ -148,14 +144,14 @@ const Home = () => {
               <p className="why-us-text">
                 Our dedication to innovation and customer satisfaction has
                 positioned us as a leader in the telecom industry. Every day, we
-                enable over a billion interactions—whether it’s a quick chat
+                enable over a billion interactions—whether it's a quick chat
                 with a friend, a vital business call, or a heartfelt video
                 message. We are the trusted choice for millions who seek
                 reliability, clarity, and seamless connectivity.
                 <br />
                 <br />
                 Join the TelConnect family today and experience a network that
-                genuinely cares about your connection to the world. We don’t
+                genuinely cares about your connection to the world. We don't
                 just connect calls—we connect lives.
               </p>
             </div>
@@ -168,18 +164,20 @@ const Home = () => {
         <div className="about-us-container">
           <img src={AboutUs} alt="About Us" className="aboutus-image" />
           <p className="about-text">
-            Welcome to TelConnect! We’re not just another telecom company; We’re
+            Welcome to TelConnect! We're not just another telecom company; We're
             your digital lifestyle partner. At TelConnect, we believe in keeping
-            you connected with what matters most. Whether it’s unlimited calls
+            you connected with what matters most. Whether it's unlimited calls
             to your besties, streaming your favorite shows, or staying on top of
-            your social game with high-speed data, we’ve got you covered. Our
+            your social game with high-speed data, we've got you covered. Our
             plans are designed to fit your dynamic lifestyle, offering
             flexibility, affordability, and reliability. Join the TelConnect
             family and experience a seamless, fun, and friendly connection that
-            keeps you in the loop, always. Let’s stay connected, together!
+            keeps you in the loop, always. Let's stay connected, together!
           </p>
         </div>
       </section>
+
+      <ChatWindow />
     </div>
   );
 };
