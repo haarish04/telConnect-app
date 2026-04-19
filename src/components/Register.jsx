@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for making API calls
 import "../styles/RegisterPage.css";
 //import telconnectimg1 from "../assets/login-img.png";
+import ChatWindow from "../components/ChatWindow";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -158,6 +159,7 @@ export default function Register() {
           </p>
         </div>
       </div>
+    
     </div>
   );
 }

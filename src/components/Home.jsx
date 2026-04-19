@@ -177,7 +177,7 @@ const Home = () => {
         </div>
       </section>
 
-      <ChatWindow />
+      
     </div>
   );
 };

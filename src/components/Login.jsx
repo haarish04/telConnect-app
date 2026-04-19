@@ -3,6 +3,7 @@ import "../styles/LoginPage.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CustomerContext } from "../context/CustomerContext";
+import ChatWindow from "../components/ChatWindow";
 
 const Login = () => {
   const { setCustomerData } = useContext(CustomerContext);
@@ -143,6 +144,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+     
     </div>
   );
 };

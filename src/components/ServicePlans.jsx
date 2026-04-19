@@ -7,6 +7,7 @@ import { onPlanClickHandler } from "../utils/authutils";
 import Alert from "@mui/material/Alert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import duration icon
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import ChatWindow from "../components/ChatWindow";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const ServicePlans = () => {
@@ -153,6 +154,8 @@ const ServicePlans = () => {
       <button className="activate-button" onClick={handleClick}>
         Activate
       </button>
+
+  
     </div>
   );
 };

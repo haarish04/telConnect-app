@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import '../styles/SupportPage.css';
+import ChatWindow from "../components/ChatWindow";
 
 const Support = () => {
   return (
@@ -48,6 +49,7 @@ const Support = () => {
           </Col>
         </Row>
       </Container>
+    
     </section>
   );
 };
