@@ -142,6 +142,8 @@ const Profile = () => {
                         </Button>
                       </div>
                       <p>{customerData.role}</p>
+                      <p className="profile-balance-white-bold">BALANCE : {customerData.balance}</p>
+                      <p className="profile-balance-white-bold">CIDN : {customerData.cidn}</p>
                     </div>
                   </div>
                   <Button className="logout-button" onClick={handleLogout}>

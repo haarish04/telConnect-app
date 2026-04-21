@@ -12,6 +12,9 @@ function PersonalInfo() {
     address2: "",
     address3: "",
     phone: "",
+    balance: "",
+    cidn: "",
+    role: "",
   });
 
   const dateInputRef = useRef(null);
@@ -45,6 +48,9 @@ function PersonalInfo() {
       customerPhno: formData.phone,
       customerAddress: fullAddress,
       customerDOB: formData.dob,
+      balance: formData.balance,
+      cidn: formData.cidn,
+      role: formData.role,
     };
 
     try {
@@ -190,6 +196,46 @@ function PersonalInfo() {
                 placeholder="Enter mobile number"
               />
             </div>
+          </div>
+          {/* New fields: Balance, CIDN, Role */}
+          <div className="form-group">
+            <label htmlFor="balance">Balance (Amount):</label>
+            <input
+              type="text"
+              id="balance"
+              name="balance"
+              value={formData.balance}
+              onChange={handleChange}
+              className="form-input phone-input"
+              placeholder="Enter balance amount"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="cidn">CIDN:</label>
+            <input
+              type="text"
+              id="cidn"
+              name="cidn"
+              value={formData.cidn}
+              onChange={handleChange}
+              className="form-input phone-input"
+              placeholder="Enter CIDN"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="role">Role:</label>
+            <input
+              type="text"
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="form-input phone-input"
+              placeholder="Enter role"
+              required
+            />
           </div>
           <button type="submit" className="submit-button">
             Submit
