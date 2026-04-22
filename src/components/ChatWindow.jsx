@@ -3,14 +3,20 @@ import "../styles/ChatWindow.css";
 
 export default function ChatWindow() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "agent",
-      text: "Hi there! 👋 How can we help you today?",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    },
-  ]);
+
+  const [messages, setMessages] = useState(() => {
+    const stored = localStorage.getItem("chatMessages");
+    if (stored) return JSON.parse(stored);
+    return [
+      {
+        id: 1,
+        sender: "agent",
+        text: "Hi there! 👋 How can we help you today?",
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      },
+    ];
+  });
+
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
 
@@ -19,6 +25,11 @@ export default function ChatWindow() {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isOpen]);
+
+  // Sync messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   const handleSend = () => {
     const text = inputValue.trim();
@@ -51,15 +62,13 @@ export default function ChatWindow() {
         aria-label="Customer Support"
       >
         {isOpen ? (
-          /* Close icon */
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          /* Chat bubble icon */
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2zm-2 10H6V10h12v2zm0-4H6V6h12v2z" />
+            <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 002-2zm-2 10H6V10h12v2zm0-4H6V6h12v2z" />
           </svg>
         )}
         {!isOpen && <span className="chat-fab__badge">1</span>}
