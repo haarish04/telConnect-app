@@ -14,6 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const adminRoles= ["ADMIN", "SUPER_ADMIN", "LOGISTIC_ADMIN"]
 
   let logoutTimer;
 
@@ -58,7 +59,6 @@ const Login = () => {
       });
 
       localStorage.setItem("Password", password);
-      console.log(password);
 
       if (res.data.token) {
         const token = res.data.token;
@@ -90,7 +90,8 @@ const Login = () => {
 
       setCustomerData(customerData);
 
-      if (customerData.customerId === 1) {
+      if (customerData.cidn === 1 && adminRoles.includes(customerData.role)) {
+    
         navigate("/adminPage");
       } else {
         navigate("/home");
