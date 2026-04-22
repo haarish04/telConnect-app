@@ -12,7 +12,7 @@ import { Button } from "react-bootstrap";
 import { CustomerContext } from "../context/CustomerContext";
 import { useNavigate } from "react-router-dom";
 import ActivateServicePlan from "../components/ActivateServicePlan";
-
+import Incidents from "../components/Incidents"
 const AdminPage = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const { logout } = useContext(CustomerContext);
@@ -38,6 +38,8 @@ const AdminPage = () => {
         return <EditServicePlans />;
       case "DocumentVerificationStatusLogs":
         return <DocumentVerificationStatusLogs />;
+      case "Incidents":
+        return <Incidents />;
       default:
         return (
           <div className="admin-tab-content">Select a tab to view content.</div>
@@ -54,8 +56,8 @@ const AdminPage = () => {
 
   return (
     <div className="admin-page-container">
-      {/* <NavBar /> */}
-      {/* Horizontal Navbar */}
+
+      {/* Header */}
       <div className="admin-header">
         <AdminPanelSettingsIcon
           fontSize="large"
@@ -71,62 +73,66 @@ const AdminPage = () => {
 
       {/* Main container */}
       <div className="admin-main-container">
-        {/* Vertical Sidebar */}
+
+        {/* Sidebar */}
         <div className="admin-sidebar">
+
           <div
-            className={`admin-tab ${
-              activeTab === "Overview" ? "admin-active-tab" : ""
-            }`}
+            className={`admin-tab ${activeTab === "Overview" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("Overview")}
           >
             Overview
           </div>
+
           <div
-            className={`admin-tab ${
-              activeTab === "ActivateServicePlan" ? "admin-active-tab" : ""
-            }`}
+            className={`admin-tab ${activeTab === "ActivateServicePlan" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("ActivateServicePlan")}
           >
             Activate Service Plan
           </div>
+
           <div
-            className={`admin-tab ${
-              activeTab === "CustomerAccounts" ? "admin-active-tab" : ""
-            }`}
+            className={`admin-tab ${activeTab === "CustomerAccounts" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("CustomerAccounts")}
           >
             Customer Accounts
           </div>
+
           <div
-            className={`admin-tab ${
-              activeTab === "CreateServicePlan" ? "admin-active-tab" : ""
-            }`}
+            className={`admin-tab ${activeTab === "CreateServicePlan" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("CreateServicePlan")}
           >
             Create Service Plan
           </div>
+
           <div
-            className={`admin-tab ${
-              activeTab === "EditServicePlans" ? "admin-active-tab" : ""
-            }`}
+            className={`admin-tab ${activeTab === "EditServicePlans" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("EditServicePlans")}
           >
             Edit Service Plans
           </div>
+
           <div
-            className={`admin-tab ${
-              activeTab === "DocumentVerificationStatusLogs"
-                ? "admin-active-tab"
-                : ""
-            }`}
+            className={`admin-tab ${activeTab === "DocumentVerificationStatusLogs" ? "admin-active-tab" : ""}`}
             onClick={() => handleTabClick("DocumentVerificationStatusLogs")}
           >
             Document Verification Status Logs
           </div>
+
+          <div
+            className={`admin-tab ${activeTab === "Incidents" ? "admin-active-tab" : ""}`}
+            onClick={() => handleTabClick("Incidents")}
+          >
+            Incidents
+          </div>
+
         </div>
 
-        {/* Content Area */}
-        <div className="admin-content">{renderContent()}</div>
+        {/* Content */}
+        <div className="admin-content">
+          {renderContent()}
+        </div>
+
       </div>
     </div>
   );
