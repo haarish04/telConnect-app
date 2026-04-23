@@ -16,6 +16,7 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import AdminPage from "./pages/AdminPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ErrorPage from "./pages/ErrorPage";
+import ChatWindow from "./components/ChatWindow";
 
 const App = () => {
   return (
@@ -50,6 +51,7 @@ const App = () => {
         </Routes>
       </Router>
       <div className=""></div>
+      <ChatWindow/>
     </CustomerProvider>
   );
 };

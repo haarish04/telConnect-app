@@ -40,6 +40,7 @@ export const CustomerProvider = ({ children }) => {
     setPlanId(null);
     localStorage.removeItem("customerData");
     localStorage.removeItem("planId");
+    localStorage.removeItem("chatMessages");
   };
 
   return (
