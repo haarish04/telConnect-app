@@ -6,17 +6,21 @@ const API_URL = "http://localhost:8082/api/incidents";
 
 const Incidents = () => {
     const [incidents, setIncidents] = useState([]);
+
+    // description popup
     const [showDialog, setShowDialog] = useState(false);
     const [selectedDescription, setSelectedDescription] = useState("");
+
+    // status confirmation popup
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [pendingStatus, setPendingStatus] = useState(null);
 
     const fetchIncidents = async () => {
         try {
             const token = localStorage.getItem("bearerToken");
-
             const res = await axios.get(API_URL, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
             setIncidents(res.data);
         } catch (err) {
             console.error("Error fetching incidents:", err);
@@ -27,39 +31,46 @@ const Incidents = () => {
         fetchIncidents();
     }, []);
 
-    const handleStatusChange = async (id, newStatus, oldStatus) => {
-        const confirmChange = window.confirm(
-            "Are you sure you want to change the status?"
-        );
+    // open confirmation popup
+    const handleStatusChange = (id, newStatus, oldStatus) => {
+        setPendingStatus({ id, newStatus, oldStatus });
+        setShowConfirm(true);
+    };
 
-        if (!confirmChange) {
-            setIncidents((prev) =>
-                prev.map((item) =>
-                    item.incident_id === id
-                        ? { ...item, status: oldStatus }
-                        : item
-                )
-            );
-            return;
-        }
-
+    // user clicks YES
+    const confirmStatusChange = async () => {
         try {
             const token = localStorage.getItem("bearerToken");
 
             await axios.put(
-                `${API_URL}/${id}`,
-                { status: newStatus },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
+                `${API_URL}/${pendingStatus.id}`,
+                { status: pendingStatus.newStatus },
+                { headers: { Authorization: `Bearer ${token}` } }
             );
 
             fetchIncidents();
         } catch (err) {
             console.error("Update error:", err);
+        } finally {
+            setShowConfirm(false);
+            setPendingStatus(null);
         }
     };
 
+    // user clicks NO
+    const cancelStatusChange = () => {
+        setIncidents((prev) =>
+            prev.map((item) =>
+                item.incident_id === pendingStatus.id
+                    ? { ...item, status: pendingStatus.oldStatus }
+                    : item
+            )
+        );
+        setShowConfirm(false);
+        setPendingStatus(null);
+    };
+
+    // description popup
     const openDialog = (description) => {
         setSelectedDescription(description || "No description available");
         setShowDialog(true);
@@ -94,13 +105,7 @@ const Incidents = () => {
                                 <td>{item.incident_id}</td>
                                 <td>{item.customer_id || "N/A"}</td>
 
-                                <td
-                                    className={
-                                        item.priority
-                                            ? `priority-${item.priority.toLowerCase()}`
-                                            : "priority-low"
-                                    }
-                                >
+                                <td className={`priority-${item.priority?.toLowerCase() || "low"}`}>
                                     {item.priority || "LOW"}
                                 </td>
 
@@ -109,14 +114,7 @@ const Incidents = () => {
                                 <td>
                                     {item.date_time
                                         ? new Date(item.date_time)
-                                              .toLocaleString("en-GB", {
-                                                  day: "2-digit",
-                                                  month: "2-digit",
-                                                  year: "numeric",
-                                                  hour: "2-digit",
-                                                  minute: "2-digit",
-                                                  hour12: true,
-                                              })
+                                              .toLocaleString("en-GB")
                                               .replace(",", " at")
                                         : "N/A"}
                                 </td>
@@ -124,9 +122,7 @@ const Incidents = () => {
                                 <td>
                                     <button
                                         className="view-btn"
-                                        onClick={() =>
-                                            openDialog(item.description)
-                                        }
+                                        onClick={() => openDialog(item.description)}
                                     >
                                         View
                                     </button>
@@ -158,6 +154,7 @@ const Incidents = () => {
                 </tbody>
             </table>
 
+            {/* Description Popup */}
             {showDialog && (
                 <div className="dialog-overlay">
                     <div className="dialog-box">
@@ -166,6 +163,25 @@ const Incidents = () => {
                         <button className="close-btn" onClick={closeDialog}>
                             Close
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Status Confirmation Popup */}
+            {showConfirm && (
+                <div className="dialog-overlay">
+                    <div className="dialog-box">
+                        <h3>Confirm Status Change</h3>
+                        <p>Are you sure you want to change the status?</p>
+
+                        <div className="confirm-actions">
+                            <button className="yes-btn" onClick={confirmStatusChange}>
+                                Yes
+                            </button>
+                            <button className="no-btn" onClick={cancelStatusChange}>
+                                No
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

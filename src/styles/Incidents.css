@@ -157,3 +157,35 @@
 .close-btn:hover {
     background-color: #333;
 }
+.confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.yes-btn {
+    background-color: #2e7d32;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.no-btn {
+    background-color: #c62828;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.yes-btn:hover {
+    background-color: #1b5e20;
+}
+
+.no-btn:hover {
+    background-color: #8e0000;
+}
