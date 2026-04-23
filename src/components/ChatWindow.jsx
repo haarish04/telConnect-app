@@ -1,8 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "../styles/ChatWindow.css";
+import { CustomerContext } from "../context/CustomerContext"; // adjust path as needed
 
 export default function ChatWindow() {
+  const { customerData } = useContext(CustomerContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const getWelcomeMessage = () => {
+    const name = customerData?.customerName;
+    return name
+      ? `Hi ${name}! 👋 How can we help you today?`
+      : "Hi there! 👋 How can we help you today?";
+  };
 
   const [messages, setMessages] = useState(() => {
     const stored = localStorage.getItem("chatMessages");
@@ -11,11 +20,22 @@ export default function ChatWindow() {
       {
         id: 1,
         sender: "agent",
-        text: "Hi there! 👋 How can we help you today?",
+        text: getWelcomeMessage(),
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
     ];
   });
+
+  // Update welcome message when login state changes
+  useEffect(() => {
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === 1 && msg.sender === "agent"
+          ? { ...msg, text: getWelcomeMessage() }
+          : msg
+      )
+    );
+  }, [customerData]);
 
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
@@ -30,6 +50,19 @@ export default function ChatWindow() {
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
+
+  useEffect(() => {
+  if (!customerData) {
+    setMessages([
+      {
+        id: 1,
+        sender: "agent",
+        text: getWelcomeMessage(),
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      },
+    ]);
+  }
+}, [customerData]);
 
   const handleSend = () => {
     const text = inputValue.trim();
@@ -68,7 +101,7 @@ export default function ChatWindow() {
           </svg>
         ) : (
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 002-2zm-2 10H6V10h12v2zm0-4H6V6h12v2z" />
+            <path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2zm-2 10H6v-2h12v2zm0-4H6V6h12v2z" />
           </svg>
         )}
         {!isOpen && <span className="chat-fab__badge">1</span>}
@@ -102,10 +135,7 @@ export default function ChatWindow() {
         {/* Messages */}
         <div className="chat-window__messages">
           {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`chat-message chat-message--${msg.sender}`}
-            >
+            <div key={msg.id} className={`chat-message chat-message--${msg.sender}`}>
               <div className="chat-message__bubble">{msg.text}</div>
               <span className="chat-message__time">{msg.time}</span>
             </div>
