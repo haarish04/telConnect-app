@@ -119,9 +119,6 @@ export default function ChatWindow() {
             </div>
             <div>
               <p className="chat-window__agent-name">Support Team</p>
-              <p className="chat-window__status">
-                <span className="chat-window__status-dot" /> Online
-              </p>
             </div>
           </div>
           <button className="chat-window__close-btn" onClick={() => setIsOpen(false)} aria-label="Close chat">
