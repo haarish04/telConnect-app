@@ -60,10 +60,38 @@ const ActivateServicePlan = () => {
     );
 
     try {
-      // Send a PATCH request to update the status in the backend
+      console.log("Selected plan for activation:", selectedPlan);
+      // Set startDate to today (admin approval date)
+      const today = new Date();
+      const utcStartDate = new Date(today.toUTCString());
+      const isoStartDate = utcStartDate.toISOString().split("T")[0];
+
+      // Get plan duration (validity) in days
+      let durationInDays = 0;
+      // Try to get planDuration from selectedPlan, fallback to fetching plan details if not present
+      
+        // Fetch plan details from backend if not present in selectedPlan
+      const planDetailsResponse = await axios.get(`${baseUrl}/plans/${selectedPlan.planId}`);
+      durationInDays = parseInt(planDetailsResponse.data.planDuration, 10);
+      
+
+      // Calculate endDate
+      const endDateObj = new Date(utcStartDate);
+      endDateObj.setDate(endDateObj.getDate() + durationInDays);
+      const isoEndDate = endDateObj.toISOString().split("T")[0];
+      
+    
+      // console.log("Calculated endDate:", isoEndDate);
+      // console.log("Plan duration (days):", durationInDays);
+      // console.log("Start date (UTC):", isoStartDate);
+      // Send a PATCH request to update the status, startDate, and endDate in the backend
       await axios.patch(
-        `${baseUrl}/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/status?status=Active`,
-        {},
+        `${baseUrl}/admin/${selectedPlan.customerId}/plans/${selectedPlan.planId}/dates`,
+        {
+          status: "Active",
+          startDate: isoStartDate,
+          endDate: isoEndDate,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
