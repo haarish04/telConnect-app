@@ -38,6 +38,7 @@ export default function CustomerAccounts() {
           customerId: customer.customerId,
           customerName: customer.customerName,
           customerEmail: customer.customerEmail,
+          customerCidn: customer.cidn,
           customerPhno: customer.customerPhno,
           customerAddress: customer.customerAddress,
           accountCreationDate: customer.accountCreationDate,
@@ -120,6 +121,7 @@ export default function CustomerAccounts() {
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Cidn</th>
             <th>Phone Number</th>
             <th>Address</th>
             <th>Account Creation Date</th>
@@ -136,6 +138,7 @@ export default function CustomerAccounts() {
                   <td>{row.customerId}</td>
                   <td>{row.customerName}</td>
                   <td>{row.customerEmail}</td>
+                  <td>{row.customerCidn}</td>
                   <td>{row.customerPhno}</td>
                   <td>{row.customerAddress}</td>
                   <td>{row.accountCreationDate}</td>
