@@ -49,21 +49,23 @@ export default function ChatWindow() {
   // Sync messages to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("chatMessages", JSON.stringify(messages));
-    console.log(localStorage.getItem("chatMessages"))
   }, [messages]);
 
   useEffect(() => {
-  if (!customerData) {
+  const handleLogout = () => {
     setMessages([
       {
         id: 1,
         sender: "agent",
-        text: getWelcomeMessage(),
+        text: "Hi there! 👋 How can we help you today?",
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
     ]);
-  }
-}, [customerData]);
+  };
+
+  window.addEventListener("logout", handleLogout);
+  return () => window.removeEventListener("logout", handleLogout);
+}, []);
 
   const handleSend = () => {
     const text = inputValue.trim();
