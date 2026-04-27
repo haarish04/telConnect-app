@@ -4,7 +4,14 @@ import React, { createContext, useState, useEffect } from "react";
 export const CustomerContext = createContext();
 
 export const CustomerProvider = ({ children }) => {
-  const [customerData, setCustomerData] = useState(null);
+  //const [customerData, setCustomerData] = useState(null);
+  const [customerData, setCustomerData] = useState(() => {
+    const stored = localStorage.getItem("customerData");
+    return stored ? JSON.parse(stored) : null;
+  });
+
+
+
   const [planId, setPlanId] = useState(null); // New state for storing planId
 
   // Load customer data and planId from localStorage on mount
@@ -41,6 +48,7 @@ export const CustomerProvider = ({ children }) => {
     localStorage.removeItem("customerData");
     localStorage.removeItem("planId");
     localStorage.removeItem("chatMessages");
+    window.dispatchEvent(new Event("logout"));
   };
 
   return (
